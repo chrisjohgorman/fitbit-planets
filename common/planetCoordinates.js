@@ -695,3 +695,67 @@ export function uranus (day_number, latitude, longitude) {
         az: azimuth,
     };
 }
+
+export function neptune (day_number, latitude, longitude) {
+    let N = 131.7806 + 3.0173E-5    * day_number;
+    let i =   1.7700 - 2.55E-7      * day_number;
+    let w = 272.8461 - 6.027E-6     * day_number;
+    let a = 30.05826 + 3.313E-8     * day_number;
+    let e = 0.008606 + 2.15E-9      * day_number;
+    let M = 260.2471 + 0.005995147  * day_number;
+    M = Math.revolveDegree(M);
+    let oblecl = 23.4393 - 3.563e-7 * day_number; // obliquity of the eliptic
+    
+    let E = eccentricAnomaly(M, e, 0.0005);
+    // neptune's rectrangular coordinates
+    let x = a * (Math.cosd(E) - e);
+    let y = a * Math.sind(E) * Math.sqrt(1 - e*e);
+    // convert to distance and true anomaly
+    let r = Math.sqrt(x*x + y*y);
+    let v = Math.atan2d(y, x);
+    // neptune's position in ecliptic coordinates
+    let xeclip = r * ( Math.cosd(N) * Math.cosd(v+w) - Math.sind(N) * Math.sind(v+w) * Math.cosd(i));
+    let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) + Math.cosd(N) * Math.sind(v+w) * Math.cosd(i));
+    let zeclip = r * Math.sind(v+w) * Math.sind(i);
+    // add sun's rectangular coordinates
+    let sr = sunRectangular(day_number);
+    let xgeoc = sr.x1 + xeclip;
+    let ygeoc = sr.y1 + yeclip;
+    let zgeoc = sr.z1 + zeclip;
+    // rotate the equitorial coordinates
+    let xequat = xgeoc;
+    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
+    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
+    // convert to right_ascension and declination
+    let right_ascension = Math.atan2d(yequat, xequat);
+    right_ascension = Math.revolveDegree(right_ascension);
+    right_ascension = right_ascension / 15;
+    let declination = Math.atan2d(zequat,
+        Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2)));
+    let distance = Math.sqrt(Math.pow(xequat, 2) +
+        Math.pow(yequat, 2) + Math.pow(zequat, 2));
+    // convert to ecliptic longitude and latitude
+    let lon = Math.atan2d(yeclip, xeclip);
+    lon = Math.revolveDegree(lon);
+    let lat = Math.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+    // convert to azimuth and altitude
+    let hour_angle = sidtime(day_number, longitude) - right_ascension;
+    hour_angle = Math.revolveHourAngle(hour_angle);
+    hour_angle = hour_angle * 15;
+    x = Math.cosd(hour_angle)*Math.cosd(declination);
+    y = Math.sind(hour_angle)*Math.cosd(declination);
+    let z = Math.sind(declination);
+    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let y_horizon = y;
+    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
+    let altitude = Math.atan2d(z_horizon, 
+        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    return{
+        ra: right_ascension,
+        decl: declination,
+        dist: distance,
+        alt: altitude,
+        az: azimuth,
+    };
+}

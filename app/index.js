@@ -38,3 +38,7 @@ const uranus = pc.uranus(pc.dayNumber(d.getFullYear(),
     (d.getMonth() + 1),d.getDate()), lat, long);
 console.log("uranus azimuth %s", uranus.az.toFixed(2));
 console.log("uranus altitude %s", uranus.alt.toFixed(2));
+const neptune = pc.neptune(pc.dayNumber(d.getFullYear(),
+    (d.getMonth() + 1),d.getDate()), lat, long);
+console.log("neptune azimuth %s", neptune.az.toFixed(2));
+console.log("neptune altitude %s", neptune.alt.toFixed(2));
