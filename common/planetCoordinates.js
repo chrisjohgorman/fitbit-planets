@@ -461,6 +461,85 @@ export function mars (day_number, latitude, longitude, UT) {
     };
 }
 
+export function jupiter (day_number, latitude, longitude, UT) {
+    let N = 100.4542 + 2.76854e-5   * day_number;  // Long of asc. node
+    let i =   1.3030 - 1.557e-7     * day_number;  // Inclination
+    let w = 273.8777 + 1.64505e-5   * day_number;  // Argument of perihelion
+    let a = 5.20256;                   // Semi-major axis
+    let e = 0.048498 + 4.469e-9     * day_number;  // eccentricity
+    let M =  19.8950 + 0.0830853001 * day_number;  // Mean anomaly Jupiter
+    M = Math.revolveDegree(M);
+    let Mj = M;
+    let Ms = 316.9670 + 0.0334442282 * day_number; // Mean anomaly Saturn
+    Ms = Math.revolveDegree(Ms);
+    let Mu = 142.5905 + 0.011725806 * day_number;  // Mean anomaly Uranus
+    Mu = Math.revolveDegree(Mu);
+    let oblecl = 23.4393 - 3.563e-7 * day_number;  // obliquity of the eliptic
+    
+    let E = eccentricAnomaly(M, e, 0.0005);
+    // jupiter's rectrangular coordinates
+    let x = a * (Math.cosd(E) - e);
+    let y = a * Math.sind(E) * Math.sqrt(1 - e*e);
+    // convert to distance and true anomaly
+    let r = Math.sqrt(x*x + y*y);
+    let v = Math.atan2d(y, x);
+    // jupiter's position in ecliptic coordinates
+    let xeclip = r * ( Math.cosd(N) * Math.cosd(v+w) - Math.sind(N) * Math.sind(v+w) * Math.cosd(i));
+    let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) + Math.cosd(N) * Math.sind(v+w) * Math.cosd(i));
+    let zeclip = r * Math.sind(v+w) * Math.sind(i);
+    // add sun's rectangular coordinates
+    let sr = sunRectangular(day_number);
+    let xgeoc = sr.x1 + xeclip;
+    let ygeoc = sr.y1 + yeclip;
+    let zgeoc = sr.z1 + zeclip;
+    // rotate the equitorial coordinates
+    let xequat = xgeoc;
+    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
+    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
+    // convert to right_ascension and declination
+    let right_ascension = Math.atan2d(yequat, xequat);
+    right_ascension = Math.revolveDegree(right_ascension);
+    right_ascension = right_ascension/15;
+    let declination = Math.atan2d(zequat, Math.sqrt(Math.pow(xequat, 2) 
+        + Math.pow(yequat, 2)));
+    let distance = Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2) 
+        + Math.pow(zequat, 2));
+    // convert to ecliptic longitude and latitude
+    let lon = Math.atan2d(yeclip, xeclip);
+    lon = Math.revolveDegree(lon);
+    let lat = Math.atan2d(zeclip, Math.sqrt(xeclip*xeclip +
+        yeclip*yeclip));
+    let perturbations_of_longitude = -0.332 * Math.sind(2*Mj - 5*Ms - 67.6) 
+                     -0.056 * Math.sind(2*Mj - 2*Ms + 21) 
+                     +0.042 * Math.sind(3*Mj - 5*Ms + 21) 
+                     -0.036 * Math.sind(Mj - 2*Ms) 
+                     +0.022 * Math.cosd(Mj - Ms) 
+                     +0.023 * Math.sind(2*Mj - 3*Ms + 52) 
+                     -0.016 * Math.sind(Mj - 5*Ms - 69);
+    lon = lon + perturbations_of_longitude;
+    lon = Math.revolveDegree(lon);
+    // convert to azimuth and altitude
+    let hour_angle = sidtime(day_number, longitude, UT) - right_ascension;
+    hour_angle = Math.revolveHourAngle(hour_angle);
+    hour_angle = hour_angle * 15;
+    x = Math.cosd(hour_angle)*Math.cosd(declination);
+    y = Math.sind(hour_angle)*Math.cosd(declination);
+    let z = Math.sind(declination);
+    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let y_horizon = y;
+    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
+    let altitude = Math.atan2d(z_horizon, 
+        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    return{
+        ra: right_ascension,
+        decl: declination,
+        dist: distance,
+        alt: altitude,
+        az: azimuth,
+    };
+}
+
 export function uranus (day_number, latitude, longitude) {
     let N =  74.0005 + 1.3978E-5    * day_number;  // Long of asc. node
     let i =   0.7733 + 1.9E-8       * day_number;  // Inclination

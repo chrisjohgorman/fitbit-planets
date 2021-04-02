@@ -26,6 +26,10 @@ const mars = pc.mars(pc.dayNumber(d.getFullYear(),
     (d.getMonth() + 1),d.getDate()), lat, long, ut);
 console.log("mars azimuth %s", mars.az.toFixed(2));
 console.log("mars altitude %s", mars.alt.toFixed(2));
+const jupiter = pc.jupiter(pc.dayNumber(d.getFullYear(),
+    (d.getMonth() + 1),d.getDate()), lat, long, ut);
+console.log("jupiter azimuth %s", jupiter.az.toFixed(2));
+console.log("jupiter altitude %s", jupiter.alt.toFixed(2));
 const uranus = pc.uranus(pc.dayNumber(d.getFullYear(),
     (d.getMonth() + 1),d.getDate()), lat, long);
 console.log("uranus azimuth %s", uranus.az.toFixed(2));
