@@ -118,6 +118,149 @@ export function sunRectangular (day_number) {
     };
 }
 
+// sun and moon
+export function sun (day_number, latitude, longitude) {
+    // rotate equitorial coordinates
+    let sr = sunRectangular(day_number);
+    let xequat = sr.x1;
+    let yequat = sr.y1 * Math.cosd(sr.oblecl) - sr.z1 * Math.sind(sr.oblecl);
+    let zequat = sr.y1 * Math.sind(sr.oblecl) - sr.z1 * Math.cosd(sr.oblecl);
+
+    let right_ascension = Math.atan2d(yequat, xequat);
+    right_ascension = Math.revolveDegree(right_ascension);
+    // convert right_ascension to hours
+    right_ascension = right_ascension / 15;
+    let declination = Math.atan2d(zequat,
+        Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2)));
+    let distance = Math.sqrt(Math.pow(xequat, 2) +
+        Math.pow(yequat, 2) + Math.pow(zequat, 2));
+    
+    // calculate hour angle
+    let hour_angle = (sidtime(day_number, longitude) - right_ascension) * 15;
+
+    // convert hour_angle and declination to rectangular system
+    let x2 = Math.cosd(hour_angle) * Math.cosd(declination);
+    let y2 = Math.sind(hour_angle) * Math.cosd(declination);
+    let z2 = Math.sind(declination);
+
+    // rotate this along the y2 axis
+    let xhor = x2 * Math.sind(latitude) - z2 * Math.cosd(latitude);
+    let yhor = y2;
+    let zhor = x2 * Math.cosd(latitude) + z2 * Math.sind(latitude);
+
+    // finally calculate azimuth and altitude 
+    let azimuth = Math.atan2d(yhor, xhor) + 180;
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2)
+        + Math.pow(yhor, 2)));
+    return{
+        ra: right_ascension,
+        decl: declination,
+        dist: distance,
+        alt: altitude,
+        az: azimuth,
+    };
+}
+
+export function moon (day_number, latitude, longitude, UT) {
+    let N = 125.1228 - 0.0529538083 * day_number;  // long asc. node
+    let i = 5.1454;                                // inclination
+    let w = 318.0634 + 0.1643573223 * day_number;  // Arg. of perigree
+    let a = 60.2666;                               // mean distance
+    let e = 0.054900;                              // eccentricity
+    let M = 115.3654 + 13.0649929509 * day_number; // mean anomaly
+    M = Math.revolveDegree(M);
+    let oblecl = 23.4393 - 3.563e-7 * day_number;  // obliquity of the eliptic
+    let E = eccentricAnomaly(M, e, 0.0005);
+    // moon's rectrangular coordinates
+    let x = a * (Math.cosd(E) - e);
+    let y = a * Math.sind(E) * Math.sqrt(1 - e*e);
+    // convert to distance and true anomaly
+    let distance = Math.sqrt(x*x + y*y);
+    let v = Math.atan2d(y, x);
+    // moon's position in ecliptic coordinates
+    let xeclip = distance * ( Math.cosd(N) * Math.cosd(v+w) -
+        Math.sind(N) * Math.sind(v+w) * Math.cosd(i));
+    let yeclip = distance * ( Math.sind(N) * Math.cosd(v+w) +
+        Math.cosd(N) * Math.sind(v+w) * Math.cosd(i));
+    let zeclip = distance * Math.sind(v+w) * Math.sind(i);
+    // convert to ecliptic longitude, latitude and distance
+    let lon = Math.atan2d(yeclip, xeclip);
+    lon = Math.revolveDegree(lon);
+    let lat = Math.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+    let Sw = 282.9404 + 4.70935e-5   * day_number; // sun's (longitude of 
+                                                   // perihelion)
+    let Ms = 356.0470 + 0.9856002585 * day_number; // sun's mean anomaly
+    let Ls = Sw + Ms;
+    Ls = Math.revolveDegree(Ls);
+    let Lm = N + w + M;
+    let Mm = M;
+    let D = Lm - Ls;
+    let F = Lm - N;
+
+    let perturbations_in_longitude = -1.274 * Math.sind(Mm - 2*D) 
+                     +0.658 * Math.sind(2*D)  
+                     -0.186 * Math.sind(Ms) 
+                     -0.059 * Math.sind(2*Mm - 2*D) 
+                     -0.057 * Math.sind(Mm - 2*D + Ms)  
+                     +0.053 * Math.sind(Mm + 2*D) 
+                     +0.046 * Math.sind(2*D - Ms)  
+                     +0.041 * Math.sind(Mm - Ms) 
+                     -0.035 * Math.sind(D) 
+                     -0.031 * Math.sind(Mm + Ms) 
+                     -0.015 * Math.sind(2*F - 2*D)  
+                     +0.011 * Math.sind(Mm - 4*D);
+    let perturbations_in_latitude = -0.173 * Math.sind(F - 2*D) 
+                    -0.055 * Math.sind(Mm - F - 2*D) 
+                    -0.046 * Math.sind(Mm + F - 2*D) 
+                    +0.033 * Math.sind(F + 2*D) 
+                    +0.017 * Math.sind(2*Mm + F);
+    let perturbations_in_distance = -0.58 * Math.cosd(Mm - 2*D) 
+                        -0.46 * Math.cosd(2*D);
+    lon = lon + perturbations_in_longitude;
+    lat = lat + perturbations_in_latitude;
+    distance = distance + perturbations_in_distance;
+    let x1 = Math.cosd(lon) * Math.cosd(lat);
+    let y1 = Math.cosd(lat) * Math.sind(lon);
+    let z1 = Math.sind(lat);
+    let x2 = x1;
+    let y2 = y1 * Math.cosd(oblecl) - z1 * Math.sind(oblecl);
+    let z2 = y1 * Math.sind(oblecl) + z1 * Math.cosd(oblecl);
+    let right_ascension = Math.atan2d(y2,x2);
+    let right_ascension1 = right_ascension;
+    right_ascension = right_ascension / 15;
+    right_ascension = Math.revolveHourAngle(right_ascension);
+    let declination = Math.atan2d(z2, Math.sqrt(x2*x2 + y2*y2));
+    let hour_angle = (sidtime(day_number, longitude, UT) - right_ascension) * 15;
+    hour_angle = Math.revolveDegree(hour_angle);
+    x = Math.cosd(hour_angle) * Math.cosd(declination);
+    y = Math.sind(hour_angle) * Math.cosd(declination);
+    let z = Math.sind(declination);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth  = Math.atan2d( yhor, xhor ) + 180;
+    let altitude = Math.atan2d( zhor , Math.sqrt(xhor*xhor + yhor*yhor));
+    let mpar = Math.asind(1/distance);
+    let gclat = latitude - 0.1924 * Math.sind(2*latitude);
+    let rho   = 0.99833 + 0.00167 * Math.cosd(2*latitude);
+    let g = Math.atand(Math.tand(gclat) / Math.cosd(hour_angle));
+    let topocentric_right_ascension   = right_ascension1  
+        - mpar * rho * Math.cosd(gclat) 
+        * Math.sind(hour_angle) / Math.cosd(declination);
+    topocentric_right_ascension = 
+        Math.revolveDegree(topocentric_right_ascension);
+    let topocentric_declination = declination 
+        - mpar * rho * Math.sind(gclat) * Math.sind(g - declination) /
+          Math.sind(g);
+    return{
+        tra: topocentric_right_ascension,
+        tdecl: topocentric_declination,
+        dist: distance,
+        alt: altitude,
+        az: azimuth,
+    };
+}
+
 // planets
 export function mercury (day_number, latitude, longitude, UT) {
     let N =  48.3313 + 3.24587e-5   * day_number;   // (Long of asc. node)
