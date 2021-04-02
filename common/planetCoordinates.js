@@ -540,6 +540,85 @@ export function jupiter (day_number, latitude, longitude, UT) {
     };
 }
 
+export function saturn (day_number, latitude, longitude) {
+    let N = 113.6634 + 2.38980E-5   * day_number; // Long of asc. node
+    let i =   2.4886 - 1.081E-7     * day_number; // Inclination
+    let w = 339.3939 + 2.97661E-5   * day_number; // Argument of perihelion
+    let a = 9.55475;                      // Semi-major axis
+    let e = 0.055546 - 9.499E-9     * day_number; // eccentricity
+    let M = 316.9670 + 0.0334442282 * day_number; // Mean anomaly
+    M = Math.revolveDegree(M);
+    let Ms = M;
+    let Mj = 19.8950 + 0.0830853001 * day_number; // Mean anomaly Jupiter
+    Mj = Math.revolveDegree(Mj);
+    let Mu = 142.5905 + 0.011725806 * day_number; // Mean anomaly Uranus
+    Mu = Math.revolveDegree(Mu);
+    let oblecl = 23.4393 - 3.563e-7 * day_number; // obliquity of the eliptic
+
+    let E = eccentricAnomaly(M, e, 0.0005);
+    // saturn's rectrangular coordinates
+    let x = a * (Math.cosd(E) - e);
+    let y = a * Math.sind(E) * Math.sqrt(1 - e*e);
+    // convert to distance and true anomaly
+    let r = Math.sqrt(x*x + y*y);
+    let v = Math.atan2d(y, x);
+    // saturn's position in ecliptic coordinates
+    let xeclip = r * ( Math.cosd(N) * Math.cosd(v+w) - Math.sind(N) * Math.sind(v+w) * Math.cosd(i));
+    let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) + Math.cosd(N) * Math.sind(v+w) * Math.cosd(i));
+    let zeclip = r * Math.sind(v+w) * Math.sind(i);
+    // add sun's rectangular coordinates
+    let sr = sunRectangular(day_number);
+    let xgeoc = sr.x1 + xeclip;
+    let ygeoc = sr.y1 + yeclip;
+    let zgeoc = sr.z1 + zeclip;
+    // rotate the equitorial coordinates
+    let xequat = xgeoc;
+    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
+    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
+    // convert to right_ascension and declination
+    let right_ascension = Math.atan2d(yequat, xequat);
+    right_ascension = Math.revolveDegree(right_ascension);
+    right_ascension = right_ascension / 15;
+    let declination = Math.atan2d(zequat, Math.sqrt(xequat*xequat + yequat*yequat));
+    let distance = Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2) 
+        + Math.pow(zequat, 2));
+    // convert to ecliptic longitude and latitude
+    let lon = Math.atan2d(yeclip, xeclip);
+    lon = Math.revolveDegree(lon);
+    let lat = Math.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+    let perturbations_in_longitude = 0.812 * Math.sind(2*Mj - 5*Ms - 67.6) 
+                    -0.229 * Math.cosd(2*Mj - 4*Ms - 2) 
+                    +0.119 * Math.sind(Mj - 2*Ms - 3) 
+                    +0.046 * Math.sind(2*Mj - 6*Ms - 69)  
+                    +0.014 * Math.sind(Mj - 3*Ms + 32); 
+    let perturbations_in_latitude = -0.020 * Math.cosd(2*Mj - 4*Ms - 2) 
+                    +0.018 * Math.sind(2*Mj - 6*Ms - 49);
+    lon = lon + perturbations_in_longitude;
+    lon = Math.revolveDegree(lon);
+    lat = lat + perturbations_in_latitude;
+    lat = Math.revolveDegree(lat);
+    // convert to azimuth and altitude
+    let hour_angle = sidtime(day_number, longitude) - right_ascension;
+    hour_angle = Math.revolveHourAngle(hour_angle);
+    hour_angle = hour_angle * 15;
+    x = Math.cosd(hour_angle)*Math.cosd(declination);
+    y = Math.sind(hour_angle)*Math.cosd(declination);
+    let z = Math.sind(declination);
+    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let y_horizon = y;
+    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
+    let altitude = Math.atan2d(z_horizon, 
+        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    return{
+        ra: right_ascension,
+        decl: declination,
+        dist: distance,
+        alt: altitude,
+        az: azimuth,
+    };
+}
+
 export function uranus (day_number, latitude, longitude) {
     let N =  74.0005 + 1.3978E-5    * day_number;  // Long of asc. node
     let i =   0.7733 + 1.9E-8       * day_number;  // Inclination
