@@ -10,6 +10,10 @@ const mercury = pc.mercury(pc.dayNumber(d.getFullYear(),
     (d.getMonth() + 1),d.getDate()), lat, long, ut);
 console.log("mercury azimuth %s", mercury.az.toFixed(2));
 console.log("mercury altitude %s", mercury.alt.toFixed(2));
+const venus = pc.venus(pc.dayNumber(d.getFullYear(),
+    (d.getMonth() + 1),d.getDate()), lat, long, ut);
+console.log("venus azimuth %s", venus.az.toFixed(2));
+console.log("venus altitude %s", venus.alt.toFixed(2));
 const uranus = pc.uranus(pc.dayNumber(d.getFullYear(),
     (d.getMonth() + 1),d.getDate()), lat, long);
 console.log("uranus azimuth %s", uranus.az.toFixed(2));
