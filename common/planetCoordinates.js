@@ -759,3 +759,69 @@ export function neptune (day_number, latitude, longitude) {
         az: azimuth,
     };
 }
+
+export function pluto (day_number, latitude, longitude) {
+    let S  =   50.03  +  0.033459652 * day_number;
+    let P  =  238.95  +  0.003968789 * day_number;
+    let lonecl = 238.9508  +  0.00400703 * day_number 
+            - 19.799 * Math.sind(P)     + 19.848 * Math.cosd(P) 
+             + 0.897 * Math.sind(2*P)    - 4.956 * Math.cosd(2*P) 
+             + 0.610 * Math.sind(3*P)    + 1.211 * Math.cosd(3*P) 
+             - 0.341 * Math.sind(4*P)    - 0.190 * Math.cosd(4*P) 
+             + 0.128 * Math.sind(5*P)    - 0.034 * Math.cosd(5*P) 
+             - 0.038 * Math.sind(6*P)    + 0.031 * Math.cosd(6*P) 
+             + 0.020 * Math.sind(S-P)    - 0.010 * Math.cosd(S-P);
+    let latecl =  -3.9082 
+             - 5.453 * Math.sind(P)     - 14.975 * Math.cosd(P) 
+             + 3.527 * Math.sind(2*P)    + 1.673 * Math.cosd(2*P) 
+             - 1.051 * Math.sind(3*P)    + 0.328 * Math.cosd(3*P) 
+             + 0.179 * Math.sind(4*P)    - 0.292 * Math.cosd(4*P) 
+             + 0.019 * Math.sind(5*P)    + 0.100 * Math.cosd(5*P) 
+             - 0.031 * Math.sind(6*P)    - 0.026 * Math.cosd(6*P) 
+                                   + 0.011 * Math.cosd(S-P);
+    let r     =  40.72 
+           + 6.68 * Math.sind(P)       + 6.90 * Math.cosd(P) 
+           - 1.18 * Math.sind(2*P)     - 0.03 * Math.cosd(2*P) 
+           + 0.15 * Math.sind(3*P)     - 0.14 * Math.cosd(3*P);
+
+    let xh = r * Math.cosd(lonecl) * Math.cosd(latecl);
+    let yh = r * Math.sind(lonecl) * Math.cosd(latecl);
+    let zh = r               * Math.sind(latecl);
+
+    let sr = sunRectangular(day_number); 
+
+    let xg = xh + sr.x1;
+    let yg = yh + sr.y1;
+    let zg = zh;
+
+    let xe = xg;
+    let ye = yg * Math.cosd(sr.oblecl) - zg * Math.sind(sr.oblecl);
+    let ze = yg * Math.sind(sr.oblecl) + zg * Math.cosd(sr.oblecl);
+
+    let right_ascension  = Math.atan2d( ye, xe );
+    right_ascension  = Math.revolveDegree(right_ascension);
+    right_ascension = right_ascension/15; 
+    let declination = Math.atan2d( ze, Math.sqrt(xe*xe+ye*ye) );
+    let distance = Math.sqrt(xe*xe+ye*ye+ze*ze);
+
+    // convert to azimuth and altitude
+    let hour_angle = sidtime(day_number, longitude) - right_ascension;
+    hour_angle = Math.revolveHourAngle(hour_angle);
+    hour_angle = hour_angle * 15;
+    let x = Math.cosd(hour_angle)*Math.cosd(declination);
+    let y = Math.sind(hour_angle)*Math.cosd(declination);
+    let z = Math.sind(declination);
+    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let y_horizon = y;
+    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
+    let altitude = Math.atan2d(z_horizon,
+        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    return{
+        ra: right_ascension,
+        decl: declination,
+        dist: distance,
+        alt: altitude,
+        az: azimuth,
+    };
+}

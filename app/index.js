@@ -42,3 +42,7 @@ const neptune = pc.neptune(pc.dayNumber(d.getFullYear(),
     (d.getMonth() + 1),d.getDate()), lat, long);
 console.log("neptune azimuth %s", neptune.az.toFixed(2));
 console.log("neptune altitude %s", neptune.alt.toFixed(2));
+const pluto = pc.pluto(pc.dayNumber(d.getFullYear(),
+    (d.getMonth() + 1),d.getDate()), lat, long);
+console.log("pluto azimuth %s", pluto.az.toFixed(2));
+console.log("pluto altitude %s", pluto.alt.toFixed(2));
