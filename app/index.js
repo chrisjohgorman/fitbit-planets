@@ -2,6 +2,11 @@ import { geolocation } from "geolocation";
 import document from "document";
 import * as pc from "../common/planetCoordinates.js";
 
+geolocation.getCurrentPosition(locationSuccess, locationError);
+
+function locationSuccess(position) {
+  const lat = position.coords.latitude;
+  const long = position.coords.longitude;
   //FIXME - remove
   //const lat = 45.3661;
   //const long = -75.7900;
@@ -50,4 +55,9 @@ import * as pc from "../common/planetCoordinates.js";
       (d.getMonth() + 1),d.getDate()), lat, long);
   console.log("pluto azimuth: " + pluto.az.toFixed(2));
   console.log("pluto altitude: " + pluto.alt.toFixed(2));
+}
+
+function locationError(error) {
+  console.log("Error: " + error.code, "Message: " + error.message);
+}
 
