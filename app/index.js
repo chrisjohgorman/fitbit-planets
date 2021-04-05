@@ -1,18 +1,45 @@
 import { geolocation } from "geolocation";
 import document from "document";
 import * as pc from "../common/planetCoordinates.js";
+import * as fs from "fs";
+
+if(fs.existsSync("/private/data/fb-planets.txt")) {
+  console.log("GPS cache file exists, using cache");
+  let GPS_object  = fs.readFileSync("/private/data/fb-planets.txt", "json");
+  console.log("GPS lat/long: " + GPS_object.latitude + " " +
+    GPS_object.longitude);
+  let cacheLatitude = GPS_object.latitude;
+  let cacheLongitude = GPS_object.longitude;
+  formatPlanets(cacheLatitude, cacheLongitude);
+} else {
+  console.log("failed to find JSON GPS cache file");
+}
 
 geolocation.getCurrentPosition(locationSuccess, locationError);
 
 function locationSuccess(position) {
-  const lat = position.coords.latitude;
-  const long = position.coords.longitude;
-  //FIXME - remove
-  //const lat = 45.3661;
-  //const long = -75.7900;
+  //cache GPS data in json file
+  let GPS_data = {
+    "_id": "2331f964fcc9e0fd86378c16",
+    "guid": "ca5a8609-a076-607d-f714-a1a54dd50fbf",
+    "registered": "2021-04-05T18:38:25 GMT-04:00",
+    "latitude": position.coords.latitude,
+    "longitude": position.coords.longitude,
+  };
+  fs.writeFileSync("/private/data/fb-planets.txt", GPS_data, "json");
+
+  //debugging
+  let GPS_object = fs.readFileSync("/private/data/fb-planets.txt", "json");
+  //let lat = GPS_object.latitude;
+  //let long = GPS_object.longitude;
+  //console.log("latitude:" + lat); 
+  //console.log("longitude:" + long); 
+  formatPlanets(GPS_object.latitude, GPS_object.longitude);
+}
+
+function formatPlanets(lat, long) {
+  // debugging
   const d = new Date();
-  console.log("latitude:" + lat); 
-  console.log("longitude:" + long); 
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
       d.getUTCSeconds()/3600;
   const sun = pc.sun(pc.dayNumber(d.getFullYear(),
