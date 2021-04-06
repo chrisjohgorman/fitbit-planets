@@ -50,7 +50,6 @@
   fill: white;
 }
 
-
 #moonAltitude {
   font-size: 32;
   font-family: System-Regular;
@@ -60,6 +59,22 @@
 }
 
 #moonAzimuth {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#marsAltitude {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#marsAzimuth {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;

@@ -47,9 +47,9 @@ function formatPlanets(lat, long) {
   const venusAltitude = document.getElementById("venusAltitude");
   const moonAzimuth = document.getElementById("moonAzimuth");
   const moonAltitude = document.getElementById("moonAltitude");
-  /* 
   const marsAzimuth = document.getElementById("marsAzimuth");
   const marsAltitude = document.getElementById("marsAltitude");
+  /* 
   const jupiterAzimuth = document.getElementById("jupiterAzimuth");
   const jupiterAltitude = document.getElementById("jupiterAltitude");
   const saturnAzimuth = document.getElementById("saturnAzimuth");
@@ -95,9 +95,9 @@ function formatPlanets(lat, long) {
   const venusalt = venus.alt.toFixed(2);
   const moonaz = moon.az.toFixed(2);
   const moonalt = moon.alt.toFixed(2);
-  /*
   const marsaz = mars.az.toFixed(2);
   const marsalt = mars.alt.toFixed(2);
+  /*
   const jupiteraz = jupiter.az.toFixed(2);
   const jupiteralt = jupiter.alt.toFixed(2);
   const saturnaz = saturn.az.toFixed(2);
@@ -118,9 +118,9 @@ function formatPlanets(lat, long) {
   venusAltitude.text = `${venusalt}`;
   moonAzimuth.text = `${moonaz}`;
   moonAltitude.text = `${moonalt}`;
-  /*
   marsAzimuth.text = `${marsaz}`;
   marsAltitude.text = `${marsalt}`;
+  /*
   jupiterAzimuth.text = `${jupiteraz}`;
   jupiterAltitude.text = `${jupiteralt}`;
   saturnAzimuth.text = `${saturnaz}`;
