@@ -85,47 +85,26 @@ function formatPlanets(lat, long) {
   const pluto = pc.pluto(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
 
-  const sunaz = sun.az.toFixed(2);
-  const sunalt = sun.alt.toFixed(2);
-  const mercuryaz = mercury.az.toFixed(2);
-  const mercuryalt = mercury.alt.toFixed(2);
-  const venusaz = venus.az.toFixed(2);
-  const venusalt = venus.alt.toFixed(2);
-  const moonaz = moon.az.toFixed(2);
-  const moonalt = moon.alt.toFixed(2);
-  const marsaz = mars.az.toFixed(2);
-  const marsalt = mars.alt.toFixed(2);
-  const jupiteraz = jupiter.az.toFixed(2);
-  const jupiteralt = jupiter.alt.toFixed(2);
-  const saturnaz = saturn.az.toFixed(2);
-  const saturnalt = saturn.alt.toFixed(2);
-  const uranusaz = uranus.az.toFixed(2);
-  const uranusalt = uranus.alt.toFixed(2);
-  const neptuneaz = neptune.az.toFixed(2);
-  const neptunealt = neptune.alt.toFixed(2);
-  const plutoaz = pluto.az.toFixed(2);
-  const plutoalt = pluto.alt.toFixed(2);
-
-  sunAzimuth.text = `${sunaz}`;
-  sunAltitude.text = `${sunalt}`;
-  mercuryAzimuth.text = `${mercuryaz}`;
-  mercuryAltitude.text = `${mercuryalt}`;
-  venusAzimuth.text = `${venusaz}`;
-  venusAltitude.text = `${venusalt}`;
-  moonAzimuth.text = `${moonaz}`;
-  moonAltitude.text = `${moonalt}`;
-  marsAzimuth.text = `${marsaz}`;
-  marsAltitude.text = `${marsalt}`;
-  jupiterAzimuth.text = `${jupiteraz}`;
-  jupiterAltitude.text = `${jupiteralt}`;
-  saturnAzimuth.text = `${saturnaz}`;
-  saturnAltitude.text = `${saturnalt}`;
-  uranusAzimuth.text = `${uranusaz}`;
-  uranusAltitude.text = `${uranusalt}`;
-  neptuneAzimuth.text = `${neptuneaz}`;
-  neptuneAltitude.text = `${neptunealt}`;
-  plutoAzimuth.text = `${plutoaz}`;
-  plutoAltitude.text = `${plutoalt}`;
+  sunAzimuth.text = `${sun.az.toFixed(2)}`;
+  sunAltitude.text = `${sun.alt.toFixed(2)}`;
+  mercuryAzimuth.text = `${mercury.az.toFixed(2)}`;
+  mercuryAltitude.text = `${mercury.alt.toFixed(2)}`;
+  venusAzimuth.text = `${venus.az.toFixed(2)}`;
+  venusAltitude.text = `${venus.alt.toFixed(2)}`;
+  moonAzimuth.text = `${moon.az.toFixed(2)}`;
+  moonAltitude.text = `${moon.alt.toFixed(2)}`;
+  marsAzimuth.text = `${mars.az.toFixed(2)}`;
+  marsAltitude.text = `${mars.alt.toFixed(2)}`;
+  jupiterAzimuth.text = `${jupiter.az.toFixed(2)}`;
+  jupiterAltitude.text = `${jupiter.alt.toFixed(2)}`;
+  saturnAzimuth.text = `${saturn.az.toFixed(2)}`;
+  saturnAltitude.text = `${saturn.alt.toFixed(2)}`;
+  uranusAzimuth.text = `${uranus.az.toFixed(2)}`;
+  uranusAltitude.text = `${uranus.alt.toFixed(2)}`;
+  neptuneAzimuth.text = `${neptune.az.toFixed(2)}`;
+  neptuneAltitude.text = `${neptune.alt.toFixed(2)}`;
+  plutoAzimuth.text = `${pluto.az.toFixed(2)}`;
+  plutoAltitude.text = `${pluto.alt.toFixed(2)}`;
 
   // debugging
   console.log("sun azimuth: " + sun.az.toFixed(2));
