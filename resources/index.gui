@@ -1,32 +1,26 @@
 <svg class="background">
-  <text x="50%" y="15%"
-        fill="white"
-        font-family="System-Regular"
-        text-anchor="start">Current Time:</text>
-  <text x="50%" y="40%"
-        id="sunAltitudteText" />
-  <text x="50%" y="55%"
-        fill="white"
-        font-size="24"
-        font-family="System-Regular"
-        text-anchor="start">Sunrise:</text>
-  <text x="50%" y="65%"
+  <text x="25" y="50"
         fill="white"
         font-size="32"
         font-family="System-Regular"
-        text-anchor="start"
+        text-anchor="start">Sun Az:</text>
+  <text x="150" y="50"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="right"
         text-length="32"
         id="sunAzimuthText" />
-  <text x="50%" y="80%"
-        fill="white"
-        font-size="24"
-        font-family="System-Regular"
-        text-anchor="start">Sunset:</text>
-  <text x="50%" y="90%"
+  <text x="25" y="80"
         fill="white"
         font-size="32"
         font-family="System-Regular"
-        text-anchor="start"
+        text-anchor="start">Sun Alt:</text>
+  <text x="150" y="80"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="right"
         text-length="32"
-        id="sunRightAscensionText" />
+        id="sunAltitudeText" />
 </svg>

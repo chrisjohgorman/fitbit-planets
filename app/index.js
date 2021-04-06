@@ -39,18 +39,18 @@ function locationSuccess(position) {
 
 function formatPlanets(lat, long) {
   //
-  const sunAltitudeText = document.getElementById("sunAltitudeText");
   const sunAzimuthText = document.getElementById("sunAzimuthText");
-  const sunRightAscensionText = document.getElementById("sunRightAscnesionText");
+  const sunAltitudeText = document.getElementById("sunAltitudeText");
   // debugging
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
       d.getUTCSeconds()/3600;
   const sun = pc.sun(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
-  sunAzimuthText.text = `${sun.az.toFixed(2)}`;
-  sunAltitudeText.text = `${sun.alt.toFixed(2)}`;
-  sunRightAscensionText.text = `${sun.RA.toFixed(2)}`;
+  const sunaz = sun.az.toFixed(2);
+  const sunalt = sun.alt.toFixed(2);
+  sunAzimuthText.text = `${sunaz}`;
+  sunAltitudeText.text = `${sunalt}`;
   console.log("sun azimuth: " + sun.az.toFixed(2));
   console.log("sun altitude: " + sun.alt.toFixed(2));
   const mercury = pc.mercury(pc.dayNumber(d.getFullYear(),
