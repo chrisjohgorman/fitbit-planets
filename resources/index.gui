@@ -1,26 +1,74 @@
 <svg class="background">
-  <text x="25" y="50"
+  <text x="5%" y="50"
         fill="white"
         font-size="32"
         font-family="System-Regular"
         text-anchor="start">Sun Az:</text>
-  <text x="150" y="50"
+  <text x="95%" y="50"
         fill="white"
         font-size="32"
         font-family="System-Regular"
-        text-anchor="right"
+        text-anchor="end"
         text-length="32"
-        id="sunAzimuthText" />
-  <text x="25" y="80"
+        id="sunAzimuth" />
+  <text x="5%" y="80"
         fill="white"
         font-size="32"
         font-family="System-Regular"
         text-anchor="start">Sun Alt:</text>
-  <text x="150" y="80"
+  <text x="95%" y="80"
         fill="white"
         font-size="32"
         font-family="System-Regular"
-        text-anchor="right"
+        text-anchor="end"
         text-length="32"
-        id="sunAltitudeText" />
+        id="sunAltitude" />
+  <text x="5%" y="110"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="start">Mercury Az:</text>
+  <text x="95%" y="110"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="end"
+        text-length="32"
+        id="mercuryAzimuth" />
+  <text x="5%" y="140"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="start">Mercury Alt:</text>
+  <text x="95%" y="140"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="end"
+        text-length="32"
+        id="mercuryAltitude" />
+  <text x="5%" y="170"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="start">Venus Az:</text>
+  <text x="95%" y="170"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="end"
+        text-length="32"
+        id="venusAzimuth" />
+  <text x="5%" y="200"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="start">Venus Alt:</text>
+  <text x="95%" y="200"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="end"
+        text-length="32"
+        id="venusAltitude" />
 </svg>

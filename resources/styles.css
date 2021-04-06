@@ -2,19 +2,51 @@
   viewport-fill: black;
 }
 
-#sunAltitudteText {
+#sunAltitude {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
-  text-anchor: start;
+  text-anchor: end;
   fill: white;
 }
 
-#sunAzimuthText {
+#sunAzimuth {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
-  text-anchor: start;
+  text-anchor: end;
+  fill: white;
+}
+
+#mercuryAltitude {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#mercuryAzimuth {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#venusAltitude {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#venusAzimuth {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
   fill: white;
 }
 
