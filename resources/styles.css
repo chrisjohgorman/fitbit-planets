@@ -50,3 +50,20 @@
   fill: white;
 }
 
+
+#moonAltitude {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#moonAzimuth {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+

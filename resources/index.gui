@@ -71,4 +71,28 @@
         text-anchor="end"
         text-length="32"
         id="venusAltitude" />
+  <text x="5%" y="230"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="start">Moon Az:</text>
+  <text x="95%" y="230"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="end"
+        text-length="32"
+        id="moonAzimuth" />
+  <text x="5%" y="260"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="start">Moon Alt:</text>
+  <text x="95%" y="260"
+        fill="white"
+        font-size="32"
+        font-family="System-Regular"
+        text-anchor="end"
+        text-length="32"
+        id="moonAltitude" />
 </svg>
