@@ -49,7 +49,6 @@ function formatPlanets(lat, long) {
   const moonAltitude = document.getElementById("moonAltitude");
   const marsAzimuth = document.getElementById("marsAzimuth");
   const marsAltitude = document.getElementById("marsAltitude");
-  /* 
   const jupiterAzimuth = document.getElementById("jupiterAzimuth");
   const jupiterAltitude = document.getElementById("jupiterAltitude");
   const saturnAzimuth = document.getElementById("saturnAzimuth");
@@ -60,7 +59,6 @@ function formatPlanets(lat, long) {
   const neptuneAltitude = document.getElementById("neptuneAltitude");
   const plutoAzimuth = document.getElementById("plutoAzimuth");
   const plutoAltitude = document.getElementById("plutoAltitude");
-  */
   
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -97,18 +95,16 @@ function formatPlanets(lat, long) {
   const moonalt = moon.alt.toFixed(2);
   const marsaz = mars.az.toFixed(2);
   const marsalt = mars.alt.toFixed(2);
-  /*
   const jupiteraz = jupiter.az.toFixed(2);
   const jupiteralt = jupiter.alt.toFixed(2);
   const saturnaz = saturn.az.toFixed(2);
   const saturnalt = saturn.alt.toFixed(2);
-  const urnausaz = uranus.az.toFixed(2);
+  const uranusaz = uranus.az.toFixed(2);
   const uranusalt = uranus.alt.toFixed(2);
   const neptuneaz = neptune.az.toFixed(2);
   const neptunealt = neptune.alt.toFixed(2);
   const plutoaz = pluto.az.toFixed(2);
   const plutoalt = pluto.alt.toFixed(2);
-  */
 
   sunAzimuth.text = `${sunaz}`;
   sunAltitude.text = `${sunalt}`;
@@ -120,7 +116,6 @@ function formatPlanets(lat, long) {
   moonAltitude.text = `${moonalt}`;
   marsAzimuth.text = `${marsaz}`;
   marsAltitude.text = `${marsalt}`;
-  /*
   jupiterAzimuth.text = `${jupiteraz}`;
   jupiterAltitude.text = `${jupiteralt}`;
   saturnAzimuth.text = `${saturnaz}`;
@@ -131,7 +126,6 @@ function formatPlanets(lat, long) {
   neptuneAltitude.text = `${neptunealt}`;
   plutoAzimuth.text = `${plutoaz}`;
   plutoAltitude.text = `${plutoalt}`;
-  */
 
   // debugging
   console.log("sun azimuth: " + sun.az.toFixed(2));
