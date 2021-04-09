@@ -90,4 +90,9 @@
         text-anchor="end"
         text-length="32"
         id="bodySetTime" />
+  <use id="button" href="#push-button" y="250" height="40" fill="fb-red" font-family="System-Regular" font-size="32">
+    <set href="#text" attributeName="text-buffer" to="Back" />
+    <set href="#text" attributeName="fill" to="fb-white" />
+    <set href="#text" attributeName="y" to="10" />
+  </use>
 </svg>

@@ -64,6 +64,13 @@ function formatPlanets(index, lat, long) {
   const bodyDistance = document.getElementById("bodyDistance");
   const bodyAzimuth = document.getElementById("bodyAzimuth");
   const bodyAltitude = document.getElementById("bodyAltitude");
+  
+  let button = document.getElementById("button");
+  button.onactivate = function(evt) {
+    document.replaceSync("./resources/index.gui");
+    console.log(document.location.pathname);
+    launchTile();
+  }
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
