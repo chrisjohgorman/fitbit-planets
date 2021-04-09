@@ -253,8 +253,8 @@ export function moon (day_number, latitude, longitude, UT) {
         - mpar * rho * Math.sind(gclat) * Math.sind(g - declination) /
           Math.sind(g);
     return{
-        tra: topocentric_right_ascension,
-        tdecl: topocentric_declination,
+        ra: topocentric_right_ascension,
+        decl: topocentric_declination,
         dist: distance,
         alt: altitude,
         az: azimuth,
