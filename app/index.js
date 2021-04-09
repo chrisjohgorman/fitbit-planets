@@ -3,19 +3,38 @@ import document from "document";
 import * as pc from "../common/planetCoordinates.js";
 import * as fs from "fs";
 
-if(fs.existsSync("/private/data/fb-planets.txt")) {
-  console.log("GPS cache file exists, using cache");
-  let GPS_object  = fs.readFileSync("/private/data/fb-planets.txt", "json");
-  console.log("GPS lat/long: " + GPS_object.latitude + " " +
-    GPS_object.longitude);
-  let cacheLatitude = GPS_object.latitude;
-  let cacheLongitude = GPS_object.longitude;
-  formatPlanets(cacheLatitude, cacheLongitude);
-} else {
-  console.log("failed to find JSON GPS cache file");
+var idx;
+
+function launchTile() {
+  let list = document.getElementById("myList");
+  let items = list.getElementsByClassName("list-item");
+
+  items.forEach((element, index) => {
+    let touch = element.getElementById("touch");
+    touch.addEventListener("click", (evt) => {
+      idx = index;
+      console.log(`touched: ${index}`);
+      document.replaceSync("./resources/celestial-body.gui");
+      console.log(document.location.pathname);
+      displayCoordinates();
+    });
+  });
 }
 
-geolocation.getCurrentPosition(locationSuccess, locationError);
+function displayCoordinates() {
+  geolocation.getCurrentPosition(locationSuccess, locationError);
+  if(fs.existsSync("/private/data/fb-planets.txt")) {
+    console.log("GPS cache file exists, using cache");
+    let GPS_object  = fs.readFileSync("/private/data/fb-planets.txt", "json");
+    console.log("GPS lat/long: " + GPS_object.latitude + " " +
+      GPS_object.longitude);
+    let cacheLatitude = GPS_object.latitude;
+    let cacheLongitude = GPS_object.longitude;
+    formatPlanets(idx, cacheLatitude, cacheLongitude);
+  } else {
+    console.log("failed to find JSON GPS cache file");
+  }
+}
 
 function locationSuccess(position) {
   //cache GPS data in json file
@@ -29,37 +48,23 @@ function locationSuccess(position) {
   fs.writeFileSync("/private/data/fb-planets.txt", GPS_data, "json");
 
   //debugging
-  let GPS_object = fs.readFileSync("/private/data/fb-planets.txt", "json");
+  //let GPS_object = fs.readFileSync("/private/data/fb-planets.txt", "json");
   //let lat = GPS_object.latitude;
   //let long = GPS_object.longitude;
   //console.log("latitude:" + lat); 
   //console.log("longitude:" + long); 
-  formatPlanets(GPS_object.latitude, GPS_object.longitude);
+  formatPlanets(idx, position.coords.latitude, position.coords.longitude);
 }
 
-function formatPlanets(lat, long) {
+function formatPlanets(index, lat, long) {
   //
-  const sunAzimuth = document.getElementById("sunAzimuth");
-  const sunAltitude = document.getElementById("sunAltitude");
-  const mercuryAzimuth = document.getElementById("mercuryAzimuth");
-  const mercuryAltitude = document.getElementById("mercuryAltitude");
-  const venusAzimuth = document.getElementById("venusAzimuth");
-  const venusAltitude = document.getElementById("venusAltitude");
-  const moonAzimuth = document.getElementById("moonAzimuth");
-  const moonAltitude = document.getElementById("moonAltitude");
-  const marsAzimuth = document.getElementById("marsAzimuth");
-  const marsAltitude = document.getElementById("marsAltitude");
-  const jupiterAzimuth = document.getElementById("jupiterAzimuth");
-  const jupiterAltitude = document.getElementById("jupiterAltitude");
-  const saturnAzimuth = document.getElementById("saturnAzimuth");
-  const saturnAltitude = document.getElementById("saturnAltitude");
-  const uranusAzimuth = document.getElementById("uranusAzimuth");
-  const uranusAltitude = document.getElementById("uranusAltitude");
-  const neptuneAzimuth = document.getElementById("neptuneAzimuth");
-  const neptuneAltitude = document.getElementById("neptuneAltitude");
-  const plutoAzimuth = document.getElementById("plutoAzimuth");
-  const plutoAltitude = document.getElementById("plutoAltitude");
-  
+  const bodyName = document.getElementById("bodyName");
+  const bodyRightAscension = document.getElementById("bodyRightAscension");
+  const bodyDeclination = document.getElementById("bodyDeclination");
+  const bodyDistance = document.getElementById("bodyDistance");
+  const bodyAzimuth = document.getElementById("bodyAzimuth");
+  const bodyAltitude = document.getElementById("bodyAltitude");
+
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
       d.getUTCSeconds()/3600;
@@ -85,28 +90,82 @@ function formatPlanets(lat, long) {
   const pluto = pc.pluto(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
 
-  sunAzimuth.text = `${sun.az.toFixed(2)}`;
-  sunAltitude.text = `${sun.alt.toFixed(2)}`;
-  mercuryAzimuth.text = `${mercury.az.toFixed(2)}`;
-  mercuryAltitude.text = `${mercury.alt.toFixed(2)}`;
-  venusAzimuth.text = `${venus.az.toFixed(2)}`;
-  venusAltitude.text = `${venus.alt.toFixed(2)}`;
-  moonAzimuth.text = `${moon.az.toFixed(2)}`;
-  moonAltitude.text = `${moon.alt.toFixed(2)}`;
-  marsAzimuth.text = `${mars.az.toFixed(2)}`;
-  marsAltitude.text = `${mars.alt.toFixed(2)}`;
-  jupiterAzimuth.text = `${jupiter.az.toFixed(2)}`;
-  jupiterAltitude.text = `${jupiter.alt.toFixed(2)}`;
-  saturnAzimuth.text = `${saturn.az.toFixed(2)}`;
-  saturnAltitude.text = `${saturn.alt.toFixed(2)}`;
-  uranusAzimuth.text = `${uranus.az.toFixed(2)}`;
-  uranusAltitude.text = `${uranus.alt.toFixed(2)}`;
-  neptuneAzimuth.text = `${neptune.az.toFixed(2)}`;
-  neptuneAltitude.text = `${neptune.alt.toFixed(2)}`;
-  plutoAzimuth.text = `${pluto.az.toFixed(2)}`;
-  plutoAltitude.text = `${pluto.alt.toFixed(2)}`;
+  if (index === 0) {
+    bodyName.text = "Sun";
+    bodyRightAscension.text = `${sun.ra.toFixed(2)}`;
+    bodyDeclination.text = `${sun.decl.toFixed(2)}`;
+    bodyDistance.text = `${sun.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${sun.az.toFixed(2)}`;
+    bodyAltitude.text = `${sun.alt.toFixed(2)}`;
+  } else if (index === 1) {
+    bodyName.text = "Mercury";
+    bodyRightAscension.text = `${mercury.ra.toFixed(2)}`;
+    bodyDeclination.text = `${mercury.decl.toFixed(2)}`;
+    bodyDistance.text = `${mercury.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${mercury.az.toFixed(2)}`;
+    bodyAltitude.text = `${mercury.alt.toFixed(2)}`;
+  } else if (index === 2) {
+    bodyName.text = "Venus";
+    bodyRightAscension.text = `${venus.ra.toFixed(2)}`;
+    bodyDeclination.text = `${venus.decl.toFixed(2)}`;
+    bodyDistance.text = `${venus.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${venus.az.toFixed(2)}`;
+    bodyAltitude.text = `${venus.alt.toFixed(2)}`;
+  } else if (index === 3) {
+    bodyName.text = "Moon";
+    bodyRightAscension.text = `${moon.ra.toFixed(2)}`;
+    bodyDeclination.text = `${moon.decl.toFixed(2)}`;
+    bodyDistance.text = `${moon.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${moon.az.toFixed(2)}`;
+    bodyAltitude.text = `${moon.alt.toFixed(2)}`;
+  } else if (index === 4) {
+    bodyName.text = "Mars";
+    bodyRightAscension.text = `${mars.ra.toFixed(2)}`;
+    bodyDeclination.text = `${mars.decl.toFixed(2)}`;
+    bodyDistance.text = `${mars.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${mars.az.toFixed(2)}`;
+    bodyAltitude.text = `${mars.alt.toFixed(2)}`;
+  } else if (index === 5) {
+    bodyName.text = "Jupiter";
+    bodyRightAscension.text = `${jupiter.ra.toFixed(2)}`;
+    bodyDeclination.text = `${jupiter.decl.toFixed(2)}`;
+    bodyDistance.text = `${jupiter.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${jupiter.az.toFixed(2)}`;
+    bodyAltitude.text = `${jupiter.alt.toFixed(2)}`;
+  } else if (index === 6) {
+    bodyName.text = "Saturn";
+    bodyRightAscension.text = `${saturn.ra.toFixed(2)}`;
+    bodyDeclination.text = `${saturn.decl.toFixed(2)}`;
+    bodyDistance.text = `${saturn.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${saturn.az.toFixed(2)}`;
+    bodyAltitude.text = `${saturn.alt.toFixed(2)}`;
+  } else if (index === 7) {
+    bodyName.text = "Uranus";
+    bodyRightAscension.text = `${uranus.ra.toFixed(2)}`;
+    bodyDeclination.text = `${uranus.decl.toFixed(2)}`;
+    bodyDistance.text = `${uranus.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${uranus.az.toFixed(2)}`;
+    bodyAltitude.text = `${uranus.alt.toFixed(2)}`;
+  } else if (index === 8) {
+    bodyName.text = "Neptune";
+    bodyRightAscension.text = `${neptune.ra.toFixed(2)}`;
+    bodyDeclination.text = `${neptune.decl.toFixed(2)}`;
+    bodyDistance.text = `${neptune.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${neptune.az.toFixed(2)}`;
+    bodyAltitude.text = `${neptune.alt.toFixed(2)}`;
+  } else if (index === 9) {
+    bodyName.text = "Pluto";
+    bodyRightAscension.text = `${pluto.ra.toFixed(2)}`;
+    bodyDeclination.text = `${pluto.decl.toFixed(2)}`;
+    bodyDistance.text = `${pluto.dist.toFixed(2)}`;
+    bodyAzimuth.text = `${pluto.az.toFixed(2)}`;
+    bodyAltitude.text = `${pluto.alt.toFixed(2)}`;
+  }
 
   // debugging
+  console.log("sun RA: " + sun.ra.toFixed(2));
+  console.log("sun Decl: " + sun.decl.toFixed(2));
+  console.log("sun Dist: " + sun.dist.toFixed(2));
   console.log("sun azimuth: " + sun.az.toFixed(2));
   console.log("sun altitude: " + sun.alt.toFixed(2));
   console.log("mercury azimuth: " + mercury.az.toFixed(2));
@@ -133,3 +192,4 @@ function locationError(error) {
   console.log("Error: " + error.code, "Message: " + error.message);
 }
 
+launchTile();
