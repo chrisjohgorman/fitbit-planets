@@ -2,5 +2,16 @@
   <defs>
     <link rel="stylesheet" href="styles.css" />
     <link rel="import" href="/mnt/sysassets/widgets_common.gui" />
+
+    <link rel="import" href="/mnt/sysassets/widgets/baseview_widget.gui" />
+    <link rel="import" href="/mnt/sysassets/widgets/scrollview_widget.gui" />
+    <link rel="import" href="/mnt/sysassets/widgets/tile_list_widget.gui" />
+
+    <symbol id="my-item" href="#tile-list-item" class="list-item">
+      <rect class="bg" />
+      <text id="text" />
+      <rect class="line" />
+      <rect id="touch" pointer-events="all" />
+    </symbol>
   </defs>
 </svg>
