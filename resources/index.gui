@@ -1,242 +1,35 @@
-<svg class="background">
-  <text x="5%" y="30"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Sun Az:</text>
-  <text x="95%" y="30"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="sunAzimuth" />
-  <text x="5%" y="60"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Sun Alt:</text>
-  <text x="95%" y="60"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="sunAltitude" />
-  <text x="5%" y="90"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Mercury Az:</text>
-  <text x="95%" y="90"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="mercuryAzimuth" />
-  <text x="5%" y="120"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Mercury Alt:</text>
-  <text x="95%" y="120"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="mercuryAltitude" />
-  <text x="5%" y="150"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Venus Az:</text>
-  <text x="95%" y="150"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="venusAzimuth" />
-  <text x="5%" y="180"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Venus Alt:</text>
-  <text x="95%" y="180"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="venusAltitude" />
-  <text x="5%" y="210"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Moon Az:</text>
-  <text x="95%" y="210"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="moonAzimuth" />
-  <text x="5%" y="240"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Moon Alt:</text>
-  <text x="95%" y="240"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="moonAltitude" />
-  <text x="5%" y="270"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Mars Az:</text>
-  <text x="95%" y="270"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="marsAzimuth" />
-  <text x="5%" y="300"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Mars Alt:</text>
-  <text x="95%" y="300"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="marsAltitude" />
-  <text x="5%" y="330"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Jupiter Az:</text>
-  <text x="95%" y="330"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="jupiterAzimuth" />
-  <text x="5%" y="360"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Jupiter Alt:</text>
-  <text x="95%" y="360"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="jupiterAltitude" />
-  <text x="5%" y="390"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Saturn Az:</text>
-  <text x="95%" y="390"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="saturnAzimuth" />
-  <text x="5%" y="420"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Saturn Alt:</text>
-  <text x="95%" y="420"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="saturnAltitude" />
-  <text x="5%" y="450"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Uranus Az:</text>
-  <text x="95%" y="450"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="uranusAzimuth" />
-  <text x="5%" y="480"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Uranus Alt:</text>
-  <text x="95%" y="480"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="uranusAltitude" />
-  <text x="5%" y="510"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Neptune Az:</text>
-  <text x="95%" y="510"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="neptuneAzimuth" />
-  <text x="5%" y="540"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Neptune Alt:</text>
-  <text x="95%" y="540"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="neptuneAltitude" />
-  <text x="5%" y="570"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Pluto Az:</text>
-  <text x="95%" y="570"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="plutoAzimuth" />
-  <text x="5%" y="600"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Pluto Alt:</text>
-  <text x="95%" y="600"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="plutoAltitude" />
+<svg>
+  <use id="myList" href="#tile-list" class="horizontal-pad">
+    <var id="separator-height-bottom" value="6" />
+    <use id="item1" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Sun" />
+    </use>
+    <use id="item2" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Mercury" />
+    </use>
+    <use id="item3" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Venus" />
+    </use>
+    <use id="item4" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Moon" />
+    </use>
+    <use id="item5" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Mars" />
+    </use>
+    <use id="item6" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Jupiter" />
+    </use>
+    <use id="item7" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Saturn" />
+    </use>
+    <use id="item8" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Uranus" />
+    </use>
+    <use id="item9" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Neptune" />
+    </use>
+    <use id="item10" href="#my-item">
+      <set href="#text" attributeName="text-buffer" to="Pluto" />
+    </use>
+  </use>
 </svg>
