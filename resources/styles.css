@@ -1,8 +1,39 @@
-.background {
-  viewport-fill: black;
+.list-item {
+  height: 112;
 }
 
-#sunAltitude {
+.list-item text {
+  fill: "white";
+  text-anchor: middle;
+  x: 50%;
+  font-size: 45;
+  text-length: 20;
+}
+
+.line {
+  width: 100%;
+  height: 6;
+  fill: #222222;
+  y: 100%-6;
+}
+
+.bg {
+  fill: #111111;
+  width: 100%;
+  height: 100%;
+  x: 0;
+  y: 0;
+}
+
+#touch {
+  width: 100%;
+  height: 100%-6;
+  x: 0;
+  y: 0;
+  opacity: 0;
+}
+
+#bodyName {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
@@ -10,7 +41,7 @@
   fill: white;
 }
 
-#sunAzimuth {
+#bodyRightAscension {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
@@ -18,7 +49,7 @@
   fill: white;
 }
 
-#mercuryAltitude {
+#bodyDeclination {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
@@ -26,7 +57,7 @@
   fill: white;
 }
 
-#mercuryAzimuth {
+#bodyAltitude {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
@@ -34,7 +65,7 @@
   fill: white;
 }
 
-#venusAltitude {
+#bodyAzimuth {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
@@ -42,7 +73,7 @@
   fill: white;
 }
 
-#venusAzimuth {
+#bodyDistance {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
@@ -50,7 +81,7 @@
   fill: white;
 }
 
-#moonAltitude {
+#bodyRiseTime {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
@@ -58,107 +89,10 @@
   fill: white;
 }
 
-#moonAzimuth {
+#bodySetTime {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
   text-anchor: end;
   fill: white;
 }
-
-#marsAltitude {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#marsAzimuth {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#jupiterAltitude {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#jupiterAzimuth {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#saturnAltitude {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#saturnAzimuth {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#uranusAltitude {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#uranusAzimuth {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#neptuneAltitude {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#neptuneAzimuth {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#plutoAltitude {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#plutoAzimuth {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
