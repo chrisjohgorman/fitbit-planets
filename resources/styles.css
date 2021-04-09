@@ -57,6 +57,14 @@
   fill: white;
 }
 
+#bodyDistance {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
 #bodyAltitude {
   font-size: 32;
   font-family: System-Regular;
@@ -66,14 +74,6 @@
 }
 
 #bodyAzimuth {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#bodyDistance {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
