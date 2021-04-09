@@ -65,7 +65,7 @@
   fill: white;
 }
 
-#bodyAltitude {
+#bodyAzimuth {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
@@ -73,7 +73,7 @@
   fill: white;
 }
 
-#bodyAzimuth {
+#bodyAltitude {
   font-size: 32;
   font-family: System-Regular;
   text-length: 32;
