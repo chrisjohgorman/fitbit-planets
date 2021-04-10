@@ -825,3 +825,40 @@ export function pluto (day_number, latitude, longitude) {
         az: azimuth,
     };
 }
+
+// Rise and Set times for Celestial Bodies
+export function sunRiseSet (year, month, day, latitude, longitude) {
+    let h = -0.833;
+    let d = dayNumber(year, month, day);
+    let sr = sunRectangular(d);
+    let sun1 = sun(d, latitude, longitude);
+    let GMST0 = (sr.L + 180) / 15;
+    let UT_Sun_in_south = sun1.ra - (sr.L+180)/15 - longitude/15.0;
+    UT_Sun_in_south = Math.revolveHourAngle(UT_Sun_in_south);
+    let cos_lha = (Math.sind(h) -
+      Math.sind(latitude)*Math.sind(sun1.decl))/(Math.cosd(latitude) *
+      Math.cosd(sun1.decl));
+    if (cos_lha > 1) {
+        throw "Sun is always below our altitude limit.";
+    }
+    else if (cos_lha < -1) {
+        throw "Sun is always above our altitude limit.";
+    }
+    let LHA = Math.acosd(cos_lha)/15;
+    let time = new Date();
+    let srise = UT_Sun_in_south - LHA - time.getTimezoneOffset()/60;
+    let sset = UT_Sun_in_south + LHA - time.getTimezoneOffset()/60;
+    let srHours = Math.floor(srise);
+    if (srHours < 10) {
+      srHours = "0" + srHours;
+    }
+    let srMinutes = Math.round((srise % 1)*100)/100;
+    let srTime = srHours + ':' + Math.floor(srMinutes * 60);
+    let ssHours = Math.floor(sset);
+    let ssMinutes = Math.round((sset % 1)*100)/100;
+    let ssTime = ssHours + ':' + Math.floor(ssMinutes * 60);
+    return{
+      sr: srTime,
+      ss: ssTime,
+    }
+}

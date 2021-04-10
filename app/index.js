@@ -64,6 +64,8 @@ function formatPlanets(index, lat, long) {
   const bodyDistance = document.getElementById("bodyDistance");
   const bodyAzimuth = document.getElementById("bodyAzimuth");
   const bodyAltitude = document.getElementById("bodyAltitude");
+  const bodyRiseTime = document.getElementById("bodyRiseTime");
+  const bodySetTime = document.getElementById("bodySetTime");
   
   let button = document.getElementById("button");
   button.onactivate = function(evt) {
@@ -78,6 +80,8 @@ function formatPlanets(index, lat, long) {
 
   const sun = pc.sun(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
+  const sunrs = pc.sunRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), lat, long);
   const mercury = pc.mercury(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long, ut);
   const venus = pc.venus(pc.dayNumber(d.getFullYear(),
@@ -104,6 +108,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${sun.dist.toFixed(2)}`;
     bodyAzimuth.text = `${sun.az.toFixed(2)}`;
     bodyAltitude.text = `${sun.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${sunrs.sr}`;
+    bodySetTime.text = `${sunrs.ss}`;
   } else if (index === 1) {
     bodyName.text = "Mercury";
     bodyRightAscension.text = `${mercury.ra.toFixed(2)}`;
