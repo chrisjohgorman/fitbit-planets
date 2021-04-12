@@ -840,31 +840,98 @@ export function addZero (n) {
 
 // Rise and Set times for Celestial Bodies
 export function sunRiseSet (year, month, day, latitude, longitude) {
-    let h = -0.833;
-    let d = dayNumber(year, month, day);
-    let sr = sunRectangular(d);
-    let sun1 = sun(d, latitude, longitude);
-    let GMST0 = (sr.L + 180) / 15;
-    let UT_Sun_in_south = sun1.ra - (sr.L+180)/15 - longitude/15.0;
-    UT_Sun_in_south = Math.revolveHourAngle(UT_Sun_in_south);
-    let cos_lha = (Math.sind(h) -
-      Math.sind(latitude)*Math.sind(sun1.decl))/(Math.cosd(latitude) *
-      Math.cosd(sun1.decl));
-    if (cos_lha > 1) {
-        throw "Sun is always below our altitude limit.";
-    }
-    else if (cos_lha < -1) {
-        throw "Sun is always above our altitude limit.";
-    }
-    let LHA = Math.acosd(cos_lha)/15;
-    let time = new Date();
-    let srise = UT_Sun_in_south - LHA - time.getTimezoneOffset()/60;
-    let sset = UT_Sun_in_south + LHA - time.getTimezoneOffset()/60;
-    let srTime = decimalToHM(srise);
-    let ssTime = decimalToHM(sset);
-    return{
-      sr: srTime,
-      ss: ssTime,
-    }
+  let h = -0.833;
+  let d = dayNumber(year, month, day);
+  let sr = sunRectangular(d);
+  let sun1 = sun(d, latitude, longitude);
+  let GMST0 = (sr.L + 180) / 15;
+  let UT_Sun_in_south = sun1.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Sun_in_south = Math.revolveHourAngle(UT_Sun_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(sun1.decl))/(Math.cosd(latitude) *
+    Math.cosd(sun1.decl));
+  if (cos_lha > 1) {
+    throw "Sun is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Sun is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15;
+  let time = new Date();
+  let srise = UT_Sun_in_south - LHA - time.getTimezoneOffset()/60;
+  let sset = UT_Sun_in_south + LHA - time.getTimezoneOffset()/60;
+  let srTime = decimalToHM(srise);
+  let ssTime = decimalToHM(sset);
+  return{
+    rise: srTime,
+    set: ssTime,
+  }
 }
 
+export function mriset (year, month, day, hour, latitude, longitude) {
+  let d = dayNumber(year, month, day, hour);
+  let sr = sunRectangular(d);
+  let Moon = moon(d, latitude, longitude, hour);
+  let mpar = Math.asind(1/Moon.dist);
+  let GMST0 = (sr.L + 180);
+  let UT_Planet_in_south = Moon.ra/15 - (sr.L+180)/15 - longitude/15.0;
+  UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
+  let cos_lha = (Math.sind(-mpar) -
+    Math.sind(latitude)*Math.sind(Moon.decl))/(Math.cosd(latitude) *
+    Math.cosd(Moon.decl));
+  if (cos_lha > 1) {
+    throw "Moon is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Moon is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+      
+  let moonrise = UT_Planet_in_south - LHA;
+  let moonset = UT_Planet_in_south + LHA;
+  return{
+    rise: moonrise, 
+    set: moonset,
+  }
+}
+
+export function moonRiseSet (year, month, day, hour, latitude, longitude) {
+  let d = dayNumber(year, month, day, hour);
+  let sr = sunRectangular(d);
+  let Moon = moon(d, latitude, longitude, hour);
+  let mpar = Math.asind(1/Moon.dist);
+  let GMST0 = (sr.L + 180);
+  let UT_Moon_in_south = Moon.ra/15 - (sr.L+180)/15 - longitude/15.0;
+  UT_Moon_in_south = Math.revolveHourAngle(UT_Moon_in_south);
+  let cos_lha = (Math.sind(-mpar) -
+    Math.sind(latitude)*Math.sind(Moon.decl))/(Math.cosd(latitude) *
+    Math.cosd(Moon.decl));
+  if (cos_lha > 1) {
+    throw "Moon is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Moon is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+  let time = new Date();
+  let moonrise = UT_Moon_in_south - LHA;
+  let mr1 = mriset(year,month,day,moonrise,latitude,longitude);
+  let mr2 = mriset(year,month,day,mr1.rise,latitude,longitude);
+  let mr3 = mriset(year,month,day,mr2.rise,latitude,longitude);
+  let mr4 = mriset(year,month,day,mr3.rise,latitude,longitude);
+  let mr5 = mriset(year,month,day,mr4.rise,latitude,longitude);
+  moonrise = mr5.rise - time.getTimezoneOffset()/60;
+  moonrise = decimalToHM(moonrise);
+  let moonset = UT_Moon_in_south + LHA;
+  let ms1 = mriset(year,month,day,moonset,latitude,longitude);
+  let ms2 = mriset(year,month,day,ms1.set,latitude,longitude);
+  let ms3 = mriset(year,month,day,ms2.set,latitude,longitude);
+  let ms4 = mriset(year,month,day,ms3.set,latitude,longitude);
+  let ms5 = mriset(year,month,day,ms4.set,latitude,longitude);
+  moonset = ms5.set - time.getTimezoneOffset()/60;
+  moonset = decimalToHM(moonset);
+  return {
+    rise: moonrise,
+    set: moonset,
+  }
+}
