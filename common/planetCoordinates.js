@@ -935,3 +935,61 @@ export function moonRiseSet (year, month, day, hour, latitude, longitude) {
     set: moonset,
   }
 }
+
+export function neptuneRiseSet (year, month, day, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day);
+  let sr = sunRectangular(d);
+  let Neptune = neptune(d, latitude, longitude);
+  let GMST0 = (sr.L + 180) / 15;
+  let UT_Planet_in_south = Neptune.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Neptune.decl))/(Math.cosd(latitude) *
+    Math.cosd(Neptune.decl));
+  if (cos_lha > 1) {
+    throw "Neptune is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Neptune is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+  let time = new Date();
+  let nr = UT_Planet_in_south - LHA - time.getTimezoneOffset()/60;
+  let ns = UT_Planet_in_south + LHA - time.getTimezoneOffset()/60;
+  let neptunerise = decimalToHM(nr);
+  let neptuneset = decimalToHM(ns);
+  return {
+    rise: neptunerise,
+    set: neptuneset,
+  }
+}
+
+export function plutoRiseSet (year, month, day, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day);
+  let sr = sunRectangular(d);
+  let Pluto = pluto(d, latitude, longitude);
+  let GMST0 = (sr.L + 180) / 15;
+  let UT_Planet_in_south = Pluto.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Pluto.decl))/(Math.cosd(latitude) *
+    Math.cosd(Pluto.decl));
+  if (cos_lha > 1) {
+    throw "Pluto is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Pluto is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+  let time = new Date();
+  let pr = UT_Planet_in_south - LHA - time.getTimezoneOffset()/60;
+  let ps = UT_Planet_in_south + LHA - time.getTimezoneOffset()/60;
+  let plutorise = decimalToHM(pr);
+  let plutoset = decimalToHM(ps);
+  return {
+    rise: plutorise,
+    set: plutoset,
+  }
+}
