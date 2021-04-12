@@ -936,6 +936,35 @@ export function moonRiseSet (year, month, day, hour, latitude, longitude) {
   }
 }
 
+export function uranusRiseSet (year, month, day, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day);
+  let sr = sunRectangular(d);
+  let Uranus = uranus(d, latitude, longitude);
+  let GMST0 = (sr.L + 180) / 15;
+  let UT_Planet_in_south = Uranus.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Uranus.decl))/(Math.cosd(latitude) *
+    Math.cosd(Uranus.decl));
+  if (cos_lha > 1) {
+    throw "Uranus is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Uranus is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+  let time = new Date();
+  let ur = UT_Planet_in_south - LHA - time.getTimezoneOffset()/60;
+  let us = UT_Planet_in_south + LHA - time.getTimezoneOffset()/60;
+  let uranusrise = decimalToHM(ur);
+  let uranusset = decimalToHM(us);
+  return {
+    rise: uranusrise,
+    set: uranusset,
+  }
+}
+
 export function neptuneRiseSet (year, month, day, latitude, longitude) {
   let h = -0.833;
   let d = dayNumber(year, month, day);
