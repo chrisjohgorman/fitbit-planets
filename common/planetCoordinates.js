@@ -936,6 +936,35 @@ export function moonRiseSet (year, month, day, hour, latitude, longitude) {
   }
 }
 
+export function saturnRiseSet (year, month, day, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day);
+  let sr = sunRectangular(d);
+  let Saturn = saturn(d, latitude, longitude);
+  let GMST0 = (sr.L + 180) / 15;
+  let UT_Planet_in_south = Saturn.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Saturn.decl))/(Math.cosd(latitude) *
+    Math.cosd(Saturn.decl));
+  if (cos_lha > 1) {
+    throw "Saturn is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Saturn is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+  let time = new Date();
+  let sar = UT_Planet_in_south - LHA - time.getTimezoneOffset()/60;
+  let sas = UT_Planet_in_south + LHA - time.getTimezoneOffset()/60;
+  let saturnrise = decimalToHM(sar);
+  let saturnset = decimalToHM(sas);
+  return {
+    rise: saturnrise,
+    set: saturnset,
+  }
+}
+
 export function uranusRiseSet (year, month, day, latitude, longitude) {
   let h = -0.833;
   let d = dayNumber(year, month, day);
