@@ -868,6 +868,138 @@ export function sunRiseSet (year, month, day, latitude, longitude) {
   }
 }
 
+export function mercriset (year, month, day, hour, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day, hour);
+  let sr = sunRectangular(d);
+  let Mercury = mercury(d, latitude, longitude, hour);
+  let UT_Planet_in_south = Mercury.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Mercury.decl))/(Math.cosd(latitude) *
+    Math.cosd(Mercury.decl));
+  if (cos_lha > 1) {
+    throw "Mercury is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Mercury is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+      
+  let mercuryrise = UT_Planet_in_south - LHA;
+  let mercuryset = UT_Planet_in_south + LHA;
+  return{
+    rise: mercuryrise, 
+    set: mercuryset,
+  }
+}
+
+export function mercuryRiseSet (year, month, day, hour, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day, hour);
+  let sr = sunRectangular(d);
+  let Mercury = mercury(d, latitude, longitude, hour);
+  let UT_Mercury_in_south = Mercury.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Mercury_in_south = Math.revolveHourAngle(UT_Mercury_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Mercury.decl))/(Math.cosd(latitude) *
+    Math.cosd(Mercury.decl));
+  if (cos_lha > 1) {
+    throw "Mercury is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Mercury is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+  let time = new Date();
+  let mercuryrise = UT_Mercury_in_south - LHA;
+  let mr1 = mercriset(year,month,day,mercuryrise,latitude,longitude);
+  let mr2 = mercriset(year,month,day,mr1.rise,latitude,longitude);
+  let mr3 = mercriset(year,month,day,mr2.rise,latitude,longitude);
+  let mr4 = mercriset(year,month,day,mr3.rise,latitude,longitude);
+  let mr5 = mercriset(year,month,day,mr4.rise,latitude,longitude);
+  mercuryrise = mr5.rise - time.getTimezoneOffset()/60;
+  mercuryrise = decimalToHM(mercuryrise);
+  let mercuryset = UT_Mercury_in_south + LHA;
+  let ms1 = mercriset(year,month,day,mercuryset,latitude,longitude);
+  let ms2 = mercriset(year,month,day,ms1.set,latitude,longitude);
+  let ms3 = mercriset(year,month,day,ms2.set,latitude,longitude);
+  let ms4 = mercriset(year,month,day,ms3.set,latitude,longitude);
+  let ms5 = mercriset(year,month,day,ms4.set,latitude,longitude);
+  mercuryset = ms5.set - time.getTimezoneOffset()/60;
+  mercuryset = decimalToHM(mercuryset);
+  return {
+    rise: mercuryrise,
+    set: mercuryset,
+  }
+}
+
+export function vriset (year, month, day, hour, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day, hour);
+  let sr = sunRectangular(d);
+  let Venus = venus(d, latitude, longitude, hour);
+  let UT_Planet_in_south = Venus.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Venus.decl))/(Math.cosd(latitude) *
+    Math.cosd(Venus.decl));
+  if (cos_lha > 1) {
+    throw "Venus is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Venus is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+      
+  let venusrise = UT_Planet_in_south - LHA;
+  let venusset = UT_Planet_in_south + LHA;
+  return{
+    rise: venusrise, 
+    set: venusset,
+  }
+}
+
+export function venusRiseSet (year, month, day, hour, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day, hour);
+  let sr = sunRectangular(d);
+  let Venus = venus(d, latitude, longitude, hour);
+  let UT_Venus_in_south = Venus.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Venus_in_south = Math.revolveHourAngle(UT_Venus_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Venus.decl))/(Math.cosd(latitude) *
+    Math.cosd(Venus.decl));
+  if (cos_lha > 1) {
+    throw "Venus is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Venus is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+  let time = new Date();
+  let venusrise = UT_Venus_in_south - LHA;
+  let mr1 = vriset(year,month,day,venusrise,latitude,longitude);
+  let mr2 = vriset(year,month,day,mr1.rise,latitude,longitude);
+  let mr3 = vriset(year,month,day,mr2.rise,latitude,longitude);
+  let mr4 = vriset(year,month,day,mr3.rise,latitude,longitude);
+  let mr5 = vriset(year,month,day,mr4.rise,latitude,longitude);
+  venusrise = mr5.rise - time.getTimezoneOffset()/60;
+  venusrise = decimalToHM(venusrise);
+  let venusset = UT_Venus_in_south + LHA;
+  let ms1 = vriset(year,month,day,venusset,latitude,longitude);
+  let ms2 = vriset(year,month,day,ms1.set,latitude,longitude);
+  let ms3 = vriset(year,month,day,ms2.set,latitude,longitude);
+  let ms4 = vriset(year,month,day,ms3.set,latitude,longitude);
+  let ms5 = vriset(year,month,day,ms4.set,latitude,longitude);
+  venusset = ms5.set - time.getTimezoneOffset()/60;
+  venusset = decimalToHM(venusset);
+  return {
+    rise: venusrise,
+    set: venusset,
+  }
+}
+
 export function mriset (year, month, day, hour, latitude, longitude) {
   let d = dayNumber(year, month, day, hour);
   let sr = sunRectangular(d);
