@@ -828,7 +828,7 @@ export function pluto (day_number, latitude, longitude) {
 
 // Helper functions for Rise and Set times
 export function decimalToHM (time) {
-  let hours = addZero(Math.floor(time));
+  let hours = addZero(Math.floor(time) % 24);
   let minutes = addZero(Math.floor((Math.round((time % 1)*100)/100)*60));
   let formatted = hours + ":" + minutes;
   return (formatted);
@@ -933,6 +933,72 @@ export function moonRiseSet (year, month, day, hour, latitude, longitude) {
   return {
     rise: moonrise,
     set: moonset,
+  }
+}
+
+export function mariset (year, month, day, hour, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day, hour);
+  let sr = sunRectangular(d);
+  let Mars = mars(d, latitude, longitude, hour);
+  let UT_Planet_in_south = Mars.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Mars.decl))/(Math.cosd(latitude) *
+    Math.cosd(Mars.decl));
+  if (cos_lha > 1) {
+    throw "Mars is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Mars is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+      
+  let marsrise = UT_Planet_in_south - LHA;
+  let marsset = UT_Planet_in_south + LHA;
+  return{
+    rise: marsrise, 
+    set: marsset,
+  }
+}
+
+export function marsRiseSet (year, month, day, hour, latitude, longitude) {
+  let h = -0.833;
+  let d = dayNumber(year, month, day, hour);
+  let sr = sunRectangular(d);
+  let Mars = mars(d, latitude, longitude, hour);
+  let UT_Mars_in_south = Mars.ra - (sr.L+180)/15 - longitude/15.0;
+  UT_Mars_in_south = Math.revolveHourAngle(UT_Mars_in_south);
+  let cos_lha = (Math.sind(h) -
+    Math.sind(latitude)*Math.sind(Mars.decl))/(Math.cosd(latitude) *
+    Math.cosd(Mars.decl));
+  if (cos_lha > 1) {
+    throw "Mars is always below our altitude limit.";
+  }
+  else if (cos_lha < -1) {
+    throw "Mars is always above our altitude limit.";
+  }
+  let LHA = Math.acosd(cos_lha)/15.04107;
+  let time = new Date();
+  let marsrise = UT_Mars_in_south - LHA;
+  let mr1 = mariset(year,month,day,marsrise,latitude,longitude);
+  let mr2 = mariset(year,month,day,mr1.rise,latitude,longitude);
+  let mr3 = mariset(year,month,day,mr2.rise,latitude,longitude);
+  let mr4 = mariset(year,month,day,mr3.rise,latitude,longitude);
+  let mr5 = mariset(year,month,day,mr4.rise,latitude,longitude);
+  marsrise = mr5.rise - time.getTimezoneOffset()/60;
+  marsrise = decimalToHM(marsrise);
+  let marsset = UT_Mars_in_south + LHA;
+  let ms1 = mariset(year,month,day,marsset,latitude,longitude);
+  let ms2 = mariset(year,month,day,ms1.set,latitude,longitude);
+  let ms3 = mariset(year,month,day,ms2.set,latitude,longitude);
+  let ms4 = mariset(year,month,day,ms3.set,latitude,longitude);
+  let ms5 = mariset(year,month,day,ms4.set,latitude,longitude);
+  marsset = ms5.set - time.getTimezoneOffset()/60;
+  marsset = decimalToHM(marsset);
+  return {
+    rise: marsrise,
+    set: marsset,
   }
 }
 
