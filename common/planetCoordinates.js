@@ -826,6 +826,18 @@ export function pluto (day_number, latitude, longitude) {
     };
 }
 
+// Helper functions for Rise and Set times
+export function decimalToHM (time) {
+  let hours = addZero(Math.floor(time));
+  let minutes = addZero(Math.floor((Math.round((time % 1)*100)/100)*60));
+  let formatted = hours + ":" + minutes;
+  return (formatted);
+}
+
+export function addZero (n) {
+  return (n < 10 ? '0' : '') + n;
+}
+
 // Rise and Set times for Celestial Bodies
 export function sunRiseSet (year, month, day, latitude, longitude) {
     let h = -0.833;
@@ -848,17 +860,11 @@ export function sunRiseSet (year, month, day, latitude, longitude) {
     let time = new Date();
     let srise = UT_Sun_in_south - LHA - time.getTimezoneOffset()/60;
     let sset = UT_Sun_in_south + LHA - time.getTimezoneOffset()/60;
-    let srHours = Math.floor(srise);
-    if (srHours < 10) {
-      srHours = "0" + srHours;
-    }
-    let srMinutes = Math.round((srise % 1)*100)/100;
-    let srTime = srHours + ':' + Math.floor(srMinutes * 60);
-    let ssHours = Math.floor(sset);
-    let ssMinutes = Math.round((sset % 1)*100)/100;
-    let ssTime = ssHours + ':' + Math.floor(ssMinutes * 60);
+    let srTime = decimalToHM(srise);
+    let ssTime = decimalToHM(sset);
     return{
       sr: srTime,
       ss: ssTime,
     }
 }
+
