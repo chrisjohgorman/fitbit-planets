@@ -84,22 +84,40 @@ function formatPlanets(index, lat, long) {
       (d.getMonth() + 1), d.getDate(), lat, long);
   const mercury = pc.mercury(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long, ut);
+  const mercuryrs = pc.mercuryRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), ut, lat, long);
   const venus = pc.venus(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long, ut);
+  const venusrs = pc.venusRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), ut, lat, long);
   const moon = pc.moon(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long, ut);
+  const moonrs = pc.moonRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), ut, lat, long);
   const mars = pc.mars(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long, ut);
+  const marsrs = pc.marsRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), ut, lat, long);
   const jupiter = pc.jupiter(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long, ut);
+  const jupiterrs = pc.jupiterRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), lat, long);
   const saturn = pc.saturn(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
+  const saturnrs = pc.saturnRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), lat, long);
   const uranus = pc.uranus(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
+  const uranusrs = pc.uranusRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), lat, long);
   const neptune = pc.neptune(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
+  const neptuners = pc.neptuneRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), lat, long);
   const pluto = pc.pluto(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
+  const plutors = pc.plutoRiseSet(d.getFullYear(),
+      (d.getMonth() + 1), d.getDate(), lat, long);
 
   if (index === 0) {
     bodyName.text = "Sun";
@@ -108,8 +126,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${sun.dist.toFixed(2)}`;
     bodyAzimuth.text = `${sun.az.toFixed(2)}`;
     bodyAltitude.text = `${sun.alt.toFixed(2)}`;
-    bodyRiseTime.text = `${sunrs.sr}`;
-    bodySetTime.text = `${sunrs.ss}`;
+    bodyRiseTime.text = `${sunrs.rise}`;
+    bodySetTime.text = `${sunrs.set}`;
   } else if (index === 1) {
     bodyName.text = "Mercury";
     bodyRightAscension.text = `${mercury.ra.toFixed(2)}`;
@@ -117,6 +135,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${mercury.dist.toFixed(2)}`;
     bodyAzimuth.text = `${mercury.az.toFixed(2)}`;
     bodyAltitude.text = `${mercury.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${mercuryrs.rise}`;
+    bodySetTime.text = `${mercuryrs.set}`;
   } else if (index === 2) {
     bodyName.text = "Venus";
     bodyRightAscension.text = `${venus.ra.toFixed(2)}`;
@@ -124,6 +144,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${venus.dist.toFixed(2)}`;
     bodyAzimuth.text = `${venus.az.toFixed(2)}`;
     bodyAltitude.text = `${venus.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${venusrs.rise}`;
+    bodySetTime.text = `${venusrs.set}`;
   } else if (index === 3) {
     bodyName.text = "Moon";
     bodyRightAscension.text = `${moon.ra.toFixed(2)}`;
@@ -131,6 +153,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${moon.dist.toFixed(2)}`;
     bodyAzimuth.text = `${moon.az.toFixed(2)}`;
     bodyAltitude.text = `${moon.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${moonrs.rise}`;
+    bodySetTime.text = `${moonrs.set}`;
   } else if (index === 4) {
     bodyName.text = "Mars";
     bodyRightAscension.text = `${mars.ra.toFixed(2)}`;
@@ -138,6 +162,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${mars.dist.toFixed(2)}`;
     bodyAzimuth.text = `${mars.az.toFixed(2)}`;
     bodyAltitude.text = `${mars.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${marsrs.rise}`;
+    bodySetTime.text = `${marsrs.set}`;
   } else if (index === 5) {
     bodyName.text = "Jupiter";
     bodyRightAscension.text = `${jupiter.ra.toFixed(2)}`;
@@ -145,6 +171,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${jupiter.dist.toFixed(2)}`;
     bodyAzimuth.text = `${jupiter.az.toFixed(2)}`;
     bodyAltitude.text = `${jupiter.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${jupiterrs.rise}`;
+    bodySetTime.text = `${jupiterrs.set}`;
   } else if (index === 6) {
     bodyName.text = "Saturn";
     bodyRightAscension.text = `${saturn.ra.toFixed(2)}`;
@@ -152,6 +180,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${saturn.dist.toFixed(2)}`;
     bodyAzimuth.text = `${saturn.az.toFixed(2)}`;
     bodyAltitude.text = `${saturn.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${saturnrs.rise}`;
+    bodySetTime.text = `${saturnrs.set}`;
   } else if (index === 7) {
     bodyName.text = "Uranus";
     bodyRightAscension.text = `${uranus.ra.toFixed(2)}`;
@@ -159,6 +189,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${uranus.dist.toFixed(2)}`;
     bodyAzimuth.text = `${uranus.az.toFixed(2)}`;
     bodyAltitude.text = `${uranus.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${uranusrs.rise}`;
+    bodySetTime.text = `${uranusrs.set}`;
   } else if (index === 8) {
     bodyName.text = "Neptune";
     bodyRightAscension.text = `${neptune.ra.toFixed(2)}`;
@@ -166,6 +198,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${neptune.dist.toFixed(2)}`;
     bodyAzimuth.text = `${neptune.az.toFixed(2)}`;
     bodyAltitude.text = `${neptune.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${neptuners.rise}`;
+    bodySetTime.text = `${neptuners.set}`;
   } else if (index === 9) {
     bodyName.text = "Pluto";
     bodyRightAscension.text = `${pluto.ra.toFixed(2)}`;
@@ -173,6 +207,8 @@ function formatPlanets(index, lat, long) {
     bodyDistance.text = `${pluto.dist.toFixed(2)}`;
     bodyAzimuth.text = `${pluto.az.toFixed(2)}`;
     bodyAltitude.text = `${pluto.alt.toFixed(2)}`;
+    bodyRiseTime.text = `${plutors.rise}`;
+    bodySetTime.text = `${plutors.set}`;
   }
 
   // debugging
