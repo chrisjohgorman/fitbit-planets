@@ -73,11 +73,11 @@ function formatPlanets(index, lat, long) {
     console.log(document.location.pathname);
     launchTile();
   }
-
+  
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
       d.getUTCSeconds()/3600;
-
+  /*
   const sun = pc.sun(pc.dayNumber(d.getFullYear(),
       (d.getMonth() + 1),d.getDate()), lat, long);
   const sunrs = pc.sunRiseSet(d.getFullYear(),
@@ -118,100 +118,184 @@ function formatPlanets(index, lat, long) {
       (d.getMonth() + 1),d.getDate()), lat, long);
   const plutors = pc.plutoRiseSet(d.getFullYear(),
       (d.getMonth() + 1), d.getDate(), lat, long);
-
+  */
   if (index === 0) {
+    const sun = pc.sun(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long);
+    const sunrs = pc.sunRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), lat, long);
+
     bodyName.text = "Sun";
-    bodyRightAscension.text = `${sun.ra.toFixed(2)}`;
-    bodyDeclination.text = `${sun.decl.toFixed(2)}`;
-    bodyDistance.text = `${sun.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${sun.az.toFixed(2)}`;
-    bodyAltitude.text = `${sun.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${sun.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${sun.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${sun.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${sun.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${sun.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${sunrs.rise}`;
     bodySetTime.text = `${sunrs.set}`;
+       
+    console.log("sun RA: " + sun.ra.toFixed(2));
+    console.log("sun Decl: " + sun.decl.toFixed(2));
+    console.log("sun Dist: " + sun.dist.toFixed(2));
+    console.log("sun azimuth: " + sun.az.toFixed(2));
+    console.log("sun altitude: " + sun.alt.toFixed(2));
   } else if (index === 1) {
+    const mercury = pc.mercury(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long, ut);
+    const mercuryrs = pc.mercuryRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), ut, lat, long);
+
     bodyName.text = "Mercury";
-    bodyRightAscension.text = `${mercury.ra.toFixed(2)}`;
-    bodyDeclination.text = `${mercury.decl.toFixed(2)}`;
-    bodyDistance.text = `${mercury.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${mercury.az.toFixed(2)}`;
-    bodyAltitude.text = `${mercury.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${mercury.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${mercury.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${mercury.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${mercury.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${mercury.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${mercuryrs.rise}`;
     bodySetTime.text = `${mercuryrs.set}`;
+ 
+    console.log("mercury azimuth: " + mercury.az.toFixed(2));
+    console.log("mercury altitude: " + mercury.alt.toFixed(2));
   } else if (index === 2) {
+    const venus = pc.venus(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long, ut);
+    const venusrs = pc.venusRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), ut, lat, long);
+
     bodyName.text = "Venus";
-    bodyRightAscension.text = `${venus.ra.toFixed(2)}`;
-    bodyDeclination.text = `${venus.decl.toFixed(2)}`;
-    bodyDistance.text = `${venus.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${venus.az.toFixed(2)}`;
-    bodyAltitude.text = `${venus.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${venus.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${venus.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${venus.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${venus.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${venus.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${venusrs.rise}`;
     bodySetTime.text = `${venusrs.set}`;
+
+    console.log("venus azimuth: " + venus.az.toFixed(2));
+    console.log("venus altitude: " + venus.alt.toFixed(2));
   } else if (index === 3) {
+    const moon = pc.moon(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long, ut);
+    const moonrs = pc.moonRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), ut, lat, long);
+
     bodyName.text = "Moon";
-    bodyRightAscension.text = `${moon.ra.toFixed(2)}`;
-    bodyDeclination.text = `${moon.decl.toFixed(2)}`;
-    bodyDistance.text = `${moon.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${moon.az.toFixed(2)}`;
-    bodyAltitude.text = `${moon.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${moon.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${moon.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${moon.dist.toFixed(2)}` + "radii";
+    bodyAzimuth.text = `${moon.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${moon.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${moonrs.rise}`;
     bodySetTime.text = `${moonrs.set}`;
+    
+    console.log("moon azimuth: " + moon.az.toFixed(2));
+    console.log("moon altitude: " + moon.alt.toFixed(2));
   } else if (index === 4) {
+    const mars = pc.mars(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long, ut);
+    const marsrs = pc.marsRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), ut, lat, long);
+    
     bodyName.text = "Mars";
-    bodyRightAscension.text = `${mars.ra.toFixed(2)}`;
-    bodyDeclination.text = `${mars.decl.toFixed(2)}`;
-    bodyDistance.text = `${mars.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${mars.az.toFixed(2)}`;
-    bodyAltitude.text = `${mars.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${mars.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${mars.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${mars.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${mars.az.toFixed(2)}` + "°"; 
+    bodyAltitude.text = `${mars.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${marsrs.rise}`;
     bodySetTime.text = `${marsrs.set}`;
+
+    console.log("mars azimuth: " + mars.az.toFixed(2));
+    console.log("mars altitude: " + mars.alt.toFixed(2));
   } else if (index === 5) {
+    const jupiter = pc.jupiter(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long, ut);
+    const jupiterrs = pc.jupiterRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), lat, long);
+
     bodyName.text = "Jupiter";
-    bodyRightAscension.text = `${jupiter.ra.toFixed(2)}`;
-    bodyDeclination.text = `${jupiter.decl.toFixed(2)}`;
-    bodyDistance.text = `${jupiter.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${jupiter.az.toFixed(2)}`;
-    bodyAltitude.text = `${jupiter.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${jupiter.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${jupiter.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${jupiter.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${jupiter.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${jupiter.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${jupiterrs.rise}`;
     bodySetTime.text = `${jupiterrs.set}`;
+    
+    console.log("jupiter azimuth: " + jupiter.az.toFixed(2));
+    console.log("jupiter altitude: " + jupiter.alt.toFixed(2));
   } else if (index === 6) {
+    const saturn = pc.saturn(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long);
+    const saturnrs = pc.saturnRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), lat, long);
+
     bodyName.text = "Saturn";
-    bodyRightAscension.text = `${saturn.ra.toFixed(2)}`;
-    bodyDeclination.text = `${saturn.decl.toFixed(2)}`;
-    bodyDistance.text = `${saturn.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${saturn.az.toFixed(2)}`;
-    bodyAltitude.text = `${saturn.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${saturn.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${saturn.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${saturn.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${saturn.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${saturn.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${saturnrs.rise}`;
     bodySetTime.text = `${saturnrs.set}`;
+  
+    console.log("saturn azimuth: " + saturn.az.toFixed(2));
+    console.log("saturn altitude: " + saturn.alt.toFixed(2));
   } else if (index === 7) {
+    const uranus = pc.uranus(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long);
+    const uranusrs = pc.uranusRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), lat, long);
+
     bodyName.text = "Uranus";
-    bodyRightAscension.text = `${uranus.ra.toFixed(2)}`;
-    bodyDeclination.text = `${uranus.decl.toFixed(2)}`;
-    bodyDistance.text = `${uranus.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${uranus.az.toFixed(2)}`;
-    bodyAltitude.text = `${uranus.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${uranus.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${uranus.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${uranus.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${uranus.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${uranus.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${uranusrs.rise}`;
     bodySetTime.text = `${uranusrs.set}`;
+  
+    console.log("uranus azimuth: " + uranus.az.toFixed(2));
+    console.log("uranus altitude: " + uranus.alt.toFixed(2));
   } else if (index === 8) {
+    const neptune = pc.neptune(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long);
+    const neptuners = pc.neptuneRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), lat, long);
+
     bodyName.text = "Neptune";
-    bodyRightAscension.text = `${neptune.ra.toFixed(2)}`;
-    bodyDeclination.text = `${neptune.decl.toFixed(2)}`;
-    bodyDistance.text = `${neptune.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${neptune.az.toFixed(2)}`;
-    bodyAltitude.text = `${neptune.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${neptune.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${neptune.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${neptune.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${neptune.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${neptune.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${neptuners.rise}`;
     bodySetTime.text = `${neptuners.set}`;
+
+    console.log("neptune azimuth: " + neptune.az.toFixed(2));
+    console.log("neptune altitude: " + neptune.alt.toFixed(2));
   } else if (index === 9) {
+    const pluto = pc.pluto(pc.dayNumber(d.getFullYear(),
+        (d.getMonth() + 1),d.getDate()), lat, long);
+    const plutors = pc.plutoRiseSet(d.getFullYear(),
+        (d.getMonth() + 1), d.getDate(), lat, long);
+
     bodyName.text = "Pluto";
-    bodyRightAscension.text = `${pluto.ra.toFixed(2)}`;
-    bodyDeclination.text = `${pluto.decl.toFixed(2)}`;
-    bodyDistance.text = `${pluto.dist.toFixed(2)}`;
-    bodyAzimuth.text = `${pluto.az.toFixed(2)}`;
-    bodyAltitude.text = `${pluto.alt.toFixed(2)}`;
+    bodyRightAscension.text = `${pluto.ra.toFixed(2)}` + "h";
+    bodyDeclination.text = `${pluto.decl.toFixed(2)}` + "°";
+    bodyDistance.text = `${pluto.dist.toFixed(2)}` + "au";
+    bodyAzimuth.text = `${pluto.az.toFixed(2)}` + "°";
+    bodyAltitude.text = `${pluto.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${plutors.rise}`;
     bodySetTime.text = `${plutors.set}`;
+
+    console.log("pluto azimuth: " + pluto.az.toFixed(2));
+    console.log("pluto altitude: " + pluto.alt.toFixed(2));
   }
 
   // debugging
+  /*
   console.log("sun RA: " + sun.ra.toFixed(2));
   console.log("sun Decl: " + sun.decl.toFixed(2));
   console.log("sun Dist: " + sun.dist.toFixed(2));
@@ -235,6 +319,7 @@ function formatPlanets(index, lat, long) {
   console.log("neptune altitude: " + neptune.alt.toFixed(2));
   console.log("pluto azimuth: " + pluto.az.toFixed(2));
   console.log("pluto altitude: " + pluto.alt.toFixed(2));
+  */
 }
 
 function locationError(error) {
