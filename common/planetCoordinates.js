@@ -828,8 +828,12 @@ export function pluto (day_number, latitude, longitude) {
 
 // Helper functions for Rise and Set times
 export function decimalToHM (time) {
-  let hours = addZero(Math.floor(time) % 24);
-  let minutes = addZero(Math.floor((Math.round((time % 1)*100)/100)*60));
+  let decimalTime = time;
+  if (decimalTime < 0) {
+    decimalTime = decimalTime + 24;
+  }
+  let hours = addZero(Math.floor(decimalTime) % 24);
+  let minutes = addZero(Math.floor((Math.round((decimalTime % 1)*100)/100)*60));
   let formatted = hours + ":" + minutes;
   return (formatted);
 }
