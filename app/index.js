@@ -3,10 +3,11 @@ import document from "document";
 import * as pc from "../common/planetCoordinates.js";
 import * as fs from "fs";
 
-var idx;
+var idx = 0;
 
 function launchTile() {
   let list = document.getElementById("myList");
+  list.value = idx;
   let items = list.getElementsByClassName("list-item");
 
   items.forEach((element, index) => {
