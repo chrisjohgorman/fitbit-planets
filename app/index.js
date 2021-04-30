@@ -1,3 +1,24 @@
+/*
+Fitbit planets, calculates the position of the planets in our solar
+system and their rise and set times based on the user's GPS
+location.
+
+Copyright (C) 2021  Chris Gorman
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>. 
+*/
+
 import { geolocation } from "geolocation";
 import document from "document";
 import * as pc from "../common/planetCoordinates.js";
