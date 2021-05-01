@@ -24,6 +24,7 @@ npm i @fitbit/sdk-cli
 Then build and install the app with npx.
 ```
 npx fitbit
+---
 Logged in as Chris Gorman <chrisjohgorman@gmail.com>
 ```
 ```
