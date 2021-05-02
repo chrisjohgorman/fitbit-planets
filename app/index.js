@@ -148,9 +148,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), lat, long);
 
     bodyName.text = "Sun";
-    bodyRightAscension.text = `${sun.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${sun.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${sun.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${sun.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${sun.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${sun.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${sun.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${sunrs.rise}`;
@@ -168,9 +168,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
     bodyName.text = "Mercury";
-    bodyRightAscension.text = `${mercury.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${mercury.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${mercury.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${mercury.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${mercury.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${mercury.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${mercury.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${mercuryrs.rise}`;
@@ -185,9 +185,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
     bodyName.text = "Venus";
-    bodyRightAscension.text = `${venus.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${venus.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${venus.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${venus.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${venus.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${venus.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${venus.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${venusrs.rise}`;
@@ -200,11 +200,11 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1),d.getDate()), lat, long, ut);
     const moonrs = pc.moonRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
-
+ 
     bodyName.text = "Moon";
-    bodyRightAscension.text = `${moon.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${moon.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${moon.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${moon.dist.toFixed(2)}` + "radii";
+    bodyDistance.text = `${(moon.dist * 6371).toFixed()}` + " km";
     bodyAzimuth.text = `${moon.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${moon.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${moonrs.rise}`;
@@ -219,9 +219,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
     
     bodyName.text = "Mars";
-    bodyRightAscension.text = `${mars.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${mars.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${mars.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${mars.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${mars.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${mars.az.toFixed(2)}` + "°"; 
     bodyAltitude.text = `${mars.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${marsrs.rise}`;
@@ -236,9 +236,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), lat, long);
 
     bodyName.text = "Jupiter";
-    bodyRightAscension.text = `${jupiter.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${jupiter.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${jupiter.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${jupiter.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${jupiter.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${jupiter.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${jupiter.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${jupiterrs.rise}`;
@@ -253,9 +253,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), lat, long);
 
     bodyName.text = "Saturn";
-    bodyRightAscension.text = `${saturn.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${saturn.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${saturn.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${saturn.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${saturn.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${saturn.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${saturn.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${saturnrs.rise}`;
@@ -270,9 +270,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), lat, long);
 
     bodyName.text = "Uranus";
-    bodyRightAscension.text = `${uranus.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${uranus.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${uranus.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${uranus.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${uranus.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${uranus.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${uranus.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${uranusrs.rise}`;
@@ -287,9 +287,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), lat, long);
 
     bodyName.text = "Neptune";
-    bodyRightAscension.text = `${neptune.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${neptune.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${neptune.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${neptune.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${neptune.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${neptune.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${neptune.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${neptuners.rise}`;
@@ -304,9 +304,9 @@ function formatPlanets(index, lat, long) {
         (d.getMonth() + 1), d.getDate(), lat, long);
 
     bodyName.text = "Pluto";
-    bodyRightAscension.text = `${pluto.ra.toFixed(2)}` + "h";
+    bodyRightAscension.text = `${pluto.ra.toFixed(2)}` + " h";
     bodyDeclination.text = `${pluto.decl.toFixed(2)}` + "°";
-    bodyDistance.text = `${pluto.dist.toFixed(2)}` + "au";
+    bodyDistance.text = `${pluto.dist.toFixed(2)}` + " au";
     bodyAzimuth.text = `${pluto.az.toFixed(2)}` + "°";
     bodyAltitude.text = `${pluto.alt.toFixed(2)}` + "°";
     bodyRiseTime.text = `${plutors.rise}`;
