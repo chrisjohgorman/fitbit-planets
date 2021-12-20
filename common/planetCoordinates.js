@@ -136,11 +136,13 @@ export function sunRectangular (day_number) {
         z1: z1, 
         oblecl: oblecl,
         L: L,    
+        lonsun: lon,
+        rs: r,
     };
 }
 
 // sun and moon
-export function sun (day_number, latitude, longitude) {
+export function sun (day_number, latitude, longitude, UT) {
     // rotate equitorial coordinates
     let sr = sunRectangular(day_number);
     let xequat = sr.x1;
@@ -157,7 +159,7 @@ export function sun (day_number, latitude, longitude) {
         Math.pow(yequat, 2) + Math.pow(zequat, 2));
     
     // calculate hour angle
-    let hour_angle = (sidtime(day_number, longitude) - right_ascension) * 15;
+    let hour_angle = (sidtime(day_number, longitude, UT) - right_ascension) * 15;
 
     // convert hour_angle and declination to rectangular system
     let x2 = Math.cosd(hour_angle) * Math.cosd(declination);
@@ -306,44 +308,49 @@ export function mercury (day_number, latitude, longitude, UT) {
     let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) + Math.cosd(N) *
         Math.sind(v+w) * Math.cosd(i));
     let zeclip = r * Math.sind(v+w) * Math.sind(i);
-    // add sun's rectangular coordinates
+    // sun's rectangular coordinates
     let sr = sunRectangular(day_number);
-    let xgeoc = sr.x1 + xeclip;
-    let ygeoc = sr.y1 + yeclip;
-    let zgeoc = sr.z1 + zeclip;
-    // rotate the equitorial coordinates
-    let xequat = xgeoc;
-    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
-    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
-    // convert to right_ascension and declination
-    let right_ascension = Math.atan2d(yequat, xequat);
-    right_ascension = Math.revolveDegree(right_ascension);
-    right_ascension = right_ascension/15;
-    let declination = Math.atan2d(zequat, Math.sqrt(Math.pow(xequat, 2)
-        + Math.pow(yequat, 2)));
-    let distance = Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2) +
-        Math.pow(zequat,2));
     // convert to ecliptic longitude and latitude
     let lon = Math.atan2d(yeclip, xeclip);
-    lon = Math.revolveDegree(lon);
     let lat = Math.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+    // use lat and lon to produce RA and Dec
+    let xh = r * Math.cosd(lon) * Math.cosd(lat);
+    let yh = r * Math.sind(lon) * Math.cosd(lat);
+    let zh = r * Math.sind(lat);
+    // convert sun's position
+    let xs = sr.rs * Math.cosd(sr.lonsun);
+    let ys = sr.rs * Math.sind(sr.lonsun);
+    // convert from heliocentric to geocentric
+    let xg = xh + xs;
+    let yg = yh + ys;
+    let zg = zh;
+    // convert to equitorial
+    let xe = xg;
+    let ye = yg * Math.cosd(oblecl) - zg * Math.sind(oblecl);
+    let ze = yg * Math.sind(oblecl) + zg * Math.cosd(oblecl);
+    // RA and Decl
+    let RA = Math.atan2d(ye, xe);
+    RA = Math.revolveDegree(RA);
+    RA = RA/15;
+    let Dec = Math.atan2d(ze, Math.sqrt(xe*xe+ye*ye));
+    let rg = Math.sqrt(xe*xe+ye*ye+ze*ze);
     // convert to azimuth and altitude
-    let hour_angle = sidtime(day_number, longitude, UT) - right_ascension;
-    hour_angle = Math.revolveHourAngle(hour_angle);
-    hour_angle = hour_angle * 15;
-    x = Math.cosd(hour_angle) * Math.cosd(declination);
-    y = Math.sind(hour_angle) * Math.cosd(declination);
-    let z = Math.sind(declination);
-    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
-    let y_horizon = y;
-    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
-    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
-    let altitude = Math.atan2d(z_horizon, Math.sqrt(Math.pow(x_horizon, 2) 
-        + Math.pow(y_horizon, 2))); 
+    let HA = sidtime(day_number, longitude, UT) - RA;
+    HA = HA * 15;
+    HA = Math.revolveDegree(HA);
+    x = Math.cosd(HA) * Math.cosd(Dec);
+    y = Math.sind(HA) * Math.cosd(Dec);
+    let z = Math.sind(Dec);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(yhor,xhor) + 180;
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
+        + Math.pow(yhor, 2))); 
     return{
-        ra: right_ascension,
-        decl: declination,
-        dist: distance,
+        ra: RA,
+        decl: Dec,
+        dist: rg,
         alt: altitude,
         az: azimuth,
     };
@@ -372,45 +379,50 @@ export function venus (day_number, latitude, longitude, UT) {
     let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) + Math.cosd(N) *
         Math.sind(v+w) * Math.cosd(i));
     let zeclip = r * Math.sind(v+w) * Math.sind(i);
-    // add sun's rectangular coordinates
+    //  sun's rectangular coordinates
     let sr = sunRectangular(day_number);
-    let xgeoc = sr.x1 + xeclip;
-    let ygeoc = sr.y1 + yeclip;
-    let zgeoc = sr.z1 + zeclip;
-    // rotate the equitorial coordinates
-    let xequat = xgeoc;
-    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
-    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
-    // convert to right_ascension and declination
-    let right_ascension = Math.atan2d(yequat, xequat);
-    right_ascension = Math.revolveDegree(right_ascension);
-    right_ascension = right_ascension/15;
-    let declination = Math.atan2d(zequat, Math.sqrt(Math.pow(xequat, 2) 
-        + Math.pow(yequat, 2)));
-    let distance = Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2) 
-        + Math.pow(zequat, 2));
     // convert to ecliptic longitude and latitude
     let lon = Math.atan2d(yeclip, xeclip);
     lon = Math.revolveDegree(lon);
-    let lat = Math.atan2d(zeclip, Math.sqrt(Math.pow(xeclip, 2) 
-        + Math.pow(yeclip, 2)));
+    let lat = Math.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+    // use lat and lon to produce RA and Dec
+    let xh = r * Math.cosd(lon) * Math.cosd(lat);
+    let yh = r * Math.sind(lon) * Math.cosd(lat);
+    let zh = r * Math.sind(lat);
+    // convert sun's position
+    let xs = sr.rs * Math.cosd(sr.lonsun);
+    let ys = sr.rs * Math.sind(sr.lonsun);
+    // convert from heliocentric to geocentric
+    let xg = xh + xs;
+    let yg = yh + ys;
+    let zg = zh;
+    // convert to equitorial
+    let xe = xg;
+    let ye = yg * Math.cosd(oblecl) - zg * Math.sind(oblecl);
+    let ze = yg * Math.sind(oblecl) + zg * Math.cosd(oblecl);
+    // RA and Decl
+    let RA = Math.atan2d(ye, xe);
+    RA = Math.revolveDegree(RA);
+    RA = RA/15;
+    let Dec = Math.atan2d(ze, Math.sqrt(xe*xe+ye*ye));
+    let rg = Math.sqrt(xe*xe+ye*ye+ze*ze);
     // convert to azimuth and altitude
-    let hour_angle = sidtime(day_number, longitude, UT) - right_ascension;
-    hour_angle = Math.revolveHourAngle(hour_angle);
-    hour_angle = hour_angle * 15;
-    x = Math.cosd(hour_angle) * Math.cosd(declination);
-    y = Math.sind(hour_angle) * Math.cosd(declination);
-    let z = Math.sind(declination);
-    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
-    let y_horizon = y;
-    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
-    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
-    let altitude = Math.atan2d(z_horizon, Math.sqrt(Math.pow(x_horizon, 2) 
-        + Math.pow(y_horizon, 2)));
+    let HA = sidtime(day_number, longitude, UT) - RA;
+    HA = HA * 15;
+    HA = Math.revolveDegree(HA);
+    x = Math.cosd(HA) * Math.cosd(Dec);
+    y = Math.sind(HA) * Math.cosd(Dec);
+    let z = Math.sind(Dec);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(yhor,xhor) + 180;
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
+        + Math.pow(yhor, 2)));
     return{
-        ra: right_ascension,
-        decl: declination,
-        dist: distance,
+        ra: RA,
+        decl: Dec,
+        dist: rg,
         alt: altitude,
         az: azimuth,
     };
@@ -439,44 +451,50 @@ export function mars (day_number, latitude, longitude, UT) {
     let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) 
         + Math.cosd(N) * Math.sind(v+w) * Math.cosd(i));
     let zeclip = r * Math.sind(v+w) * Math.sind(i);
-    // add sun's rectangular coordinates
+    // sun's rectangular coordinates
     let sr = sunRectangular(day_number);
-    let xgeoc = sr.x1 + xeclip;
-    let ygeoc = sr.y1 + yeclip;
-    let zgeoc = sr.z1 + zeclip;
-    // rotate the equitorial coordinates
-    let xequat = xgeoc;
-    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
-    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
-    // convert to right_ascension and declination
-    let right_ascension = Math.atan2d(yequat, xequat);
-    right_ascension = Math.revolveDegree(right_ascension);
-    right_ascension = right_ascension / 15;
-    let declination = Math.atan2d(zequat, 
-        Math.sqrt(xequat*xequat + yequat*yequat));
-    let distance = Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2)
-        + Math.pow(zequat, 2));
     // convert to ecliptic longitude and latitude
     let lon = Math.atan2d(yeclip, xeclip);
-    lon = Math.revolveDegree(longitude);
+    lon = Math.revolveDegree(lon);
     let lat = Math.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+    // use lat and lon to produce RA and Dec
+    let xh = r * Math.cosd(lon) * Math.cosd(lat);
+    let yh = r * Math.sind(lon) * Math.cosd(lat);
+    let zh = r * Math.sind(lat);
+    // convert sun's position
+    let xs = sr.rs * Math.cosd(sr.lonsun);
+    let ys = sr.rs * Math.sind(sr.lonsun);
+    // convert from heliocentric to geocentric
+    let xg = xh + xs;
+    let yg = yh + ys;
+    let zg = zh;
+    // convert to equitorial
+    let xe = xg;
+    let ye = yg * Math.cosd(oblecl) - zg * Math.sind(oblecl);
+    let ze = yg * Math.sind(oblecl) + zg * Math.cosd(oblecl);
+    // RA and Decl
+    let RA = Math.atan2d(ye, xe);
+    RA = Math.revolveDegree(RA);
+    RA = RA/15;
+    let Dec = Math.atan2d(ze, Math.sqrt(xe*xe+ye*ye));
+    let rg = Math.sqrt(xe*xe+ye*ye+ze*ze);
     // convert to azimuth and altitude
-    let hour_angle = sidtime(day_number, longitude, UT) - right_ascension;
-    hour_angle = Math.revolveHourAngle(hour_angle);
-    hour_angle = hour_angle * 15;
-    x = Math.cosd(hour_angle) * Math.cosd(declination);
-    y = Math.sind(hour_angle) * Math.cosd(declination);
-    let z = Math.sind(declination);
-    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
-    let y_horizon = y;
-    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
-    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
-    let altitude = Math.atan2d(z_horizon, 
-        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    let HA = sidtime(day_number, longitude, UT) - RA;
+    HA = HA * 15;
+    HA = Math.revolveDegree(HA);
+    x = Math.cosd(HA) * Math.cosd(Dec);
+    y = Math.sind(HA) * Math.cosd(Dec);
+    let z = Math.sind(Dec);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(yhor,xhor) + 180;
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
+        + Math.pow(yhor, 2)));
     return{
-        ra: right_ascension,
-        decl: declination,
-        dist: distance,
+        ra: RA,
+        decl: Dec,
+        dist: rg,
         alt: altitude,
         az: azimuth,
     };
@@ -508,23 +526,8 @@ export function jupiter (day_number, latitude, longitude, UT) {
     let xeclip = r * ( Math.cosd(N) * Math.cosd(v+w) - Math.sind(N) * Math.sind(v+w) * Math.cosd(i));
     let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) + Math.cosd(N) * Math.sind(v+w) * Math.cosd(i));
     let zeclip = r * Math.sind(v+w) * Math.sind(i);
-    // add sun's rectangular coordinates
+    // sun's rectangular coordinates
     let sr = sunRectangular(day_number);
-    let xgeoc = sr.x1 + xeclip;
-    let ygeoc = sr.y1 + yeclip;
-    let zgeoc = sr.z1 + zeclip;
-    // rotate the equitorial coordinates
-    let xequat = xgeoc;
-    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
-    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
-    // convert to right_ascension and declination
-    let right_ascension = Math.atan2d(yequat, xequat);
-    right_ascension = Math.revolveDegree(right_ascension);
-    right_ascension = right_ascension/15;
-    let declination = Math.atan2d(zequat, Math.sqrt(Math.pow(xequat, 2) 
-        + Math.pow(yequat, 2)));
-    let distance = Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2) 
-        + Math.pow(zequat, 2));
     // convert to ecliptic longitude and latitude
     let lon = Math.atan2d(yeclip, xeclip);
     lon = Math.revolveDegree(lon);
@@ -539,29 +542,50 @@ export function jupiter (day_number, latitude, longitude, UT) {
                      -0.016 * Math.sind(Mj - 5*Ms - 69);
     lon = lon + perturbations_of_longitude;
     lon = Math.revolveDegree(lon);
+    // use lat and lon to produce RA and Dec
+    let xh = r * Math.cosd(lon) * Math.cosd(lat);
+    let yh = r * Math.sind(lon) * Math.cosd(lat);
+    let zh = r * Math.sind(lat);
+    // convert sun's position
+    let xs = sr.rs * Math.cosd(sr.lonsun);
+    let ys = sr.rs * Math.sind(sr.lonsun);
+    // convert from heliocentric to geocentric
+    let xg = xh + xs;
+    let yg = yh + ys;
+    let zg = zh;
+    // convert to equitorial
+    let xe = xg;
+    let ye = yg * Math.cosd(oblecl) - zg * Math.sind(oblecl);
+    let ze = yg * Math.sind(oblecl) + zg * Math.cosd(oblecl);
+    // RA and Decl
+    let RA = Math.atan2d(ye, xe);
+    RA = Math.revolveDegree(RA);
+    RA = RA/15;
+    let Dec = Math.atan2d(ze, Math.sqrt(xe*xe+ye*ye));
+    let rg = Math.sqrt(xe*xe+ye*ye+ze*ze);
     // convert to azimuth and altitude
-    let hour_angle = sidtime(day_number, longitude, UT) - right_ascension;
-    hour_angle = Math.revolveHourAngle(hour_angle);
-    hour_angle = hour_angle * 15;
-    x = Math.cosd(hour_angle)*Math.cosd(declination);
-    y = Math.sind(hour_angle)*Math.cosd(declination);
-    let z = Math.sind(declination);
-    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
-    let y_horizon = y;
-    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
-    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
-    let altitude = Math.atan2d(z_horizon, 
-        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    let HA = sidtime(day_number, longitude, UT) - RA;
+    HA = HA * 15;
+    HA = Math.revolveDegree(HA);
+    x = Math.cosd(HA) * Math.cosd(Dec);
+    y = Math.sind(HA) * Math.cosd(Dec);
+    let z = Math.sind(Dec);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(yhor,xhor) + 180;
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
+        + Math.pow(yhor, 2)));
     return{
-        ra: right_ascension,
-        decl: declination,
-        dist: distance,
+        ra: RA,
+        decl: Dec,
+        dist: rg,
         alt: altitude,
         az: azimuth,
     };
 }
 
-export function saturn (day_number, latitude, longitude) {
+export function saturn (day_number, latitude, longitude, UT) {
     let N = 113.6634 + 2.38980E-5   * day_number; // Long of asc. node
     let i =   2.4886 - 1.081E-7     * day_number; // Inclination
     let w = 339.3939 + 2.97661E-5   * day_number; // Argument of perihelion
@@ -589,20 +613,6 @@ export function saturn (day_number, latitude, longitude) {
     let zeclip = r * Math.sind(v+w) * Math.sind(i);
     // add sun's rectangular coordinates
     let sr = sunRectangular(day_number);
-    let xgeoc = sr.x1 + xeclip;
-    let ygeoc = sr.y1 + yeclip;
-    let zgeoc = sr.z1 + zeclip;
-    // rotate the equitorial coordinates
-    let xequat = xgeoc;
-    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
-    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
-    // convert to right_ascension and declination
-    let right_ascension = Math.atan2d(yequat, xequat);
-    right_ascension = Math.revolveDegree(right_ascension);
-    right_ascension = right_ascension / 15;
-    let declination = Math.atan2d(zequat, Math.sqrt(xequat*xequat + yequat*yequat));
-    let distance = Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2) 
-        + Math.pow(zequat, 2));
     // convert to ecliptic longitude and latitude
     let lon = Math.atan2d(yeclip, xeclip);
     lon = Math.revolveDegree(lon);
@@ -618,29 +628,50 @@ export function saturn (day_number, latitude, longitude) {
     lon = Math.revolveDegree(lon);
     lat = lat + perturbations_in_latitude;
     lat = Math.revolveDegree(lat);
+    // use lat and lon to produce RA and Dec
+    let xh = r * Math.cosd(lon) * Math.cosd(lat);
+    let yh = r * Math.sind(lon) * Math.cosd(lat);
+    let zh = r * Math.sind(lat);
+    // convert sun's position
+    let xs = sr.rs * Math.cosd(sr.lonsun);
+    let ys = sr.rs * Math.sind(sr.lonsun);
+    // convert from heliocentric to geocentric
+    let xg = xh + xs;
+    let yg = yh + ys;
+    let zg = zh;
+    // convert to equitorial
+    let xe = xg;
+    let ye = yg * Math.cosd(oblecl) - zg * Math.sind(oblecl);
+    let ze = yg * Math.sind(oblecl) + zg * Math.cosd(oblecl);
+    // RA and Decl
+    let RA = Math.atan2d(ye, xe);
+    RA = Math.revolveDegree(RA);
+    RA = RA/15;
+    let Dec = Math.atan2d(ze, Math.sqrt(xe*xe+ye*ye));
+    let rg = Math.sqrt(xe*xe+ye*ye+ze*ze);
     // convert to azimuth and altitude
-    let hour_angle = sidtime(day_number, longitude) - right_ascension;
-    hour_angle = Math.revolveHourAngle(hour_angle);
-    hour_angle = hour_angle * 15;
-    x = Math.cosd(hour_angle)*Math.cosd(declination);
-    y = Math.sind(hour_angle)*Math.cosd(declination);
-    let z = Math.sind(declination);
-    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
-    let y_horizon = y;
-    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
-    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
-    let altitude = Math.atan2d(z_horizon, 
-        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    let HA = sidtime(day_number, longitude, UT) - RA;
+    HA = HA * 15;
+    HA = Math.revolveDegree(HA);
+    x = Math.cosd(HA) * Math.cosd(Dec);
+    y = Math.sind(HA) * Math.cosd(Dec);
+    let z = Math.sind(Dec);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(yhor,xhor) + 180;
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
+        + Math.pow(yhor, 2)));
     return{
-        ra: right_ascension,
-        decl: declination,
-        dist: distance,
+        ra: RA,
+        decl: Dec,
+        dist: rg,
         alt: altitude,
         az: azimuth,
     };
 }
 
-export function uranus (day_number, latitude, longitude) {
+export function uranus (day_number, latitude, longitude, UT) {
     let N =  74.0005 + 1.3978E-5    * day_number;  // Long of asc. node
     let i =   0.7733 + 1.9E-8       * day_number;  // Inclination
     let w =  96.6612 + 3.0565E-5    * day_number;  // Argument of perihelion
@@ -668,23 +699,8 @@ export function uranus (day_number, latitude, longitude) {
     let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) + Math.cosd(N) *
         Math.sind(v+w) * Math.cosd(i));
     let zeclip = r * Math.sind(v+w) * Math.sind(i);
-    // add sun's rectangular coordinates
+    // sun's rectangular coordinates
     let sr = sunRectangular(day_number);
-    let xgeoc = sr.x1 + xeclip;
-    let ygeoc = sr.y1 + yeclip;
-    let zgeoc = sr.z1 + zeclip;
-    // rotate the equitorial coordinates
-    let xequat = xgeoc;
-    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
-    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
-    // convert to right_ascension and declination
-    let right_ascension = Math.atan2d(yequat, xequat);
-    right_ascension = Math.revolveDegree(right_ascension);
-    right_ascension = right_ascension / 15;
-    let declination = Math.atan2d(zequat, 
-        Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2)));
-    let distance = Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2) 
-        + Math.pow(zequat, 2));
     // convert to ecliptic longitude and latitude
     let lon = Math.atan2d(yeclip, xeclip);
     lon = Math.revolveDegree(lon);
@@ -695,29 +711,50 @@ export function uranus (day_number, latitude, longitude) {
                         -0.015 * Math.sind(Mj - Mu + 20);
     lon = perturbations_in_longitude + lon;
     lon = Math.revolveDegree(lon);
+    // use lat and lon to produce RA and Dec
+    let xh = r * Math.cosd(lon) * Math.cosd(lat);
+    let yh = r * Math.sind(lon) * Math.cosd(lat);
+    let zh = r * Math.sind(lat);
+    // convert sun's position
+    let xs = sr.rs * Math.cosd(sr.lonsun);
+    let ys = sr.rs * Math.sind(sr.lonsun);
+    // convert from heliocentric to geocentric
+    let xg = xh + xs;
+    let yg = yh + ys;
+    let zg = zh;
+    // convert to equitorial
+    let xe = xg;
+    let ye = yg * Math.cosd(oblecl) - zg * Math.sind(oblecl);
+    let ze = yg * Math.sind(oblecl) + zg * Math.cosd(oblecl);
+    // RA and Decl
+    let RA = Math.atan2d(ye, xe);
+    RA = Math.revolveDegree(RA);
+    RA = RA/15;
+    let Dec = Math.atan2d(ze, Math.sqrt(xe*xe+ye*ye));
+    let rg = Math.sqrt(xe*xe+ye*ye+ze*ze);
     // convert to azimuth and altitude
-    let hour_angle = sidtime(day_number, longitude) - right_ascension;
-    hour_angle = Math.revolveHourAngle(hour_angle);
-    hour_angle = hour_angle * 15;
-    x = Math.cosd(hour_angle)*Math.cosd(declination);
-    y = Math.sind(hour_angle)*Math.cosd(declination);
-    let z = Math.sind(declination);
-    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
-    let y_horizon = y;
-    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
-    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
-    let altitude = Math.atan2d(z_horizon, 
-        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    let HA = sidtime(day_number, longitude, UT) - RA;
+    HA = HA * 15;
+    HA = Math.revolveDegree(HA);
+    x = Math.cosd(HA) * Math.cosd(Dec);
+    y = Math.sind(HA) * Math.cosd(Dec);
+    let z = Math.sind(Dec);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(yhor,xhor) + 180;
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
+        + Math.pow(yhor, 2)));
     return{
-        ra: right_ascension,
-        decl: declination,
-        dist: distance,
+        ra: RA,
+        decl: Dec,
+        dist: rg,
         alt: altitude,
         az: azimuth,
     };
 }
 
-export function neptune (day_number, latitude, longitude) {
+export function neptune (day_number, latitude, longitude, UT) {
     let N = 131.7806 + 3.0173E-5    * day_number;
     let i =   1.7700 - 2.55E-7      * day_number;
     let w = 272.8461 - 6.027E-6     * day_number;
@@ -738,50 +775,56 @@ export function neptune (day_number, latitude, longitude) {
     let xeclip = r * ( Math.cosd(N) * Math.cosd(v+w) - Math.sind(N) * Math.sind(v+w) * Math.cosd(i));
     let yeclip = r * ( Math.sind(N) * Math.cosd(v+w) + Math.cosd(N) * Math.sind(v+w) * Math.cosd(i));
     let zeclip = r * Math.sind(v+w) * Math.sind(i);
-    // add sun's rectangular coordinates
+    // sun's rectangular coordinates
     let sr = sunRectangular(day_number);
-    let xgeoc = sr.x1 + xeclip;
-    let ygeoc = sr.y1 + yeclip;
-    let zgeoc = sr.z1 + zeclip;
-    // rotate the equitorial coordinates
-    let xequat = xgeoc;
-    let yequat = ygeoc * Math.cosd(oblecl) - zgeoc * Math.sind(oblecl);
-    let zequat = ygeoc * Math.sind(oblecl) + zgeoc * Math.cosd(oblecl);
-    // convert to right_ascension and declination
-    let right_ascension = Math.atan2d(yequat, xequat);
-    right_ascension = Math.revolveDegree(right_ascension);
-    right_ascension = right_ascension / 15;
-    let declination = Math.atan2d(zequat,
-        Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2)));
-    let distance = Math.sqrt(Math.pow(xequat, 2) +
-        Math.pow(yequat, 2) + Math.pow(zequat, 2));
     // convert to ecliptic longitude and latitude
     let lon = Math.atan2d(yeclip, xeclip);
     lon = Math.revolveDegree(lon);
     let lat = Math.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+    // use lat and lon to produce RA and Dec
+    let xh = r * Math.cosd(lon) * Math.cosd(lat);
+    let yh = r * Math.sind(lon) * Math.cosd(lat);
+    let zh = r * Math.sind(lat);
+    // convert sun's position
+    let xs = sr.rs * Math.cosd(sr.lonsun);
+    let ys = sr.rs * Math.sind(sr.lonsun);
+    // convert from heliocentric to geocentric
+    let xg = xh + xs;
+    let yg = yh + ys;
+    let zg = zh;
+    // convert to equitorial
+    let xe = xg;
+    let ye = yg * Math.cosd(oblecl) - zg * Math.sind(oblecl);
+    let ze = yg * Math.sind(oblecl) + zg * Math.cosd(oblecl);
+    // RA and Decl
+    let RA = Math.atan2d(ye, xe);
+    RA = Math.revolveDegree(RA);
+    RA = RA/15;
+    let Dec = Math.atan2d(ze, Math.sqrt(xe*xe+ye*ye));
+    let rg = Math.sqrt(xe*xe+ye*ye+ze*ze);
     // convert to azimuth and altitude
-    let hour_angle = sidtime(day_number, longitude) - right_ascension;
-    hour_angle = Math.revolveHourAngle(hour_angle);
-    hour_angle = hour_angle * 15;
-    x = Math.cosd(hour_angle)*Math.cosd(declination);
-    y = Math.sind(hour_angle)*Math.cosd(declination);
-    let z = Math.sind(declination);
-    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
-    let y_horizon = y;
-    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
-    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
-    let altitude = Math.atan2d(z_horizon, 
-        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    let HA = sidtime(day_number, longitude, UT) - RA;
+    HA = HA * 15;
+    HA = Math.revolveDegree(HA);
+    x = Math.cosd(HA) * Math.cosd(Dec);
+    y = Math.sind(HA) * Math.cosd(Dec);
+    let z = Math.sind(Dec);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(yhor,xhor) + 180;
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
+        + Math.pow(yhor, 2)));
     return{
-        ra: right_ascension,
-        decl: declination,
-        dist: distance,
+        ra: RA,
+        decl: Dec,
+        dist: rg,
         alt: altitude,
         az: azimuth,
     };
 }
 
-export function pluto (day_number, latitude, longitude) {
+export function pluto (day_number, latitude, longitude, UT) {
     let S  =   50.03  +  0.033459652 * day_number;
     let P  =  238.95  +  0.003968789 * day_number;
     let lonecl = 238.9508  +  0.00400703 * day_number 
@@ -819,29 +862,29 @@ export function pluto (day_number, latitude, longitude) {
     let ye = yg * Math.cosd(sr.oblecl) - zg * Math.sind(sr.oblecl);
     let ze = yg * Math.sind(sr.oblecl) + zg * Math.cosd(sr.oblecl);
 
-    let right_ascension  = Math.atan2d( ye, xe );
-    right_ascension  = Math.revolveDegree(right_ascension);
-    right_ascension = right_ascension/15; 
-    let declination = Math.atan2d( ze, Math.sqrt(xe*xe+ye*ye) );
-    let distance = Math.sqrt(xe*xe+ye*ye+ze*ze);
+    let RA  = Math.atan2d( ye, xe );
+    RA  = Math.revolveDegree(RA);
+    RA = RA/15; 
+    let Dec = Math.atan2d( ze, Math.sqrt(xe*xe+ye*ye) );
+    let rg = Math.sqrt(xe*xe+ye*ye+ze*ze);
 
     // convert to azimuth and altitude
-    let hour_angle = sidtime(day_number, longitude) - right_ascension;
-    hour_angle = Math.revolveHourAngle(hour_angle);
-    hour_angle = hour_angle * 15;
-    let x = Math.cosd(hour_angle)*Math.cosd(declination);
-    let y = Math.sind(hour_angle)*Math.cosd(declination);
-    let z = Math.sind(declination);
-    let x_horizon = x * Math.sind(latitude) - z * Math.cosd(latitude);
-    let y_horizon = y;
-    let z_horizon = x * Math.cosd(latitude) + z * Math.sind(latitude);
-    let azimuth = Math.atan2d(y_horizon,x_horizon) + 180;
-    let altitude = Math.atan2d(z_horizon,
-        Math.sqrt(Math.pow(x_horizon, 2) + Math.pow(y_horizon, 2)));
+    let HA = sidtime(day_number, longitude, UT) - RA;
+    HA = HA * 15;
+    HA = Math.revolveDegree(HA);
+    let x = Math.cosd(HA)*Math.cosd(Dec);
+    let y = Math.sind(HA)*Math.cosd(Dec);
+    let z = Math.sind(Dec);
+    let xhor = x * Math.sind(latitude) - z * Math.cosd(latitude);
+    let yhor = y;
+    let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
+    let azimuth = Math.atan2d(yhor,xhor) + 180;
+    let altitude = Math.atan2d(zhor,
+        Math.sqrt(Math.pow(xhor, 2) + Math.pow(yhor, 2)));
     return{
-        ra: right_ascension,
-        decl: declination,
-        dist: distance,
+        ra: RA,
+        decl: Dec,
+        dist: rg,
         alt: altitude,
         az: azimuth,
     };
@@ -864,11 +907,11 @@ export function addZero (n) {
 }
 
 // Rise and Set times for Celestial Bodies
-export function sunRiseSet (year, month, day, latitude, longitude) {
+export function sunRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let sun1 = sun(d, latitude, longitude);
+  let sun1 = sun(d, latitude, longitude, UT);
   let GMST0 = (sr.L + 180) / 15;
   let UT_Sun_in_south = sun1.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Sun_in_south = Math.revolveHourAngle(UT_Sun_in_south);
@@ -893,11 +936,11 @@ export function sunRiseSet (year, month, day, latitude, longitude) {
   }
 }
 
-export function mercriset (year, month, day, hour, latitude, longitude) {
+export function mercriset (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day, hour);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Mercury = mercury(d, latitude, longitude, hour);
+  let Mercury = mercury(d, latitude, longitude, UT);
   let UT_Planet_in_south = Mercury.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
   let cos_lha = (Math.sind(h) -
@@ -919,11 +962,11 @@ export function mercriset (year, month, day, hour, latitude, longitude) {
   }
 }
 
-export function mercuryRiseSet (year, month, day, hour, latitude, longitude) {
+export function mercuryRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day, hour);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Mercury = mercury(d, latitude, longitude, hour);
+  let Mercury = mercury(d, latitude, longitude, UT);
   let UT_Mercury_in_south = Mercury.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Mercury_in_south = Math.revolveHourAngle(UT_Mercury_in_south);
   let cos_lha = (Math.sind(h) -
@@ -959,11 +1002,11 @@ export function mercuryRiseSet (year, month, day, hour, latitude, longitude) {
   }
 }
 
-export function vriset (year, month, day, hour, latitude, longitude) {
+export function vriset (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day, hour);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Venus = venus(d, latitude, longitude, hour);
+  let Venus = venus(d, latitude, longitude, UT);
   let UT_Planet_in_south = Venus.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
   let cos_lha = (Math.sind(h) -
@@ -985,11 +1028,11 @@ export function vriset (year, month, day, hour, latitude, longitude) {
   }
 }
 
-export function venusRiseSet (year, month, day, hour, latitude, longitude) {
+export function venusRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day, hour);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Venus = venus(d, latitude, longitude, hour);
+  let Venus = venus(d, latitude, longitude, UT);
   let UT_Venus_in_south = Venus.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Venus_in_south = Math.revolveHourAngle(UT_Venus_in_south);
   let cos_lha = (Math.sind(h) -
@@ -1025,10 +1068,10 @@ export function venusRiseSet (year, month, day, hour, latitude, longitude) {
   }
 }
 
-export function mriset (year, month, day, hour, latitude, longitude) {
-  let d = dayNumber(year, month, day, hour);
+export function mriset (year, month, day, UT, latitude, longitude) {
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Moon = moon(d, latitude, longitude, hour);
+  let Moon = moon(d, latitude, longitude, UT);
   let mpar = Math.asind(1/Moon.dist);
   let GMST0 = (sr.L + 180);
   let UT_Planet_in_south = Moon.ra/15 - (sr.L+180)/15 - longitude/15.0;
@@ -1052,10 +1095,10 @@ export function mriset (year, month, day, hour, latitude, longitude) {
   }
 }
 
-export function moonRiseSet (year, month, day, hour, latitude, longitude) {
-  let d = dayNumber(year, month, day, hour);
+export function moonRiseSet (year, month, day, UT, latitude, longitude) {
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Moon = moon(d, latitude, longitude, hour);
+  let Moon = moon(d, latitude, longitude, UT);
   let mpar = Math.asind(1/Moon.dist);
   let GMST0 = (sr.L + 180);
   let UT_Moon_in_south = Moon.ra/15 - (sr.L+180)/15 - longitude/15.0;
@@ -1093,11 +1136,11 @@ export function moonRiseSet (year, month, day, hour, latitude, longitude) {
   }
 }
 
-export function mariset (year, month, day, hour, latitude, longitude) {
+export function mariset (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day, hour);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Mars = mars(d, latitude, longitude, hour);
+  let Mars = mars(d, latitude, longitude, UT);
   let UT_Planet_in_south = Mars.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
   let cos_lha = (Math.sind(h) -
@@ -1119,11 +1162,11 @@ export function mariset (year, month, day, hour, latitude, longitude) {
   }
 }
 
-export function marsRiseSet (year, month, day, hour, latitude, longitude) {
+export function marsRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day, hour);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Mars = mars(d, latitude, longitude, hour);
+  let Mars = mars(d, latitude, longitude, UT);
   let UT_Mars_in_south = Mars.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Mars_in_south = Math.revolveHourAngle(UT_Mars_in_south);
   let cos_lha = (Math.sind(h) -
@@ -1159,11 +1202,11 @@ export function marsRiseSet (year, month, day, hour, latitude, longitude) {
   }
 }
 
-export function jupiterRiseSet (year, month, day, latitude, longitude) {
+export function jupiterRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Jupiter = jupiter(d, latitude, longitude);
+  let Jupiter = jupiter(d, latitude, longitude, UT);
   let GMST0 = (sr.L + 180) / 15;
   let UT_Planet_in_south = Jupiter.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
@@ -1188,11 +1231,11 @@ export function jupiterRiseSet (year, month, day, latitude, longitude) {
   }
 }
 
-export function saturnRiseSet (year, month, day, latitude, longitude) {
+export function saturnRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Saturn = saturn(d, latitude, longitude);
+  let Saturn = saturn(d, latitude, longitude, UT);
   let GMST0 = (sr.L + 180) / 15;
   let UT_Planet_in_south = Saturn.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
@@ -1217,11 +1260,11 @@ export function saturnRiseSet (year, month, day, latitude, longitude) {
   }
 }
 
-export function uranusRiseSet (year, month, day, latitude, longitude) {
+export function uranusRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Uranus = uranus(d, latitude, longitude);
+  let Uranus = uranus(d, latitude, longitude, UT);
   let GMST0 = (sr.L + 180) / 15;
   let UT_Planet_in_south = Uranus.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
@@ -1246,11 +1289,11 @@ export function uranusRiseSet (year, month, day, latitude, longitude) {
   }
 }
 
-export function neptuneRiseSet (year, month, day, latitude, longitude) {
+export function neptuneRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Neptune = neptune(d, latitude, longitude);
+  let Neptune = neptune(d, latitude, longitude, UT);
   let GMST0 = (sr.L + 180) / 15;
   let UT_Planet_in_south = Neptune.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
@@ -1275,11 +1318,11 @@ export function neptuneRiseSet (year, month, day, latitude, longitude) {
   }
 }
 
-export function plutoRiseSet (year, month, day, latitude, longitude) {
+export function plutoRiseSet (year, month, day, UT, latitude, longitude) {
   let h = -0.833;
-  let d = dayNumber(year, month, day);
+  let d = dayNumber(year, month, day, UT);
   let sr = sunRectangular(d);
-  let Pluto = pluto(d, latitude, longitude);
+  let Pluto = pluto(d, latitude, longitude, UT);
   let GMST0 = (sr.L + 180) / 15;
   let UT_Planet_in_south = Pluto.ra - (sr.L+180)/15 - longitude/15.0;
   UT_Planet_in_south = Math.revolveHourAngle(UT_Planet_in_south);
