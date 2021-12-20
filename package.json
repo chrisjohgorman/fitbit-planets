@@ -1,10 +1,10 @@
 {
   "name": "fitbit-planets",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "@fitbit/sdk": "~4.2.2",
+    "@fitbit/sdk": "^4.2.2",
     "@fitbit/sdk-cli": "^1.7.3"
   },
   "fitbit": {
