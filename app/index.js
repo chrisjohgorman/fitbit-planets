@@ -145,7 +145,7 @@ function formatPlanets(index, lat, long) {
 
   if (index === 0) {
     const sun = pc.sun(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const sunrs = pc.sunRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
@@ -165,7 +165,7 @@ function formatPlanets(index, lat, long) {
     console.log("sun altitude: " + sun.alt.toFixed(4));
   } else if (index === 1) {
     const mercury = pc.mercury(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const mercuryrs = pc.mercuryRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
@@ -185,7 +185,7 @@ function formatPlanets(index, lat, long) {
     console.log("mercury altitude: " + mercury.alt.toFixed(4));
   } else if (index === 2) {
     const venus = pc.venus(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const venusrs = pc.venusRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
@@ -205,7 +205,7 @@ function formatPlanets(index, lat, long) {
     console.log("venus altitude: " + venus.alt.toFixed(4));
   } else if (index === 3) {
     const moon = pc.moon(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const moonrs = pc.moonRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
  
@@ -225,7 +225,7 @@ function formatPlanets(index, lat, long) {
     console.log("moon altitude: " + moon.alt.toFixed(4));
   } else if (index === 4) {
     const mars = pc.mars(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const marsrs = pc.marsRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
     
@@ -245,7 +245,7 @@ function formatPlanets(index, lat, long) {
     console.log("mars altitude: " + mars.alt.toFixed(4));
   } else if (index === 5) {
     const jupiter = pc.jupiter(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const jupiterrs = pc.jupiterRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
@@ -265,7 +265,7 @@ function formatPlanets(index, lat, long) {
     console.log("jupiter altitude: " + jupiter.alt.toFixed(4));
   } else if (index === 6) {
     const saturn = pc.saturn(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const saturnrs = pc.saturnRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
@@ -285,7 +285,7 @@ function formatPlanets(index, lat, long) {
     console.log("saturn altitude: " + saturn.alt.toFixed(4));
   } else if (index === 7) {
     const uranus = pc.uranus(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const uranusrs = pc.uranusRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
@@ -305,7 +305,7 @@ function formatPlanets(index, lat, long) {
     console.log("uranus altitude: " + uranus.alt.toFixed(4));
   } else if (index === 8) {
     const neptune = pc.neptune(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const neptuners = pc.neptuneRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
@@ -325,7 +325,7 @@ function formatPlanets(index, lat, long) {
     console.log("neptune altitude: " + neptune.alt.toFixed(4));
   } else if (index === 9) {
     const pluto = pc.pluto(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut/24), lat, long, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const plutors = pc.plutoRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, lat, long);
 
