@@ -264,6 +264,7 @@ export function moon (day_number, latitude, longitude, UT) {
     let azimuth  = Math.atan2d( yhor, xhor ) + 180;
     let altitude = Math.atan2d( zhor , Math.sqrt(xhor*xhor + yhor*yhor));
     let mpar = Math.asind(1/distance);
+    let alt_geoc = altitude - mpar * Math.cosd(altitude);
     let gclat = latitude - 0.1924 * Math.sind(2*latitude);
     let rho   = 0.99833 + 0.00167 * Math.cosd(2*latitude);
     let g = Math.atand(Math.tand(gclat) / Math.cosd(hour_angle));
@@ -279,7 +280,7 @@ export function moon (day_number, latitude, longitude, UT) {
         ra: topocentric_right_ascension,
         decl: topocentric_declination,
         dist: distance,
-        alt: altitude,
+        alt: alt_geoc,
         az: azimuth,
     };
 }
