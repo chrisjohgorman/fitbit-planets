@@ -36,7 +36,7 @@ function launchTile() {
     touch.addEventListener("click", (evt) => {
       idx = index;
       console.log(`touched: ${index}`);
-      document.replaceSync("./resources/celestial-body.gui");
+      document.replaceSync("./resources/celestial-body.view");
       console.log(document.location.pathname);
       displayCoordinates();
     });
