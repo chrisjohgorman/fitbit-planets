@@ -1,35 +1,35 @@
-<svg>
-  <use id="myList" href="#tile-list" class="horizontal-pad">
-    <var id="separator-height-bottom" value="6" />
-    <use id="item1" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Sun" />
+<svg class="foreground">
+    <use id="myList" href="#tile-list" class="horizontal-pad">
+      <var id="separator-height-bottom" value="6" />
+      <use id="item1" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Sun" />
+      </use>
+      <use id="item2" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Mercury" />
+      </use>
+      <use id="item3" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Venus" />
+      </use>
+      <use id="item4" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Moon" />
+      </use>
+      <use id="item5" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Mars" />
+      </use>
+      <use id="item6" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Jupiter" />
+      </use>
+      <use id="item7" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Saturn" />
+      </use>
+      <use id="item8" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Uranus" />
+      </use>
+      <use id="item9" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Neptune" />
+      </use>
+      <use id="item10" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="Pluto" />
+      </use>
     </use>
-    <use id="item2" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Mercury" />
-    </use>
-    <use id="item3" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Venus" />
-    </use>
-    <use id="item4" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Moon" />
-    </use>
-    <use id="item5" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Mars" />
-    </use>
-    <use id="item6" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Jupiter" />
-    </use>
-    <use id="item7" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Saturn" />
-    </use>
-    <use id="item8" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Uranus" />
-    </use>
-    <use id="item9" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Neptune" />
-    </use>
-    <use id="item10" href="#my-item">
-      <set href="#text" attributeName="text-buffer" to="Pluto" />
-    </use>
-  </use>
 </svg>

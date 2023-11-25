@@ -1,98 +1,97 @@
-<svg class="background">
-  <text x="5%" y="30"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start"
-        text-length="32"
-        id="bodyName" />
-  <text x="5%" y="60"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">RA:</text>
-  <text x="95%" y="60"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="bodyRightAscension" />
-  <text x="5%" y="90"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Decl:</text>
-  <text x="95%" y="90"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="bodyDeclination" />
-  <text x="5%" y="120"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Dist:</text>
-  <text x="95%" y="120"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="bodyDistance" />
-  <text x="5%" y="150"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Az:</text>
-  <text x="95%" y="150"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="bodyAzimuth" />
-  <text x="5%" y="180"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Alt:</text>
-  <text x="95%" y="180"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="bodyAltitude" />
-  <text x="5%" y="210"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Rise:</text>
-  <text x="95%" y="210"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="bodyRiseTime" />
-  <text x="5%" y="240"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="start">Set:</text>
-  <text x="95%" y="240"
-        fill="white"
-        font-size="32"
-        font-family="System-Regular"
-        text-anchor="end"
-        text-length="32"
-        id="bodySetTime" />
-  <use id="button" href="#push-button" y="250" height="40" fill="fb-red" font-family="System-Regular" font-size="32">
-    <set href="#text" attributeName="text-buffer" to="Back" />
-    <set href="#text" attributeName="fill" to="fb-white" />
-    <set href="#text" attributeName="y" to="10" />
-  </use>
+<svg>
+  <rect x="0"   y="0" width="100%" height="100%" fill="#000000" />
+  <animate id="anim" attributeName="x" from="100%" to="0" begin="load" dur="0.5" easing="ease-in-out" />
+  <svg class="background">
+    <text x="5%" y="30"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="start"
+      text-length="32"
+      id="bodyName" />
+    <text x="5%" y="60"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="start">RA:</text>
+    <text x="95%" y="60"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="end"
+      text-length="32"
+      id="bodyRightAscension" />
+    <text x="5%" y="90"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="start">Decl:</text>
+    <text x="95%" y="90"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="end"
+      text-length="32"
+      id="bodyDeclination" />
+    <text x="5%" y="120"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="start">Dist:</text>
+    <text x="95%" y="120"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="end"
+      text-length="32"
+      id="bodyDistance" />
+    <text x="5%" y="150"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="start">Az:</text>
+    <text x="95%" y="150"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="end"
+      text-length="32"
+      id="bodyAzimuth" />
+    <text x="5%" y="180"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="start">Alt:</text>
+    <text x="95%" y="180"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="end"
+      text-length="32"
+      id="bodyAltitude" />
+    <text x="5%" y="210"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="start">Rise:</text>
+    <text x="95%" y="210"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="end"
+      text-length="32"
+      id="bodyRiseTime" />
+    <text x="5%" y="240"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="start">Set:</text>
+    <text x="95%" y="240"
+      fill="white"
+      font-size="32"
+      font-family="System-Regular"
+      text-anchor="end"
+      text-length="32"
+      id="bodySetTime" />
+  </svg>
 </svg>
