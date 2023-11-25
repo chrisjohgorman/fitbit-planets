@@ -36,7 +36,7 @@ function launchTile() {
     touch.addEventListener("click", (evt) => {
       idx = index;
       console.log(`touched: ${index}`);
-      document.replaceSync("./resources/celestial-body.view");
+      document.location.replace("./resources/celestial-body.view");
       console.log(document.location.pathname);
       displayCoordinates();
     });
@@ -88,14 +88,15 @@ function formatPlanets(index, lat, long) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
-  
-  let button = document.getElementById("button");
-  button.onactivate = function(evt) {
-    document.replaceSync("./resources/index.gui");
+
+  let tile = document.getElementById("anim");
+  if (tile != null) {
+  tile.oncollapse = function(evt) {
+    document.location.replace("./resources/index.view");
     console.log(document.location.pathname);
     launchTile();
   }
-  
+  }
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
       d.getUTCSeconds()/3600;
@@ -143,7 +144,7 @@ function formatPlanets(index, lat, long) {
       (d.getMonth() + 1), d.getDate(), ut, lat, long);
   */
 
-  if (index === 0) {
+  if (index === 0 && bodyName != null) {
     const sun = pc.sun(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const sunrs = pc.sunRiseSet(d.getFullYear(),
@@ -163,7 +164,7 @@ function formatPlanets(index, lat, long) {
     console.log("sun Dist: " + sun.dist.toFixed(4));
     console.log("sun azimuth: " + sun.az.toFixed(4));
     console.log("sun altitude: " + sun.alt.toFixed(4));
-  } else if (index === 1) {
+  } else if (index === 1 && bodyName != null) {
     const mercury = pc.mercury(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const mercuryrs = pc.mercuryRiseSet(d.getFullYear(),
@@ -183,7 +184,7 @@ function formatPlanets(index, lat, long) {
     console.log("mercury dist: " + mercury.dist.toFixed(4));
     console.log("mercury azimuth: " + mercury.az.toFixed(4));
     console.log("mercury altitude: " + mercury.alt.toFixed(4));
-  } else if (index === 2) {
+  } else if (index === 2 && bodyName != null) {
     const venus = pc.venus(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const venusrs = pc.venusRiseSet(d.getFullYear(),
@@ -203,7 +204,7 @@ function formatPlanets(index, lat, long) {
     console.log("venus Dist: " + venus.dist.toFixed(4));
     console.log("venus azimuth: " + venus.az.toFixed(4));
     console.log("venus altitude: " + venus.alt.toFixed(4));
-  } else if (index === 3) {
+  } else if (index === 3 && bodyName != null) {
     const moon = pc.moon(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const moonrs = pc.moonRiseSet(d.getFullYear(),
@@ -223,7 +224,7 @@ function formatPlanets(index, lat, long) {
     console.log("moon Dist: " + moon.dist.toFixed(4));
     console.log("moon azimuth: " + moon.az.toFixed(4));
     console.log("moon altitude: " + moon.alt.toFixed(4));
-  } else if (index === 4) {
+  } else if (index === 4 && bodyName != null) {
     const mars = pc.mars(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const marsrs = pc.marsRiseSet(d.getFullYear(),
@@ -243,7 +244,7 @@ function formatPlanets(index, lat, long) {
     console.log("mars Dist: " + mars.dist.toFixed(4));
     console.log("mars azimuth: " + mars.az.toFixed(4));
     console.log("mars altitude: " + mars.alt.toFixed(4));
-  } else if (index === 5) {
+  } else if (index === 5 && bodyName != null) {
     const jupiter = pc.jupiter(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const jupiterrs = pc.jupiterRiseSet(d.getFullYear(),
@@ -263,7 +264,7 @@ function formatPlanets(index, lat, long) {
     console.log("jupiter Dist: " + jupiter.dist.toFixed(4));
     console.log("jupiter azimuth: " + jupiter.az.toFixed(4));
     console.log("jupiter altitude: " + jupiter.alt.toFixed(4));
-  } else if (index === 6) {
+  } else if (index === 6 && bodyName != null) {
     const saturn = pc.saturn(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const saturnrs = pc.saturnRiseSet(d.getFullYear(),
@@ -283,7 +284,7 @@ function formatPlanets(index, lat, long) {
     console.log("saturn Dist: " + saturn.dist.toFixed(4));
     console.log("saturn azimuth: " + saturn.az.toFixed(4));
     console.log("saturn altitude: " + saturn.alt.toFixed(4));
-  } else if (index === 7) {
+  } else if (index === 7 && bodyName != null) {
     const uranus = pc.uranus(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const uranusrs = pc.uranusRiseSet(d.getFullYear(),
@@ -303,7 +304,7 @@ function formatPlanets(index, lat, long) {
     console.log("uranus Dist: " + uranus.dist.toFixed(4));
     console.log("uranus azimuth: " + uranus.az.toFixed(4));
     console.log("uranus altitude: " + uranus.alt.toFixed(4));
-  } else if (index === 8) {
+  } else if (index === 8 && bodyName != null) {
     const neptune = pc.neptune(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const neptuners = pc.neptuneRiseSet(d.getFullYear(),
@@ -323,7 +324,7 @@ function formatPlanets(index, lat, long) {
     console.log("neptune Dist: " + neptune.dist.toFixed(4));
     console.log("neptune azimuth: " + neptune.az.toFixed(4));
     console.log("neptune altitude: " + neptune.alt.toFixed(4));
-  } else if (index === 9) {
+  } else if (index === 9 && bodyName != null) {
     const pluto = pc.pluto(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const plutors = pc.plutoRiseSet(d.getFullYear(),
