@@ -18,8 +18,8 @@
       "run_background"
     ],
     "buildTargets": [
-      "atlas",
-      "vulcan"
+      "rhea",
+      "hera"
     ],
     "i18n": {},
     "defaultLanguage": "en-US"
