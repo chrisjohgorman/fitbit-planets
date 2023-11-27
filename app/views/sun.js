@@ -13,6 +13,8 @@ export function init() {
 }
 
 function locationSuccess(position) {
+  console.log("Latitude: " + position.coords.latitude,
+    "Longitude: " + position.coords.longitude);
   formatPlanets(position.coords.latitude, position.coords.longitude);
 }
 
