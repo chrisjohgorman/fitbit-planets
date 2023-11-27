@@ -1,11 +1,12 @@
 {
   "name": "fitbit-planets",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@fitbit/sdk": "^7.2.0-pre.0",
-    "@fitbit/sdk-cli": "^1.8.0-pre.11"
+    "@fitbit/sdk-cli": "^1.8.0-pre.11",
+    "@fitbit/sdk-build-targets": "cmengler/fitbit-sdk-build-targets"
   },
   "fitbit": {
     "appUUID": "4b678716-7e8e-4259-893d-d4b026e3c4a5",
@@ -22,7 +23,8 @@
       "hera"
     ],
     "i18n": {},
-    "defaultLanguage": "en-US"
+    "defaultLanguage": "en-US",
+    "enableProposedAPI": true
   },
   "scripts": {
     "build": "fitbit-build",
