@@ -5,6 +5,7 @@ import * as fs from "fs";
 
 
 var idx = 0;
+var flag = 0;
 
 //////////////////////////////////
 // { Sun view menu entry
@@ -12,7 +13,7 @@ var idx = 0;
 function sunViewStart() {
   console.log("sun-view clicked");
   idx = 0;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -25,7 +26,7 @@ function sunViewStart() {
 function mercuryViewStart() {
   console.log("mercury-view clicked");
   idx = 1;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -39,7 +40,7 @@ function mercuryViewStart() {
 function venusViewStart() {
   console.log("venus-view clicked");
   idx = 2;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -52,7 +53,7 @@ function venusViewStart() {
 function moonViewStart() {
   console.log("moon-view clicked");
   idx = 3;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -65,7 +66,7 @@ function moonViewStart() {
 function marsViewStart() {
   console.log("mars-view clicked");
   idx = 4;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -78,7 +79,7 @@ function marsViewStart() {
 function jupiterViewStart() {
   console.log("jupiter-view clicked");
   idx = 5;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -91,7 +92,7 @@ function jupiterViewStart() {
 function saturnViewStart() {
   console.log("saturn-view clicked");
   idx = 6;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -104,7 +105,7 @@ function saturnViewStart() {
 function uranusViewStart() {
   console.log("uranus-view clicked");
   idx = 7;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -117,7 +118,7 @@ function uranusViewStart() {
 function neptuneViewStart() {
   console.log("neptune-view clicked");
   idx = 8;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
@@ -130,21 +131,69 @@ function neptuneViewStart() {
 function plutoViewStart() {
   console.log("pluto-view clicked");
   idx = 9;
-  geolocation.getCurrentPosition(locationSuccess, locationError);
+  displayCoordinates();
   document.location.assign('celestial-body.view');
 }
 
 // }
 //////////////////////////////////
 
-function locationSuccess(position) {
-  console.log("Latitude: " + position.coords.latitude,
-    "Longitude: " + position.coords.longitude);
-  formatPlanets(idx, position.coords.latitude, position.coords.longitude);
-}
-
 function locationError(error) {
   console.log("Error: " + error.code, "Message: " + error.message);
+}
+
+async function displayCoordinates() {
+  geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
+  if(fs.existsSync("/private/data/fb-planets.txt")) {
+    console.log("GPS cache file exists, using cache");
+    let GPSObject  = fs.readFileSync("/private/data/fb-planets.txt", "json");
+    console.log("GPS lat/long: " + GPSObject.latitude + " " +
+      GPSObject.longitude);
+    let cacheLatitude = GPSObject.latitude;
+    let cacheLongitude = GPSObject.longitude;
+    await formatPlanets(idx, cacheLatitude, cacheLongitude);
+  } else {
+    console.log("failed to find JSON GPS cache file");
+    if (flag === 0) {
+      let flag = 1;
+      // Write to fb-planets.txt for initial pass
+      let GPSDataInitial = {
+        "_id": "2331f964fcc9e0fd86378c16",
+        "guid": "ca5a8609-a076-607d-f714-a1a54dd50fbf",
+        "registered": "2021-04-05T18:38:25 GMT-04:00",
+        "latitude": 45.36585,
+        "longitude": -75.7894,
+      };
+      fs.writeFileSync("/private/data/fb-planets.txt", GPSDataInitial, "json");
+      await formatPlanets(idx, 45.36585, -75.7894);
+    }
+  }
+}
+
+var geoOptions = {
+  enableHighAccuracy: false,
+  maximumAge        : 0,
+  timeout           : Infinity,
+};
+
+function locationSuccess(position) {
+  //cache GPS data in json file
+  let GPS_data = {
+    "_id": "2331f964fcc9e0fd86378c16",
+    "guid": "ca5a8609-a076-607d-f714-a1a54dd50fbf",
+    "registered": "2021-04-05T18:38:25 GMT-04:00",
+    "latitude": position.coords.latitude,
+    "longitude": position.coords.longitude,
+  };
+  fs.writeFileSync("/private/data/fb-planets.txt", GPS_data, "json");
+
+  //debugging
+  let GPSObject = fs.readFileSync("/private/data/fb-planets.txt", "json");
+  let lat = GPSObject.latitude;
+  let long = GPSObject.longitude;
+  console.log("latitude:" + lat); 
+  console.log("longitude:" + long); 
+  formatPlanets(idx, position.coords.latitude, position.coords.longitude);
 }
 
 function formatPlanets(index, lat, long) {
