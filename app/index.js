@@ -170,16 +170,6 @@ function formatPlanets(index, lat, long) {
   
     bodyName.text = "Sun";
     bodyRightAscension.text = `${sun.ra.toFixed(4)}` + " h";
-    const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
-        d.getUTCSeconds()/3600;
-  
-    const sun = pc.sun(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
-    const sunrs = pc.sunRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, lat, long);
-  
-    bodyName.text = "Sun";
-    bodyRightAscension.text = `${sun.ra.toFixed(4)}` + " h";
     bodyDeclination.text = `${sun.decl.toFixed(4)}` + "°";
     bodyDistance.text = `${sun.dist.toFixed(4)}` + " au";
     bodyAzimuth.text = `${sun.az.toFixed(4)}` + "°";
