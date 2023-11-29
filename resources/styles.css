@@ -3,6 +3,70 @@
 .foreground-fill            { fill: fb-white; }
 .background-fill            { fill: fb-black; }
 
+#bodyName {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#bodyRightAscension {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#bodyDeclination {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#bodyDistance {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#bodyAzimuth {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#bodyAltitude {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#bodyRiseTime {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
+#bodySetTime {
+  font-size: 32;
+  font-family: System-Regular;
+  text-length: 32;
+  text-anchor: end;
+  fill: white;
+}
+
 .container {
   x: 10%;
   y: 60%;
@@ -84,7 +148,6 @@
   width: 50;
   height: 50;
 }
-
 .my-button {
   height: 10%;
 }
@@ -112,68 +175,4 @@
   text-anchor: middle;
   width: 80%;
   fill: "fb-white";
-}
-
-#bodyName {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#bodyRightAscension {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#bodyDeclination {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#bodyDistance {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#bodyAzimuth {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#bodyAltitude {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#bodyRiseTime {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
-}
-
-#bodySetTime {
-  font-size: 32;
-  font-family: System-Regular;
-  text-length: 32;
-  text-anchor: end;
-  fill: white;
 }
