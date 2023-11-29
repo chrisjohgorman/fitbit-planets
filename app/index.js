@@ -1,4 +1,4 @@
-import document from "document";
+import * as document from "document";
 import { geolocation } from "geolocation";
 import * as pc from "../common/planetCoordinates.js";
 import * as fs from "fs";
@@ -142,7 +142,7 @@ function locationError(error) {
   console.log("Error: " + error.code, "Message: " + error.message);
 }
 
-async function displayCoordinates() {
+function displayCoordinates() {
   geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
   if(fs.existsSync("/private/data/fb-planets.txt")) {
     console.log("GPS cache file exists, using cache");
@@ -151,7 +151,7 @@ async function displayCoordinates() {
       GPSObject.longitude);
     let cacheLatitude = GPSObject.latitude;
     let cacheLongitude = GPSObject.longitude;
-    await formatPlanets(idx, cacheLatitude, cacheLongitude);
+    formatPlanets(idx, cacheLatitude, cacheLongitude);
   } else {
     console.log("failed to find JSON GPS cache file");
     if (flag === 0) {
@@ -165,7 +165,6 @@ async function displayCoordinates() {
         "longitude": -75.7894,
       };
       fs.writeFileSync("/private/data/fb-planets.txt", GPSDataInitial, "json");
-      await formatPlanets(idx, 45.36585, -75.7894);
     }
   }
 }
@@ -197,7 +196,7 @@ function locationSuccess(position) {
 }
 
 function formatPlanets(index, lat, long) {
-  //
+
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
   const bodyDeclination = document.getElementById("bodyDeclination");
@@ -211,7 +210,7 @@ function formatPlanets(index, lat, long) {
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
       d.getUTCSeconds()/3600;
 
-  if (index === 0) {
+  if (1) {
     const sun = pc.sun(pc.dayNumber(d.getFullYear(),
         (d.getMonth() + 1),d.getDate(), ut), lat, long, ut);
     const sunrs = pc.sunRiseSet(d.getFullYear(),
