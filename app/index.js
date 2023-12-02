@@ -4,12 +4,6 @@ import * as pc from "../common/planetCoordinates.js";
 import * as fs from "fs";
 import { inbox } from "file-transfer"
 
-
-//var idx = 0;
-//var flag = 0;
-const latitude = 45.3654395;
-const longitude = -75.7895892;
-
 //////////////////////////////////
 // { Sun view menu entry
 
@@ -542,10 +536,10 @@ async function displayCoordinates() {
     inbox.addEventListener("newfile", processAllFiles);
     await processAllFiles();
     //GPSObject = fs.readFileSync('/private/data/companion-fb-planets.txt', 'cbor');
-    latitude = 45.3654395;
-    longitude = -75.7895892;
+    const latitude = 45.3654395;
+    const longitude = -75.7895892;
     console.log("using gps data from companion");
-    //updateMainMenu();
+    updateMainMenu(latitude, longitude);
   } else if (fs.existsSync("/private/data/fb-planets.txt")) {
     console.log("Watch GPS cache file exists, using cache");
     let GPSObject  = fs.readFileSync("/private/data/fb-planets.txt", "json");
@@ -553,11 +547,11 @@ async function displayCoordinates() {
       GPSObject.longitude);
     var latitude = GPSObject.latitude;
     var longitude = GPSObject.longitude;
-    //updateMainMenu();
+    updateMainMenu(latitude, longitude);
   } else {
     // FIXME add gps error to top of page displayed
     console.log("Failed to set gps");
-    //updateMainMenu();
+    updateMainMenu(latitude, longitude);
   }
 }
 
@@ -626,5 +620,5 @@ function updateMainMenu(lat, lon) {
  }, false );
 }
 
-//displayCoordinates();
-updateMainMenu(latitude, longitude);
+displayCoordinates();
+//updateMainMenu(latitude, longitude);
