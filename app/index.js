@@ -7,19 +7,20 @@ import { inbox } from "file-transfer"
 
 //var idx = 0;
 //var flag = 0;
-var latitude = 0
-var longitude = 0;
-
+const latitude = 45.3654395;
+const longitude = -75.7895892;
 
 //////////////////////////////////
 // { Sun view menu entry
 
-function sunViewStart() {
+function sunViewStart(lat, lon) {
   console.log("sun-view clicked");
-  document.location.assign('celestial-body.view').then(updateSun);
+  document.location.assign('celestial-body.view').then(() => {
+    updateSun(lat, lon);
+  });
 }
 
-function updateSun() {
+function updateSun(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -36,9 +37,9 @@ function updateSun() {
   console.log("Date is " + `${d}`);
 
   let sun = pc.sun(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let sunrs = pc.sunRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Sun";
@@ -64,12 +65,14 @@ function updateSun() {
 //////////////////////////////////
 // { Mercury view menu entry
 
-function mercuryViewStart() {
+function mercuryViewStart(lat, lon) {
   console.log("mercury-view clicked");
-  document.location.assign('celestial-body.view').then(updateMercury);
+  document.location.assign('celestial-body.view').then(() => {
+    updateMercury(lat, lon);
+  });
 }
 
-function updateMercury() {
+function updateMercury(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -86,9 +89,9 @@ function updateMercury() {
   console.log("Date is " + `${d}`);
 
   let mercury = pc.mercury(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let mercuryrs = pc.mercuryRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Mercury";
@@ -116,12 +119,14 @@ function updateMercury() {
 //////////////////////////////////
 // { Venus view menu entry
 
-function venusViewStart() {
+function venusViewStart(lat, lon) {
   console.log("venus-view clicked");
-  document.location.assign('celestial-body.view').then(updateVenus);
+  document.location.assign('celestial-body.view').then(() => {
+    updateVenus(lat, lon);
+  });
 }
 
-function updateVenus() {
+function updateVenus(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -138,9 +143,9 @@ function updateVenus() {
   console.log("Date is " + `${d}`);
 
   let venus = pc.venus(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let venusrs = pc.venusRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Venus";
@@ -166,12 +171,14 @@ function updateVenus() {
 //////////////////////////////////
 // { Moon view menu entry
 
-function moonViewStart() {
+function moonViewStart(lat, lon) {
   console.log("moon-view clicked");
-  document.location.assign('celestial-body.view').then(updateMoon);
+  document.location.assign('celestial-body.view').then(() => {
+    updateMoon(lat, lon);
+  });
 }
 
-function updateMoon() {
+function updateMoon(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -188,9 +195,9 @@ function updateMoon() {
   console.log("Date is " + `${d}`);
 
   let moon = pc.moon(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let moonrs = pc.moonRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
  
   bodyName.text = "Moon";
@@ -216,12 +223,14 @@ function updateMoon() {
 //////////////////////////////////
 // { Mars view menu entry
 
-function marsViewStart() {
+function marsViewStart(lat, lon) {
   console.log("mars-view clicked");
-  document.location.assign('celestial-body.view').then(updateMars);
+  document.location.assign('celestial-body.view').then(() => {
+    updateMars(lat, lon);
+  });
 }
 
-function updateMars() {
+function updateMars(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -238,9 +247,9 @@ function updateMars() {
   console.log("Date is " + `${d}`);
 
   let mars = pc.mars(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let marsrs = pc.marsRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Mars";
@@ -266,12 +275,14 @@ function updateMars() {
 //////////////////////////////////
 // { Jupiter view menu entry
 
-function jupiterViewStart() {
+function jupiterViewStart(lat, lon) {
   console.log("jupiter-view clicked");
-  document.location.assign('celestial-body.view').then(updateJupiter);
+  document.location.assign('celestial-body.view').then(() => {
+    updateJupiter(lat, lon);
+  });
 }
 
-function updateJupiter() {
+function updateJupiter(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -288,9 +299,9 @@ function updateJupiter() {
   console.log("Date is " + `${d}`);
 
   let jupiter = pc.jupiter(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let jupiterrs = pc.jupiterRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Jupiter";
@@ -316,12 +327,14 @@ function updateJupiter() {
 //////////////////////////////////
 // { Saturn view menu entry
 
-function saturnViewStart() {
+function saturnViewStart(lat, lon) {
   console.log("saturn-view clicked");
-  document.location.assign('celestial-body.view').then(updateSaturn);
+  document.location.assign('celestial-body.view').then(() => {
+    updateSaturn(lat, lon);
+  });
 }
 
-function updateSaturn() {
+function updateSaturn(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -338,9 +351,9 @@ function updateSaturn() {
   console.log("Date is " + `${d}`);
 
   let saturn = pc.saturn(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let saturnrs = pc.saturnRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Saturn";
@@ -366,12 +379,14 @@ function updateSaturn() {
 //////////////////////////////////
 // { Uranus view menu entry
 
-function uranusViewStart() {
+function uranusViewStart(lat, lon) {
   console.log("uranus-view clicked");
-  document.location.assign('celestial-body.view').then(updateUranus);
+  document.location.assign('celestial-body.view').then(() => {
+    updateUranus(lat, lon);
+  });
 }
 
-function updateUranus() {
+function updateUranus(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -388,9 +403,9 @@ function updateUranus() {
   console.log("Date is " + `${d}`);
 
   let uranus = pc.uranus(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let uranusrs = pc.uranusRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Uranus";
@@ -416,12 +431,14 @@ function updateUranus() {
 //////////////////////////////////
 // { Neptune view menu entry
 
-function neptuneViewStart() {
+function neptuneViewStart(lat, lon) {
   console.log("neptune-view clicked");
-  document.location.assign('celestial-body.view').then(updateNeptune);
+  document.location.assign('celestial-body.view').then(() => {
+    updateNeptune(lat, lon);
+  });
 }
 
-function updateNeptune() {
+function updateNeptune(lat, lon) {
   
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -438,9 +455,9 @@ function updateNeptune() {
   console.log("Date is " + `${d}`);
 
   let neptune = pc.neptune(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let neptuners = pc.neptuneRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Neptune";
@@ -466,12 +483,14 @@ function updateNeptune() {
 //////////////////////////////////
 // { Pluto view menu entry
 
-function plutoViewStart() {
+function plutoViewStart(lat, lon) {
   console.log("pluto-view clicked");
-  document.location.assign('celestial-body.view').then(updatePluto);
+  document.location.assign('celestial-body.view').then(() => {
+    updatePluto(lat, lon);
+  });
 }
 
-function updatePluto() {
+function updatePluto(lat, lon) {
 
   const bodyName = document.getElementById("bodyName");
   const bodyRightAscension = document.getElementById("bodyRightAscension");
@@ -488,9 +507,9 @@ function updatePluto() {
   console.log("Date is " + `${d}`);
 
   let pluto = pc.pluto(pc.dayNumber(d.getFullYear(),
-        (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
+        (d.getMonth() + 1),d.getDate(), ut), lat, lon, ut);
   let plutors = pc.plutoRiseSet(d.getFullYear(),
-        (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
+        (d.getMonth() + 1), d.getDate(), ut, lat, lon);
   console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Pluto";
@@ -523,10 +542,10 @@ async function displayCoordinates() {
     inbox.addEventListener("newfile", processAllFiles);
     await processAllFiles();
     //GPSObject = fs.readFileSync('/private/data/companion-fb-planets.txt', 'cbor');
-    var latitude = 45.3654395;
-    var longitude = -75.7895892;
+    latitude = 45.3654395;
+    longitude = -75.7895892;
     console.log("using gps data from companion");
-    updateMainMenu();
+    //updateMainMenu();
   } else if (fs.existsSync("/private/data/fb-planets.txt")) {
     console.log("Watch GPS cache file exists, using cache");
     let GPSObject  = fs.readFileSync("/private/data/fb-planets.txt", "json");
@@ -534,11 +553,11 @@ async function displayCoordinates() {
       GPSObject.longitude);
     var latitude = GPSObject.latitude;
     var longitude = GPSObject.longitude;
-    updateMainMenu();
+    //updateMainMenu();
   } else {
     // FIXME add gps error to top of page displayed
     console.log("Failed to set gps");
-    updateMainMenu();
+    //updateMainMenu();
   }
 }
 
@@ -574,17 +593,38 @@ function locationSuccess(position) {
   console.log("fb-planets.txt longitude:" + GPSObject.longitude); 
 }
 
-function updateMainMenu() {
-  document.getElementById("sun-view/start").addEventListener("click", sunViewStart);
-  document.getElementById("mercury-view/start").addEventListener("click", mercuryViewStart);
-  document.getElementById("venus-view/start").addEventListener("click", venusViewStart);
-  document.getElementById("moon-view/start").addEventListener("click", moonViewStart);
-  document.getElementById("mars-view/start").addEventListener("click", marsViewStart);
-  document.getElementById("jupiter-view/start").addEventListener("click", jupiterViewStart);
-  document.getElementById("saturn-view/start").addEventListener("click", saturnViewStart);
-  document.getElementById("uranus-view/start").addEventListener("click", uranusViewStart);
-  document.getElementById("neptune-view/start").addEventListener("click", neptuneViewStart);
-  document.getElementById("pluto-view/start").addEventListener("click", plutoViewStart);
+function updateMainMenu(lat, lon) {
+  document.getElementById("sun-view/start").addEventListener("click", function() {
+   sunViewStart(lat, lon);
+ }, false );
+  document.getElementById("mercury-view/start").addEventListener("click", function() {
+   mercuryViewStart(lat, lon);
+ }, false );
+  document.getElementById("venus-view/start").addEventListener("click", function() {
+   venusViewStart(lat, lon);
+ }, false );
+  document.getElementById("moon-view/start").addEventListener("click", function() {
+   moonViewStart(lat, lon);
+ }, false );
+  document.getElementById("mars-view/start").addEventListener("click", function() {
+   marsViewStart(lat, lon);
+ }, false );
+  document.getElementById("jupiter-view/start").addEventListener("click", function() {
+   jupiterViewStart(lat, lon);
+ }, false );
+  document.getElementById("saturn-view/start").addEventListener("click", function() {
+   saturnViewStart(lat, lon);
+ }, false );
+  document.getElementById("uranus-view/start").addEventListener("click", function() {
+   uranusViewStart(lat, lon);
+ }, false );
+  document.getElementById("neptune-view/start").addEventListener("click", function() {
+   neptuneViewStart(lat, lon);
+ }, false );
+  document.getElementById("pluto-view/start").addEventListener("click", function() {
+   plutoViewStart(lat, lon);
+ }, false );
 }
 
-displayCoordinates();
+//displayCoordinates();
+updateMainMenu(latitude, longitude);
