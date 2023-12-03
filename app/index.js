@@ -2,7 +2,7 @@ import * as document from "document";
 import { geolocation } from "geolocation";
 import * as pc from "../common/planetCoordinates.js";
 import * as fs from "fs";
-import { inbox } from "file-transfer"
+import * as messaging from "messaging";
 
 //////////////////////////////////
 // { Sun view menu entry
@@ -530,35 +530,71 @@ function locationError(error) {
   console.log("Error: " + error.code, "Message: " + error.message);
 }
 
-async function displayCoordinates() {
+function getCoordinates() {
   geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
-  if(!fs.existsSync("/private/data/companion-fb-planets.txt")) {
-    inbox.addEventListener("newfile", processAllFiles);
-    await processAllFiles();
-    //GPSObject = fs.readFileSync('/private/data/companion-fb-planets.txt', 'cbor');
-    const latitude = 45.3654395;
-    const longitude = -75.7895892;
-    console.log("using gps data from companion");
+  if(!fs.existsSync("/private/data/phone-fb-planets.txt") 
+      && !(fs.existsSync("/private/data/watch-fb-planets.txt"))) {
+    messaging.peerSocket.onmessage = evt => {
+      console.log("phone latitude " + JSON.stringify(evt.data.latitude));
+      console.log("phone longitude " + JSON.stringify(evt.data.longitude));
+      const lat = JSON.stringify(evt.data.latitude);
+      const lon = JSON.stringify(evt.data.longitude);
+      //cache GPS data in json file
+      const GPSData = {
+        "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
+        "guid": "de88671e-125f-4166-a9c5-a12389d8696a",
+        "registered": "2023-12-01T08:46:05 GMT-05:00",
+        "latitude": lat,
+        "longitude": lon,
+      };
+      fs.writeFileSync("/private/data/phone-fb-planets.txt", GPSData, "json");
+      updateMainMenu(lat, lon);
+    };
+  } else if (fs.existsSync("/private/data/phone-fb-planets.txt") 
+      && !(fs.existsSync("/private/data/watch-fb-planets.txt"))) {
+    const GPSObject = fs.readFileSync("/private/data/phone-fb-planets.txt", "json");
+    console.log("phone GPS cache file exists, using cache");
+    console.log("phone no watch GPS lat/long: " + GPSObject.latitude + " " +
+      GPSObject.longitude);
+    const latitude = GPSObject.latitude;
+    const longitude = GPSObject.longitude;
     updateMainMenu(latitude, longitude);
-  } else if (fs.existsSync("/private/data/fb-planets.txt")) {
+  } else if (!fs.existsSync("/private/data/phone-fb-planets.txt") 
+      && fs.existsSync("/private/data/watch-fb-planets.txt")) {
+    const GPSObject = fs.readFileSync("/private/data/watch-fb-planets.txt", "json");
     console.log("Watch GPS cache file exists, using cache");
-    let GPSObject  = fs.readFileSync("/private/data/fb-planets.txt", "json");
+    console.log("watch no phone GPS lat/long: " + GPSObject.latitude + " " +
+      GPSObject.longitude);
+    const latitude = GPSObject.latitude;
+    const longitude = GPSObject.longitude;
+    updateMainMenu(latitude, longitude);
+  } else if (fs.existsSync("/private/data/phone-fb-planets.txt") 
+      && fs.existsSync("/private/data/watch-fb-planets.txt")) {
+    // find newer file and use it
+    // remove older file
+    const phoneStats = fs.statSync("/private/data/phone-fb-planets.txt", "json");
+    const watchStats = fs.statSync("/private/data/watch-fb-planets.txt", "json");
+    console.log("Last modified phone: " + phoneStats.mtime);
+    console.log("Last modified watch: " + watchStats.mtime);
+
+    if (phoneStats.mtime > watchStats.mtime) {
+      fs.unlinkSync("/private/data/watch-fb-planets.txt");
+      const GPSObject = fs.readFileSync("/private/data/phone-fb-planets.txt", "json");
+      console.log("Phone GPS cache file newer, using it");
+    } else {
+      fs.unlinkSync("/private/data/phone-fb-planets.txt");
+      const GPSObject = fs.readFileSync("/private/data/watch-fb-planets.txt", "json");
+      console.log("Watch GPS cache file newer, using it");
+    }
     console.log("GPS lat/long: " + GPSObject.latitude + " " +
       GPSObject.longitude);
-    var latitude = GPSObject.latitude;
-    var longitude = GPSObject.longitude;
+    const latitude = GPSObject.latitude;
+    const longitude = GPSObject.longitude;
     updateMainMenu(latitude, longitude);
   } else {
-    // FIXME add gps error to top of page displayed
+    // TODO add gps error to top of page displayed
     console.log("Failed to set gps");
     updateMainMenu(latitude, longitude);
-  }
-}
-
-function processAllFiles() {
-  let fileName;
-  while (fileName = inbox.nextFile()) {
-      console.log("Received:", fileName);
   }
 }
 
@@ -577,14 +613,14 @@ function locationSuccess(position) {
     "latitude": position.coords.latitude,
     "longitude": position.coords.longitude,
   };
-  fs.writeFileSync("/private/data/fb-planets.txt", GPSData, "json");
+  fs.writeFileSync("/private/data/watch-fb-planets.txt", GPSData, "json");
   var latitude = position.coords.latitude;
   var longitude = position.coords.longitude;
 
   //debugging
-  let GPSObject = fs.readFileSync("/private/data/fb-planets.txt", "json");
-  console.log("fb-planets.txt latitude:" + GPSObject.latitude); 
-  console.log("fb-planets.txt longitude:" + GPSObject.longitude); 
+  let GPSObject = fs.readFileSync("/private/data/watch-fb-planets.txt", "json");
+  console.log("watch-fb-planets.txt latitude:" + GPSObject.latitude); 
+  console.log("watch-fb-planets.txt longitude:" + GPSObject.longitude); 
 }
 
 function updateMainMenu(lat, lon) {
@@ -620,5 +656,4 @@ function updateMainMenu(lat, lon) {
  }, false );
 }
 
-displayCoordinates();
-//updateMainMenu(latitude, longitude);
+getCoordinates();

@@ -1,28 +1,34 @@
 /*
  * Entry point for the companion app
  */
+
+import * as messaging from "messaging";
 import { geolocation } from "geolocation";
-import { encode } from 'cbor';
-import { outbox } from "file-transfer";
+import { me as companion } from "companion";
 
-console.log("Companion code started");
+messaging.peerSocket.addEventListener("error", (err) => {
+  console.error(`Connection error: ${err.code} - ${err.message}`);
+});
 
-geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
+function sendMessage(data) {
+  if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+    // Send the data to peer as a message
+    messaging.peerSocket.send(data);
+  }
+}
 
-function locationSuccess(position) {
+async function locationSuccess(position) {
   console.log(
-    "Latitude: " + position.coords.latitude,
-    "Longitude: " + position.coords.longitude
+    "companion Latitude: " + position.coords.latitude,
+    "companion Longitude: " + position.coords.longitude
   );
-  let GPSData = {  
-    "_id": "7887d7f58ae0a6afcfd61ce206e7137c",
-    "guid": "ab76cd9d-583d-496c-97a7-6f2a8360c112",
-    "registered": "2023-12-01T08:41:21 GMT-05:00",
-    "latitude": position.coords.latitude,
-    "longitude": position.coords.longitude,
+  const data = {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
   };
-  const myFileInfo = encode(GPSData);
-  outbox.enqueue('companion-fb-planets.txt', myFileInfo);
+  console.log("data is " + data);
+  await sendMessage(data);
+  console.log("message sent");
 }
 
 function locationError(error) {
@@ -34,3 +40,24 @@ var geoOptions = {
   maximumAge        : 0,
   timeout           : Infinity,
 };
+
+function getCoordinates() {
+    geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
+}
+
+
+// Listen for the event
+companion.addEventListener("readystatechange", doThis);
+
+// The Device application caused the Companion to start
+if (companion.launchReasons.peerAppLaunched) {
+  doThis();
+}
+
+function doThis() {
+  messaging.peerSocket.onopen = () => {
+    getCoordinates();
+  };
+  console.log("Device application was launched!");
+}
+
