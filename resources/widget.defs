@@ -1,18 +1,122 @@
 <svg>
   <defs>
-    <link rel="stylesheet" href="styles.css" />
     <link rel="import" href="/mnt/sysassets/system_widget.defs" />
 
     <link rel="import" href="/mnt/sysassets/widgets/baseview_widget.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/scrollbar.defs" />
-    <link rel="import" href="/mnt/sysassets/widgets/tile_list_widget.defs" />
+    <link rel="import" href="/mnt/sysassets/widgets/scrollview_widget.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/text_button.defs" />
+    <link rel="import" href="/mnt/sysassets/widgets/tile_list_widget.defs" />
+    <link rel="import" href="/mnt/sysassets/widgets/toggle_switch.defs" />
 
-    <symbol id="my-item" href="#tile-list-item" class="list-item">
-      <rect class="bg" />
-      <text id="text" />
-      <rect class="line" />
-      <rect id="touch" pointer-events="all" />
+    <link rel="stylesheet" href="/mnt/sysassets/colors_typography.css" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Tile list header widget -->
+    <symbol id="my-tile-list-header" href="#tile-list-header">
+      <text id="text" class="h5 uppercase application-fill center-text" />
+      <rect id="tile-divider-bottom" class="tile-divider-top" />
     </symbol>
+
+    <!-- Tile list sun widget -->
+    <symbol id="my-tile-list-sun" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/sun.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list mercury widget -->
+    <symbol id="my-tile-list-mercury" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/mercury.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list venus widget -->
+    <symbol id="my-tile-list-venus" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/venus.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list moon widget -->
+    <symbol id="my-tile-list-moon" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/moon.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list mars widget -->
+    <symbol id="my-tile-list-mars" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/mars.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list jupiter widget -->
+    <symbol id="my-tile-list-jupiter" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/jupiter.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list saturn widget -->
+    <symbol id="my-tile-list-saturn" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/saturn.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list uranus widget -->
+    <symbol id="my-tile-list-uranus" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/uranus.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list neptune widget -->
+    <symbol id="my-tile-list-neptune" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/neptune.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
+    <!-- Tile list pluto widget -->
+    <symbol id="my-tile-list-pluto" href="#tile-list-item">
+      <rect id="tile-background" class="tile-background" />
+      <image class="tile-list-icon" href="icons/pluto.png" />
+      <text id="text" class="foreground-fill" />
+      <rect id="start" class="tile-background" opacity="0"
+      pointer-events="visible" />
+      <rect id="tile-divider-bottom" class="tile-divider-bottom" />
+    </symbol>
+
   </defs>
 </svg>

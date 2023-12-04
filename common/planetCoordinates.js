@@ -154,9 +154,9 @@ export function sun (day_number, latitude, longitude, UT) {
     // convert right_ascension to hours
     right_ascension = right_ascension / 15;
     let declination = Math.atan2d(zequat,
-        Math.sqrt(Math.pow(xequat, 2) + Math.pow(yequat, 2)));
-    let distance = Math.sqrt(Math.pow(xequat, 2) +
-        Math.pow(yequat, 2) + Math.pow(zequat, 2));
+        Math.sqrt(Math.pow(Math.abs(xequat), 2) + Math.pow(Math.abs(yequat), 2)));
+    let distance = Math.sqrt(Math.pow(Math.abs(xequat), 2) +
+        Math.pow(Math.abs(yequat), 2) + Math.pow(Math.abs(zequat), 2));
     
     // calculate hour angle
     let hour_angle = (sidtime(day_number, longitude, UT) - right_ascension) * 15;
@@ -173,8 +173,9 @@ export function sun (day_number, latitude, longitude, UT) {
 
     // finally calculate azimuth and altitude 
     let azimuth = Math.atan2d(yhor, xhor) + 180;
-    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2)
-        + Math.pow(yhor, 2)));
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(Math.abs(xhor), 2)
+        + Math.pow(Math.abs(yhor), 2)));
+
     return{
         ra: right_ascension,
         decl: declination,
@@ -346,8 +347,8 @@ export function mercury (day_number, latitude, longitude, UT) {
     let yhor = y;
     let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
     let azimuth = Math.atan2d(yhor,xhor) + 180;
-    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
-        + Math.pow(yhor, 2))); 
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(Math.abs(xhor), 2) 
+        + Math.pow(Math.abs(yhor), 2))); 
     return{
         ra: RA,
         decl: Dec,
@@ -418,8 +419,8 @@ export function venus (day_number, latitude, longitude, UT) {
     let yhor = y;
     let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
     let azimuth = Math.atan2d(yhor,xhor) + 180;
-    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
-        + Math.pow(yhor, 2)));
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(Math.abs(xhor), 2) 
+        + Math.pow(Math.abs(yhor), 2)));
     return{
         ra: RA,
         decl: Dec,
@@ -490,8 +491,8 @@ export function mars (day_number, latitude, longitude, UT) {
     let yhor = y;
     let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
     let azimuth = Math.atan2d(yhor,xhor) + 180;
-    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
-        + Math.pow(yhor, 2)));
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(Math.abs(xhor), 2) 
+        + Math.pow(Math.abs(yhor), 2)));
     return{
         ra: RA,
         decl: Dec,
@@ -575,8 +576,8 @@ export function jupiter (day_number, latitude, longitude, UT) {
     let yhor = y;
     let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
     let azimuth = Math.atan2d(yhor,xhor) + 180;
-    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
-        + Math.pow(yhor, 2)));
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(Math.abs(xhor), 2) 
+        + Math.pow(Math.abs(yhor), 2)));
     return{
         ra: RA,
         decl: Dec,
@@ -661,8 +662,8 @@ export function saturn (day_number, latitude, longitude, UT) {
     let yhor = y;
     let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
     let azimuth = Math.atan2d(yhor,xhor) + 180;
-    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
-        + Math.pow(yhor, 2)));
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(Math.abs(xhor), 2) 
+        + Math.pow(Math.abs(yhor), 2)));
     return{
         ra: RA,
         decl: Dec,
@@ -705,8 +706,8 @@ export function uranus (day_number, latitude, longitude, UT) {
     // convert to ecliptic longitude and latitude
     let lon = Math.atan2d(yeclip, xeclip);
     lon = Math.revolveDegree(lon);
-    let lat = Math.atan2d(zeclip, Math.sqrt(Math.pow(xeclip, 2) + 
-        Math.pow(yeclip, 2)));
+    let lat = Math.atan2d(zeclip, Math.sqrt(Math.pow(Math.abs(xeclip), 2) + 
+        Math.pow(Math.abs(yeclip), 2)));
     let perturbations_in_longitude = +0.040 * Math.sind(Ms - 2*Mu + 6)
                         +0.035 * Math.sind(Ms - 3*Mu + 33) 
                         -0.015 * Math.sind(Mj - Mu + 20);
@@ -744,8 +745,8 @@ export function uranus (day_number, latitude, longitude, UT) {
     let yhor = y;
     let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
     let azimuth = Math.atan2d(yhor,xhor) + 180;
-    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
-        + Math.pow(yhor, 2)));
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(Math.abs(xhor), 2) 
+        + Math.pow(Math.abs(yhor), 2)));
     return{
         ra: RA,
         decl: Dec,
@@ -814,8 +815,8 @@ export function neptune (day_number, latitude, longitude, UT) {
     let yhor = y;
     let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
     let azimuth = Math.atan2d(yhor,xhor) + 180;
-    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(xhor, 2) 
-        + Math.pow(yhor, 2)));
+    let altitude = Math.atan2d(zhor, Math.sqrt(Math.pow(Math.abs(xhor), 2) 
+        + Math.pow(Math.abs(yhor), 2)));
     return{
         ra: RA,
         decl: Dec,
@@ -881,7 +882,7 @@ export function pluto (day_number, latitude, longitude, UT) {
     let zhor = x * Math.cosd(latitude) + z * Math.sind(latitude);
     let azimuth = Math.atan2d(yhor,xhor) + 180;
     let altitude = Math.atan2d(zhor,
-        Math.sqrt(Math.pow(xhor, 2) + Math.pow(yhor, 2)));
+        Math.sqrt(Math.pow(Math.abs(xhor), 2) + Math.pow(Math.abs(yhor), 2)));
     return{
         ra: RA,
         decl: Dec,
