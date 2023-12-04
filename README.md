@@ -35,44 +35,64 @@ cd fitbit-planets
 ```
 ```
 cd app && yarn install && yarn build
+yarn install v1.22.19
+info No lockfile found.
+[1/4] Resolving packages...
+warning @fitbit/sdk > magic-string > sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+warning @fitbit/sdk > @rollup/plugin-commonjs > magic-string > sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+warning @fitbit/sdk-cli > @moleculer/vorpal > babel-polyfill > core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+warning @fitbit/sdk-cli > @moleculer/vorpal > babel-polyfill > babel-runtime > core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+[2/4] Fetching packages...
+[3/4] Linking dependencies...
+[4/4] Building fresh packages...
+success Saved lockfile.
+Done in 11.74s.
+yarn run v1.22.19
+$ fitbit-build
+[12:38:35][warn][build] Targeting proposed API may cause your app to behave unexpectedly. Use only when needed for development or QA.
+[12:38:35][warn][settings] This project is being built without a settings component. Create a file named settings/index.tsx, settings/index.ts, settings/index.jsx or settings/index.js to add a settings component to your project.
+[12:38:38][info][app] Building app for Fitbit Sense 2
+[12:38:38][info][app] Building app for Fitbit Versa 4
+[12:38:38][info][companion] Building companion
+[12:38:39][info][build] App UUID: 4b678716-7e8e-4259-893d-d4b026e3c4a5, BuildID: 0x09b6d1b419367701
+Done in 3.98s.
 ```
 ```
 export FITBIT_QA_COMMANDS=1
 export FITBIT_DEVBRIDGE_DUMP=1
 yarn debug
-```
-
-```
-npx fitbit
+yarn run v1.22.19
+$ fitbit
 Logged in as Chris Gorman <chrisjohgorman@gmail.com>
+fitbit$
 ```
-```
-fitbit$ build
 
-> fitbit-planets@0.1.0 build
+```
+fitbit$ connect phone
+Auto-connecting only known phone: Samsung SM-A520W
+fitbit$ connect device
+Auto-connecting only known device: Sense 2
+```
+```
+fitbit$ build-and-install
+npm WARN lifecycle The node binary used for scripts is /tmp/yarn--1701711600584-0.7858965634983297/node but npm is using /home/chris/.nvm/versions/node/v14.21.3/bin/node itself. Use the `--scripts-prepend-node-path` option to include the path for the node binary npm was executed with.
+
+> fitbit-planets@0.1.1 build /home/chris/src/javascript/fitbit-planets
 > fitbit-build
 
-[12:25:08][warn][companion] This project is being built without a companion component. Create a file named companion/index.ts or companion/index.js to add a companion component to your project.
-[12:25:08][warn][settings] This project is being built without a settings component. Create a file named settings/index.tsx, settings/index.ts, settings/index.jsx or settings/index.js to add a settings component to your project.
-(node:45266) [DEP0148] DeprecationWarning: Use of deprecated folder mapping "./" in the "exports" field module resolution of the package at /home/chris/src/javascript/foo/fitbit-planets/node_modules/tslib/package.json.
-Update this package.json to use a subpath pattern like "./*".
-(Use `node --trace-deprecation ...` to show where the warning was created)
-[12:25:10][info][app] Building app for Fitbit Ionic
-[12:25:10][info][app] Building app for Fitbit Versa
-[12:25:10][info][app] Building app for Fitbit Versa Lite
-[12:25:10][info][app] Building app for Fitbit Versa 2
-[12:25:10][info][build] App UUID: 4b678716-7e8e-4259-893d-d4b026e3c4a5, BuildID: 0x0e74dc736a701857
-```
-
-```
-fitbit$ install
-No app package specified. Reloading ./build/app.fba.
-Loaded appID:4b678716-7e8e-4259-893d-d4b026e3c4a5 buildID:0x0e74dc736a701857
-App requires a device, connecting...
-Auto-connecting only known device: Versa
-App install complete (partial)
+[12:41:59][warn][build] Targeting proposed API may cause your app to behave unexpectedly. Use only when needed for development or QA.
+[12:41:59][warn][settings] This project is being built without a settings component. Create a file named settings/index.tsx, settings/index.ts, settings/index.jsx or settings/index.js to add a settings component to your project.
+[12:42:02][info][app] Building app for Fitbit Sense 2
+[12:42:02][info][app] Building app for Fitbit Versa 4
+[12:42:02][info][companion] Building companion
+[12:42:03][info][build] App UUID: 4b678716-7e8e-4259-893d-d4b026e3c4a5, BuildID: 0x0c7f8d7e75148ce9
+No app package specified. Using default ./build/app.fba.
+Loaded appID:4b678716-7e8e-4259-893d-d4b026e3c4a5 buildID:0x0c7f8d7e75148ce9
+App install complete (full)
+Companion install complete (full)
 Launching app
 ```
+
 For further build and install instructions see the [Command Line Interface](https://dev.fitbit.com/blog/2018-08-23-cli-tools/) at dev.fitbit.com.
 
 ## License
