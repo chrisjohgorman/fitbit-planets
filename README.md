@@ -57,6 +57,7 @@ $ fitbit-build
 [12:38:39][info][build] App UUID: 4b678716-7e8e-4259-893d-d4b026e3c4a5, BuildID: 0x09b6d1b419367701
 Done in 3.98s.
 ```
+Setup the developer bridge in the fitbit app on your phone.  Select Account, device (In my case Sense 2), Developer Menu and toggle the switch Developer Bridge.  On your watch, select Settings, Developer Bridge and Turn on USB debugging.  This will require a reboot of the watch.  Then execute the first three lines of the next code example.
 ```
 export FITBIT_QA_COMMANDS=1
 export FITBIT_DEVBRIDGE_DUMP=1
@@ -66,13 +67,14 @@ $ fitbit
 Logged in as Chris Gorman <chrisjohgorman@gmail.com>
 fitbit$
 ```
-
+Connect your phone, then device.
 ```
 fitbit$ connect phone
 Auto-connecting only known phone: Samsung SM-A520W
 fitbit$ connect device
 Auto-connecting only known device: Sense 2
 ```
+Then run build-and-install to sideload the app to your watch.
 ```
 fitbit$ build-and-install
 npm WARN lifecycle The node binary used for scripts is /tmp/yarn--1701711600584-0.7858965634983297/node but npm is using /home/chris/.nvm/versions/node/v14.21.3/bin/node itself. Use the `--scripts-prepend-node-path` option to include the path for the node binary npm was executed with.
@@ -93,7 +95,7 @@ Companion install complete (full)
 Launching app
 ```
 
-For further build and install instructions see the [Command Line Interface](https://dev.fitbit.com/blog/2018-08-23-cli-tools/) at dev.fitbit.com.
+For further build and install instructions see the [Command Line Interface](https://dev.fitbit.com/build/guides/command-line-interface/) at dev.fitbit.com.
 
 ## License
 
