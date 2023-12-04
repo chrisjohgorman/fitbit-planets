@@ -3,11 +3,11 @@ This application calculates the positions of the planets and celestial bodies in
 
 There are two types of pages that can be found on the app.  The first is a menu listing of all the celestial body, and the second is the data from the celestial body.  This first example is the menu.
 
-![Screenshot](screenshots/Screenshot\ 2023-12-04\ at\ 11.32.51.png)
+![Screenshot](screenshots/screenshot2.png)
 
 And the second is an example of the data from the celestial body.  The sun in this case.
 
-![Screenshot](screenshots/Screenshoti\ 2023-12-04\ at\ 11.32.37.png)
+![Screenshot](screenshots/screenshot1.png)
 
 ## Build Instructions
 The following packages are needed to build the application.
