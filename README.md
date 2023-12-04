@@ -28,13 +28,14 @@ nvm alias default 14
 ```
 
 ### Instructions on how to build this fitbit app and install it
-Install node  by running the above commands, then clone the fitbit-planets repository.  Change directory to the fitbit-planets directory yarn to build and install the app.
+Install node  by running the above commands, then clone the fitbit-planets repository.  Change directory to the fitbit-planets directory and use to install the node_modules needed and to build the app.  Run
 
 ```
 cd fitbit-planets
-```
-```
 cd app && yarn install && yarn build
+```
+You should get something like this from the previous two commands.
+```
 yarn install v1.22.19
 info No lockfile found.
 [1/4] Resolving packages...
@@ -57,26 +58,29 @@ $ fitbit-build
 [12:38:39][info][build] App UUID: 4b678716-7e8e-4259-893d-d4b026e3c4a5, BuildID: 0x09b6d1b419367701
 Done in 3.98s.
 ```
-Setup the developer bridge in the fitbit app on your phone.  Select Account, device (In my case Sense 2), Developer Menu and toggle the switch Developer Bridge.  On your watch, select Settings, Developer Bridge and Turn on USB debugging.  This will require a reboot of the watch.  Then execute the first three lines of the next code example.
+Setup the developer bridge in the fitbit app on your phone.  Select Account, device (In my case Sense 2), Developer Menu and toggle the switch Developer Bridge.  On your watch, select Settings, Developer Bridge and Turn on USB debugging.  This will require a reboot of the watch.  Then execute the the next code example.
 ```
 export FITBIT_QA_COMMANDS=1
 export FITBIT_DEVBRIDGE_DUMP=1
 yarn debug
+```
+You should get output similar to the following section.
+```
 yarn run v1.22.19
 $ fitbit
 Logged in as Chris Gorman <chrisjohgorman@gmail.com>
 fitbit$
 ```
-Connect your phone, then device.
+Now connect your phone and device.  Then run build-and-install to sideload the app to your watch.
 ```
 fitbit$ connect phone
 Auto-connecting only known phone: Samsung SM-A520W
 fitbit$ connect device
 Auto-connecting only known device: Sense 2
-```
-Then run build-and-install to sideload the app to your watch.
-```
 fitbit$ build-and-install
+```
+You should get output similar to the following.
+```
 npm WARN lifecycle The node binary used for scripts is /tmp/yarn--1701711600584-0.7858965634983297/node but npm is using /home/chris/.nvm/versions/node/v14.21.3/bin/node itself. Use the `--scripts-prepend-node-path` option to include the path for the node binary npm was executed with.
 
 > fitbit-planets@0.1.1 build /home/chris/src/javascript/fitbit-planets
