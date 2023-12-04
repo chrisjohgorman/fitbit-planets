@@ -13,23 +13,35 @@ And the second is an example of the data from the celestial body.  The sun in th
 The following packages are needed to build the application.
 
 ### Software required to build a fitbit app
-The following versions are the ones I used to build the app.  It may build and run with older or newer versions of nodejs and npm.
+The following version is the one I used to build the app.  The instructions on how to set it up is avialable at the fitbit [developer](https://dev.fitbit.com/getting-started/) website.
+
 ```
-nodejs 16.0.0 and npm 7.11.2
+$ node --version
+v14.21.3
 ```
+
+To install node 14 follow the instructions from the developer website, in short run.
+
+```
+nvm install 14
+nvm alias default 14
+```
+
 ### Instructions on how to build this fitbit app and install it
-Install nodejs and npm then clone the fitbit-planets repository.  Change directory to the fitbit-planets directory and use npm to install the fitbit sdk and fitbit-cli sdk.  I built this for a fitbit versa which requires fitbit sdk version 4.2.2 or earlier.
+Install node  by running the above commands, then clone the fitbit-planets repository.  Change directory to the fitbit-planets directory yarn to build and install the app.
 
 ```
 cd fitbit-planets
 ```
 ```
-npm i @fitbit/sdk@4.2.2
+cd app && yarn install && yarn build
 ```
 ```
-npm i @fitbit/sdk-cli
+export FITBIT_QA_COMMANDS=1
+export FITBIT_DEVBRIDGE_DUMP=1
+yarn debug
 ```
-Then build and install the app with npx.
+
 ```
 npx fitbit
 Logged in as Chris Gorman <chrisjohgorman@gmail.com>
@@ -65,4 +77,4 @@ For further build and install instructions see the [Command Line Interface](http
 
 ## License
 
-This project is licensed under the GNU General Public License 3.0 - see the [gpl-3.0.md](gpl-3.0.md) file for details.
+This project has two licenses.  The [library](common/planetCoordinates.js) is licensed under the GNU Lesser General Public License 3.0 - see the [gpl-lgpl-v3.0.md](gnu-lgpl-v3.0.md) file for details.  The rest of the app was pulled shamelessly from [sdk-app-demo](https://github.com/Fitbit/sdk-app-demo) by Jon Barlow and is covered under the [MIT license](mit.md).
