@@ -10,9 +10,10 @@ And the second is an example of the data from the celestial body.  The sun in th
 ![Screenshot](screenshots/screenshot1.png)
 
 ## Build Instructions
-The following packages are needed to build the application.
+The packages node is required to build the application.
 
 ### Software required to build a fitbit app
+
 The following version is the one I used to build the app.  The instructions on how to set it up is avialable at the fitbit [developer](https://dev.fitbit.com/getting-started/) website.
 
 ```
