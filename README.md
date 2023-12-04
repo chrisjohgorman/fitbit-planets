@@ -29,13 +29,13 @@ nvm alias default 14
 ```
 
 ### Instructions on how to build this fitbit app and install it
-Install node  by running the above commands, then clone the fitbit-planets repository.  Change directory to the fitbit-planets directory and use to install the node_modules needed and to build the app.  Run
+Install node  by running the above commands, then clone the fitbit-planets repository.  Change directory to the fitbit-planets directory and use to install the node_modules needed and to build the app.  Run the following two commands.
 
 ```
 cd fitbit-planets
 cd app && yarn install && yarn build
 ```
-You should get something like this from the previous two commands.
+You should get output something like this.
 ```
 yarn install v1.22.19
 info No lockfile found.
@@ -59,7 +59,7 @@ $ fitbit-build
 [12:38:39][info][build] App UUID: 4b678716-7e8e-4259-893d-d4b026e3c4a5, BuildID: 0x09b6d1b419367701
 Done in 3.98s.
 ```
-Setup the developer bridge in the fitbit app on your phone.  Select Account, device (In my case Sense 2), Developer Menu and toggle the switch Developer Bridge.  On your watch, select Settings, Developer Bridge and Turn on USB debugging.  This will require a reboot of the watch.  Then execute the the next code example.
+Setup the developer bridge in the fitbit app on your phone.  Select Fitbit App, Account, device (In my case Sense 2), Developer Menu and toggle the switch Developer Bridge.  On your watch, select Settings, Developer Bridge and Turn on USB debugging.  This will require a reboot of the watch.  Then execute the the next three commands from a bash shell.
 ```
 export FITBIT_QA_COMMANDS=1
 export FITBIT_DEVBRIDGE_DUMP=1
