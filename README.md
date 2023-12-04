@@ -5,7 +5,7 @@ There are two types of pages that can be found on the app.  The first is a menu 
 
 ![Screenshot](screenshots/screenshot2.png)
 
-And the second is an example of the data from the celestial body.  The sun in this case.
+And the second is an example of the data from a celestial body.  The sun in this case.
 
 ![Screenshot](screenshots/screenshot1.png)
 
