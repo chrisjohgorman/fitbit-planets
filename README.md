@@ -10,7 +10,7 @@ And the second is an example of the data from the celestial body.  The sun in th
 ![Screenshot](screenshots/screenshot1.png)
 
 ## Build Instructions
-The packages node is required to build the application.
+The package node is required to build the application.
 
 ### Software required to build a fitbit app
 
