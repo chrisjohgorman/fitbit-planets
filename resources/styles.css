@@ -77,3 +77,13 @@
   width: 50;
   height: 50;
 }
+
+.textarea-msg {
+  x: 10%;
+  y: 10%;
+  font-size: 25;
+  text-length: 300;
+  text-anchor: middle;
+  width: 80%;
+  fill: "fb-white";
+}
