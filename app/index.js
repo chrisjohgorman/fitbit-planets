@@ -34,7 +34,7 @@ function updateSun(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let sunrs = pc.sunRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Sun";
   bodyRightAscension.text = `${sun.ra.toFixed(4)}` + " h";
@@ -86,7 +86,7 @@ function updateMercury(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let mercuryrs = pc.mercuryRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Mercury";
   bodyRightAscension.text = `${mercury.ra.toFixed(4)}` + " h";
@@ -192,7 +192,7 @@ function updateMoon(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let moonrs = pc.moonRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
  
   bodyName.text = "Moon";
   bodyRightAscension.text = `${moon.ra.toFixed(4)}` + " h";
@@ -244,7 +244,7 @@ function updateMars(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let marsrs = pc.marsRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Mars";
   bodyRightAscension.text = `${mars.ra.toFixed(4)}` + " h";
@@ -296,7 +296,7 @@ function updateJupiter(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let jupiterrs = pc.jupiterRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Jupiter";
   bodyRightAscension.text = `${jupiter.ra.toFixed(4)}` + " h";
@@ -348,7 +348,7 @@ function updateSaturn(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let saturnrs = pc.saturnRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Saturn";
   bodyRightAscension.text = `${saturn.ra.toFixed(4)}` + " h";
@@ -400,7 +400,7 @@ function updateUranus(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let uranusrs = pc.uranusRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Uranus";
   bodyRightAscension.text = `${uranus.ra.toFixed(4)}` + " h";
@@ -452,7 +452,7 @@ function updateNeptune(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let neptuners = pc.neptuneRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Neptune";
   bodyRightAscension.text = `${neptune.ra.toFixed(4)}` + " h";
@@ -504,7 +504,7 @@ function updatePluto(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let plutors = pc.plutoRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Pluto";
   bodyRightAscension.text = `${pluto.ra.toFixed(4)}` + " h";
@@ -525,41 +525,6 @@ function updatePluto(latitude, longitude) {
 }
 // }
 //////////////////////////////////
-
-function getCoordinates() {
-  messaging.peerSocket.onmessage = evt => {
-    console.log("evt.data.latitude " + evt.data.latitude);
-    console.log("evt.data.longitude " + evt.data.longitude);
-
-    if(fs.existsSync("/private/data/fitbit-planets.json")) {
-      let GPSJSON = fs.readFileSync("/private/data/fitbit-planets.json", "json");
-      if ((GPSJSON.latitude == evt.data.latitude) && (GPSJSON.longitude == evt.data.longitude)) {
-      } else {
-        const GPSData = {
-          "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
-          "guid": "de88671e-125f-4166-a9c5-a12389d8696a",
-          "registered": "2023-12-01T08:46:05 GMT-05:00",
-          "latitude": evt.data.latitude,
-          "longitude": evt.data.longitude,
-        }; 
-        fs.writeFileSync("/private/data/fitbit-planets.json", GPSData, "json");
-      }
-    } else if (!fs.existsSync("/private/data/fitbit-planets.json")) {
-      const GPSData = {
-        "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
-        "guid": "de88671e-125f-4166-a9c5-a12389d8696a",
-        "registered": "2023-12-01T08:46:05 GMT-05:00",
-        "latitude": evt.data.latitude,
-        "longitude": evt.data.longitude,
-      };
-      fs.writeFileSync("/private/data/fitbit-planets.json", GPSData, "json");
-    } else {
-      console.log("failed to get gps data");
-      document.location.replace('noGPS.view');
-    }       
-    updateMainMenu(evt.data.latitude, evt.data.longitude);
-  }
-}  
 
 function updateMainMenu(latitude, longitude) {
   document.getElementById("sun-view/start").addEventListener("click", function() {
@@ -594,4 +559,69 @@ function updateMainMenu(latitude, longitude) {
  }, false );
 }
 
-getCoordinates();
+function readCacheFile() {
+  let GPSData = fs.readFileSync("/private/data/fitbit-planets.json", "json");
+  updateMainMenu(GPSData.latitude, GPSData.longitude);
+}
+
+function cacheData(latitude, longitude, flag) {
+  if (flag === 0) {
+    console.log("Cache file doesn't exist")
+    console.log("latitude = " + latitude);
+    console.log("longitude = " + longitude);
+    console.log("flag = " + flag);
+    const GPSData = {
+      "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
+      "guid": "de88671e-125f-4166-a9c5-a12389d8696a",
+      "registered": "2023-12-01T08:46:05 GMT-05:00",
+      "latitude": latitude,
+      "longitude": longitude,
+    };
+    fs.writeFileSync("/private/data/fitbit-planets.json", GPSData, "json");
+    readCacheFile();
+  } else if (flag === 1) {
+    let GPSData = fs.readFileSync("/private/data/fitbit-planets.json", "json");
+    console.log("Cache file already exists, file data");
+    console.log("GPSData.latitude = " + GPSData.latitude);
+    console.log("GPSData.longitude = " + GPSData.longitude);
+    console.log("flag = " + flag);
+    if ((GPSData.latitude == latitude) && (GPSData.longitude == longitude)) {
+      console.log("No need to update cache file");
+    } else if ((latitude != null) || (longitude != null)) {
+      console.log("Update cache file");
+      const GPSData = {
+        "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
+        "guid": "de88671e-125f-4166-a9c5-a12389d8696a",
+        "registered": "2023-12-01T08:46:05 GMT-05:00",
+        "latitude": latitude,
+        "longitude": longitude,
+        };
+      fs.writeFileSync("/private/data/fitbit-planets.json", GPSData, "json");
+    }
+    readCacheFile();
+  }
+}
+
+function getPhoneGPS() {
+  if ((messaging.peerSocket.readyState === messaging.peerSocket.CLOSED)
+      && (fs.existsSync("/private/data/fitbit-planets.json"))){
+    readCacheFile();    
+  } else {
+
+  messaging.peerSocket.onmessage = function (evt) {
+    const latitude = JSON.stringify(evt.data.latitude);
+    const longitude = JSON.stringify(evt.data.longitude);
+    if (!fs.existsSync("/private/data/fitbit-planets.json")) {
+      cacheData(latitude, longitude, 0);
+    } else {
+    cacheData(latitude, longitude, 1);
+    }
+  };
+ }
+}
+
+messaging.peerSocket.onopen = function() {
+  console.log("messaging open");
+}
+
+getPhoneGPS();

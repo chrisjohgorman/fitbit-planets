@@ -32,7 +32,7 @@ function locationError(error) {
 var geoOptions = {
   enableHighAccuracy: false,
   maximumAge        : 0,
-  timeout           : Infinity,
+  timeout           : 60 * 1000,
 };
 
 // Listen for the event
