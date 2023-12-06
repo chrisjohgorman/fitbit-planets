@@ -6,7 +6,7 @@ import * as messaging from "messaging";
 import { geolocation } from "geolocation";
 import { me as companion } from "companion";
 
-messaging.peerSocket.addEventListener("error", (err) => {
+messaging.peerSocket.addEventListener("error", function (err) {
   console.error(`Connection error: ${err.code} - ${err.message}`);
 });
 
@@ -17,18 +17,12 @@ function sendMessage(data) {
   }
 }
 
-async function locationSuccess(position) {
-  console.log(
-    "companion Latitude: " + position.coords.latitude,
-    "companion Longitude: " + position.coords.longitude
-  );
+function locationSuccess(position) {
   const data = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
   };
-  console.log("data is " + data);
-  await sendMessage(data);
-  console.log("message sent");
+  sendMessage(data);
 }
 
 function locationError(error) {
@@ -38,25 +32,20 @@ function locationError(error) {
 var geoOptions = {
   enableHighAccuracy: false,
   maximumAge        : 0,
-  timeout           : Infinity,
+  timeout           : 60 * 1000,
 };
 
-function getCoordinates() {
-    geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
-}
-
-
 // Listen for the event
-companion.addEventListener("readystatechange", doThis);
+companion.addEventListener("readystatechange", getCoordinates);
 
 // The Device application caused the Companion to start
 if (companion.launchReasons.peerAppLaunched) {
-  doThis();
+  getCoordinates();
 }
 
-function doThis() {
-  messaging.peerSocket.onopen = () => {
-    getCoordinates();
+function getCoordinates() {
+  messaging.peerSocket.onopen = function () {
+    geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
   };
   console.log("Device application was launched!");
 }
