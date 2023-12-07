@@ -587,7 +587,7 @@ function cacheData(latitude, longitude, flag) {
     console.log("flag = " + flag);
     if ((GPSData.latitude == latitude) && (GPSData.longitude == longitude)) {
       console.log("No need to update cache file");
-    } else if ((latitude != null) || (longitude != null)) {
+    } else {
       console.log("Update cache file");
       const GPSData = {
         "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
