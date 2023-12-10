@@ -587,7 +587,7 @@ function cacheData(latitude, longitude, flag) {
     console.log("flag = " + flag);
     if ((GPSData.latitude == latitude) && (GPSData.longitude == longitude)) {
       console.log("No need to update cache file");
-    } else if ((latitude != null) || (longitude != null)) {
+    } else {
       console.log("Update cache file");
       const GPSData = {
         "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
@@ -602,26 +602,42 @@ function cacheData(latitude, longitude, flag) {
   }
 }
 
-function getPhoneGPS() {
-  if ((messaging.peerSocket.readyState === messaging.peerSocket.CLOSED)
-      && (fs.existsSync("/private/data/fitbit-planets.json"))){
-    readCacheFile();    
+// #7
+function processGPSData(data) {
+  if (!fs.existsSync("/private/data/fitbit-planets.json")) {
+    cacheData(data.latitude, data.longitude, 0);
   } else {
-
-  messaging.peerSocket.onmessage = function (evt) {
-    const latitude = JSON.stringify(evt.data.latitude);
-    const longitude = JSON.stringify(evt.data.longitude);
-    if (!fs.existsSync("/private/data/fitbit-planets.json")) {
-      cacheData(latitude, longitude, 0);
-    } else {
-    cacheData(latitude, longitude, 1);
-    }
-  };
- }
+  cacheData(data.latitude, data.longitude, 1);
+  }
 }
 
+// #2
+function fetchGPSData() {
+  if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+    // Send a command to the companion
+    console.log("sending request");
+    messaging.peerSocket.send({
+      command: 'coordinates'
+    });
+  } 
+}
+
+// #1
 messaging.peerSocket.onopen = function() {
   console.log("messaging open");
+  fetchGPSData();
 }
 
-getPhoneGPS();
+// Listen for messages from the companion
+// #4 
+messaging.peerSocket.onmessage = function(evt) {
+   console.log("received message");
+   if (evt.data) {
+      processGPSData(evt.data);
+   }
+}
+
+if ((messaging.peerSocket.readyState === messaging.peerSocket.CLOSED)
+  && (fs.existsSync("/private/data/fitbit-planets.json"))){
+  readCacheFile();
+}
