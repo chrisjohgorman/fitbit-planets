@@ -602,6 +602,7 @@ function cacheData(latitude, longitude, flag) {
   }
 }
 
+// #7
 function processGPSData(data) {
   if (!fs.existsSync("/private/data/fitbit-planets.json")) {
     cacheData(data.latitude, data.longitude, 0);
@@ -610,6 +611,7 @@ function processGPSData(data) {
   }
 }
 
+// #2
 function fetchGPSData() {
   if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
     // Send a command to the companion
@@ -617,18 +619,17 @@ function fetchGPSData() {
     messaging.peerSocket.send({
       command: 'coordinates'
     });
-  } else if ((messaging.peerSocket.readyState === messaging.peerSocket.CLOSED)
-      && (fs.existsSync("/private/data/fitbit-planets.json"))){
-    readCacheFile();    
   } 
 }
 
+// #1
 messaging.peerSocket.onopen = function() {
   console.log("messaging open");
   fetchGPSData();
 }
 
 // Listen for messages from the companion
+// #4 
 messaging.peerSocket.onmessage = function(evt) {
    console.log("received message");
    if (evt.data) {

@@ -4,7 +4,6 @@
 
 import * as messaging from "messaging";
 import { geolocation } from "geolocation";
-import { me as companion } from "companion";
 
 function locationSuccess(position) {
   const data = {
@@ -24,15 +23,14 @@ var geoOptions = {
   timeout           : Infinity,
 };
 
-// Listen for the event
-companion.addEventListener("readystatechange", launchGeoLocation);
-
+// #5
 function launchGeoLocation() {
    console.log("sending message");
    geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
 }
 
 // Send the GPS data to the device
+// #6
 function returnGPSCoordinates(data) {
    if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
       // Send a command to the device
@@ -43,6 +41,7 @@ function returnGPSCoordinates(data) {
 }
 
 // Listen for messages from the device
+// #3 
 messaging.peerSocket.onmessage = function(evt) {
    console.log("received request");
    if (evt.data && evt.data.command == "coordinates") {
