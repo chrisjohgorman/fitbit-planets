@@ -578,14 +578,13 @@ function cacheData(latitude, longitude, flag) {
       "longitude": longitude,
     };
     fs.writeFileSync("/private/data/fitbit-planets.json", GPSData, "json");
-    readCacheFile();
   } else if (flag === 1) {
     let GPSData = fs.readFileSync("/private/data/fitbit-planets.json", "json");
     console.log("Cache file already exists, file data");
     console.log("GPSData.latitude = " + GPSData.latitude);
     console.log("GPSData.longitude = " + GPSData.longitude);
     console.log("flag = " + flag);
-    if ((GPSData.latitude == latitude) && (GPSData.longitude == longitude)) {
+    if ((GPSData.latitude === latitude) && (GPSData.longitude === longitude)) {
       console.log("No need to update cache file");
     } else {
       console.log("Update cache file");
@@ -598,8 +597,8 @@ function cacheData(latitude, longitude, flag) {
         };
       fs.writeFileSync("/private/data/fitbit-planets.json", GPSData, "json");
     }
-    readCacheFile();
   }
+  readCacheFile();
 }
 
 // #7
@@ -637,6 +636,8 @@ messaging.peerSocket.onmessage = function(evt) {
    }
 }
 
+// if messaging is closed, we are offline.  read from the cached
+// latitude and longitude
 if ((messaging.peerSocket.readyState === messaging.peerSocket.CLOSED)
   && (fs.existsSync("/private/data/fitbit-planets.json"))){
   readCacheFile();

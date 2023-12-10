@@ -23,8 +23,7 @@
       "hera"
     ],
     "i18n": {},
-    "defaultLanguage": "en-US",
-    "enableProposedAPI": true
+    "defaultLanguage": "en-US"
   },
   "scripts": {
     "build": "fitbit-build",
