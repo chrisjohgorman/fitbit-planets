@@ -1,12 +1,11 @@
 {
   "name": "fitbit-planets",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "license": "MIT",
   "devDependencies": {
-    "@fitbit/sdk": "^7.2.0-pre.0",
-    "@fitbit/sdk-cli": "^1.8.0-pre.11",
-    "@fitbit/sdk-build-targets": "cmengler/fitbit-sdk-build-targets"
+    "@fitbit/sdk": "^6.2.0-pre.1",
+    "@fitbit/sdk-cli": "^1.8.0-pre.11"
   },
   "fitbit": {
     "appUUID": "4b678716-7e8e-4259-893d-d4b026e3c4a5",
