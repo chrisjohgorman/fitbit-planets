@@ -1,8 +1,0 @@
-<svg id="background" >
-  <rect x="0"   y="0" width="100%" height="100%" fill="#000000" />
-  <animate attributeName="x" from="100%" to="0" begin="load" dur="0.5"
-  easing="ease-in-out" />
-  <textarea id="description" class="textarea-msg">
-    This program requires GPS data be sent from your mobile device to the watch.  Try the following to see if you can get the GPS data.  Sync your fitbit to your device.  Try rebooting the fitbit and device.
-  </textarea>
-</svg>
