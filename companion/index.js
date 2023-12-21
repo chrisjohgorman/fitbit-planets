@@ -40,11 +40,6 @@ function launchGeoLocation() {
 if (companion.permissions.granted("access_location")) {
   // Refresh on companion launch
   launchGeoLocation();
-
-  // Schedule a refresh every 30 minutes
-  companion.wakeInterval = wakeTime;
-  companion.addEventListener("wakeinterval", launchGeoLocation);
-
 } else {
   console.error("This app requires the access_location permission.");
 }
