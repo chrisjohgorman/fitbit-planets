@@ -1,6 +1,6 @@
 import * as document from "document";
-import { geolocation } from "geolocation";
-import * as pc from "../common/planetCoordinates.js";
+import * as newfile from "./newfile";
+import * as pc from "../common/planetCoordinates";
 import * as fs from "fs";
 import * as messaging from "messaging";
 
@@ -24,6 +24,8 @@ function updateSun(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -44,6 +46,8 @@ function updateSun(latitude, longitude) {
   bodyAltitude.text = `${sun.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${sunrs.rise}`;
   bodySetTime.text = `${sunrs.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("sun RA: " + sun.ra.toFixed(4));
   console.log("sun Decl: " + sun.decl.toFixed(4));
@@ -76,6 +80,8 @@ function updateMercury(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -96,6 +102,8 @@ function updateMercury(latitude, longitude) {
   bodyAltitude.text = `${mercury.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${mercuryrs.rise}`;
   bodySetTime.text = `${mercuryrs.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("mercury RA: " + mercury.ra.toFixed(4));
   console.log("mercury Decl: " + mercury.decl.toFixed(4));
@@ -130,6 +138,8 @@ function updateVenus(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -140,7 +150,7 @@ function updateVenus(latitude, longitude) {
         (d.getMonth() + 1),d.getDate(), ut), latitude, longitude, ut);
   let venusrs = pc.venusRiseSet(d.getFullYear(),
         (d.getMonth() + 1), d.getDate(), ut, latitude, longitude);
-  console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
+  //console.log ("pc.dayNumber " + pc.dayNumber(d.getFullYear(), (d.getMonth() + 1),d.getDate(), ut));
   
   bodyName.text = "Venus";
   bodyRightAscension.text = `${venus.ra.toFixed(4)}` + " h";
@@ -150,6 +160,8 @@ function updateVenus(latitude, longitude) {
   bodyAltitude.text = `${venus.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${venusrs.rise}`;
   bodySetTime.text = `${venusrs.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("venus RA: " + venus.ra.toFixed(4));
   console.log("venus Decl: " + venus.decl.toFixed(4));
@@ -182,6 +194,8 @@ function updateMoon(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -202,6 +216,8 @@ function updateMoon(latitude, longitude) {
   bodyAltitude.text = `${moon.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${moonrs.rise}`;
   bodySetTime.text = `${moonrs.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
 
   console.log("moon RA: " + moon.ra.toFixed(4));
   console.log("moon Decl: " + moon.decl.toFixed(4));
@@ -234,6 +250,8 @@ function updateMars(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -254,6 +272,8 @@ function updateMars(latitude, longitude) {
   bodyAltitude.text = `${mars.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${marsrs.rise}`;
   bodySetTime.text = `${marsrs.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("mars RA: " + mars.ra.toFixed(4));
   console.log("mars Decl: " + mars.decl.toFixed(4));
@@ -286,6 +306,8 @@ function updateJupiter(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -306,6 +328,8 @@ function updateJupiter(latitude, longitude) {
   bodyAltitude.text = `${jupiter.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${jupiterrs.rise}`;
   bodySetTime.text = `${jupiterrs.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("jupiter RA: " + jupiter.ra.toFixed(4));
   console.log("jupiter Decl: " + jupiter.decl.toFixed(4));
@@ -338,6 +362,8 @@ function updateSaturn(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -358,6 +384,8 @@ function updateSaturn(latitude, longitude) {
   bodyAltitude.text = `${saturn.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${saturnrs.rise}`;
   bodySetTime.text = `${saturnrs.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("saturn RA: " + saturn.ra.toFixed(4));
   console.log("saturn Decl: " + saturn.decl.toFixed(4));
@@ -390,6 +418,8 @@ function updateUranus(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -410,6 +440,8 @@ function updateUranus(latitude, longitude) {
   bodyAltitude.text = `${uranus.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${uranusrs.rise}`;
   bodySetTime.text = `${uranusrs.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("uranus RA: " + uranus.ra.toFixed(4));
   console.log("uranus Decl: " + uranus.decl.toFixed(4));
@@ -442,6 +474,8 @@ function updateNeptune(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -462,6 +496,8 @@ function updateNeptune(latitude, longitude) {
   bodyAltitude.text = `${neptune.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${neptuners.rise}`;
   bodySetTime.text = `${neptuners.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("neptune RA: " + neptune.ra.toFixed(4));
   console.log("neptune Decl: " + neptune.decl.toFixed(4));
@@ -494,6 +530,8 @@ function updatePluto(latitude, longitude) {
   const bodyAltitude = document.getElementById("bodyAltitude");
   const bodyRiseTime = document.getElementById("bodyRiseTime");
   const bodySetTime = document.getElementById("bodySetTime");
+  const coordinateLatitude = document.getElementById("coordinateLatitude");
+  const coordinateLongitude = document.getElementById("coordinateLongitude");
 
   const d = new Date();
   const ut = d.getUTCHours() + d.getUTCMinutes()/60 +
@@ -514,6 +552,8 @@ function updatePluto(latitude, longitude) {
   bodyAltitude.text = `${pluto.alt.toFixed(4)}` + "°";
   bodyRiseTime.text = `${plutors.rise}`;
   bodySetTime.text = `${plutors.set}`;
+  coordinateLatitude.text = latitude + " °";
+  coordinateLongitude.text = longitude + " °";
   
   console.log("pluto RA: " + pluto.ra.toFixed(4));
   console.log("pluto Decl: " + pluto.decl.toFixed(4));
@@ -559,86 +599,7 @@ function updateMainMenu(latitude, longitude) {
  }, false );
 }
 
-function readCacheFile() {
-  let GPSData = fs.readFileSync("/private/data/fitbit-planets.json", "json");
-  updateMainMenu(GPSData.latitude, GPSData.longitude);
-}
-
-function cacheData(latitude, longitude, flag) {
-  if (flag === 0) {
-    console.log("Cache file doesn't exist")
-    console.log("latitude = " + latitude);
-    console.log("longitude = " + longitude);
-    console.log("flag = " + flag);
-    const GPSData = {
-      "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
-      "guid": "de88671e-125f-4166-a9c5-a12389d8696a",
-      "registered": "2023-12-01T08:46:05 GMT-05:00",
-      "latitude": latitude,
-      "longitude": longitude,
-    };
-    fs.writeFileSync("/private/data/fitbit-planets.json", GPSData, "json");
-  } else if (flag === 1) {
-    let GPSData = fs.readFileSync("/private/data/fitbit-planets.json", "json");
-    console.log("Cache file already exists, file data");
-    console.log("GPSData.latitude = " + GPSData.latitude);
-    console.log("GPSData.longitude = " + GPSData.longitude);
-    console.log("flag = " + flag);
-    if ((GPSData.latitude === latitude) && (GPSData.longitude === longitude)) {
-      console.log("No need to update cache file");
-    } else {
-      console.log("Update cache file");
-      const GPSData = {
-        "_id": "a338e68c6a14c2cc5deef3b03ddab7fd",
-        "guid": "de88671e-125f-4166-a9c5-a12389d8696a",
-        "registered": "2023-12-01T08:46:05 GMT-05:00",
-        "latitude": latitude,
-        "longitude": longitude,
-        };
-      fs.writeFileSync("/private/data/fitbit-planets.json", GPSData, "json");
-    }
-  }
-  readCacheFile();
-}
-
-// #7
-function processGPSData(data) {
-  if (!fs.existsSync("/private/data/fitbit-planets.json")) {
-    cacheData(data.latitude, data.longitude, 0);
-  } else {
-  cacheData(data.latitude, data.longitude, 1);
-  }
-}
-
-// #2
-function fetchGPSData() {
-  if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
-    // Send a command to the companion
-    console.log("sending request");
-    messaging.peerSocket.send({
-      command: 'coordinates'
-    });
-  } 
-}
-
-// #1
-messaging.peerSocket.onopen = function() {
-  console.log("messaging open");
-  fetchGPSData();
-}
-
-// Listen for messages from the companion
-// #4 
-messaging.peerSocket.onmessage = function(evt) {
-   console.log("received message");
-   if (evt.data) {
-      processGPSData(evt.data);
-   }
-}
-
-// if messaging is closed, we are offline.  read from the cached
-// latitude and longitude
-if ((messaging.peerSocket.readyState === messaging.peerSocket.CLOSED)
-  && (fs.existsSync("/private/data/fitbit-planets.json"))){
-  readCacheFile();
-}
+newfile.initialize(data => {
+    updateMainMenu(data.latitude, data.longitude); 
+    console.log(`coordinates are ${data.latitude} latitude and ${data.longitude} longitude`);
+});
