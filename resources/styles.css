@@ -4,7 +4,7 @@
 .background-fill            { fill: fb-black; }
 
 #bodyName {
-  text-anchor: end;
+  text-anchor: middle;
 }
 
 #bodyRightAscension {
@@ -32,6 +32,14 @@
 }
 
 #bodySetTime {
+  text-anchor: end;
+}
+
+#coordinateLatitude {
+  text-anchor: end;
+}
+
+#coordinateLongitude {
   text-anchor: end;
 }
 

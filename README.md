@@ -104,4 +104,4 @@ For further build and install instructions see the [Command Line Interface](http
 
 ## License
 
-This project has two licenses.  The [library](common/planetCoordinates.js) is licensed under the GNU Lesser General Public License 3.0 - see the [gpl-lgpl-v3.0.md](gnu-lgpl-v3.0.md) file for details.  The rest of the app was pulled shamelessly from [sdk-app-demo](https://github.com/Fitbit/sdk-app-demo) by Jon Barlow and is covered under the [MIT license](mit.md).
+This Project has two licenses.  The [library](common/planetCoordinates.js) is licensed under the GNU Lesser General Public License 3.0 - see the [gpl-lgpl-v3.0.md](gnu-lgpl-v3.0.md) file for details.  The rest of the app was pulled shamelessly from [sdk-app-demo](https://github.com/Fitbit/sdk-app-demo) and from [sdk-weather-clock](https://github.com/Fitbit/sdk-weather-clock) both by Jon Barlow and is covered under the [MIT license](mit.md).

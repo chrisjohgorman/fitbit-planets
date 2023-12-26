@@ -2,8 +2,17 @@
  * Entry point for the companion app
  */
 
-import * as messaging from "messaging";
+import * as cbor from "cbor";
+import { me as companion } from "companion";
+import { outbox } from "file-transfer";
+import { dataFile, wakeTime } from "../common/constants";
 import { geolocation } from "geolocation";
+
+function returnGPSCoordinates(data) {
+  outbox.enqueue(dataFile, cbor.encode(data)).catch(error => {
+    console.warn(`Failed to enqueue data. Error: ${error}`);
+  });
+}
 
 function locationSuccess(position) {
   const data = {
@@ -23,29 +32,14 @@ var geoOptions = {
   timeout           : Infinity,
 };
 
-// #5
 function launchGeoLocation() {
    console.log("sending message");
    geolocation.getCurrentPosition(locationSuccess, locationError, geoOptions);
 }
 
-// Send the GPS data to the device
-// #6
-function returnGPSCoordinates(data) {
-   if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
-      // Send a command to the device
-      messaging.peerSocket.send(data);
-   } else {
-      console.log("Error: Connection is not open");
-   }
-}
-
-// Listen for messages from the device
-// #3 
-messaging.peerSocket.onmessage = function(evt) {
-   console.log("received request");
-   if (evt.data && evt.data.command == "coordinates") {
-      // The device requested GPS data
-      launchGeoLocation();
-   }
+if (companion.permissions.granted("access_location")) {
+  // Refresh on companion launch
+  launchGeoLocation();
+} else {
+  console.error("This app requires the access_location permission.");
 }
