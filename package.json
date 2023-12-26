@@ -18,6 +18,8 @@
       "run_background"
     ],
     "buildTargets": [
+      "atlas",
+      "vulcan",
       "rhea",
       "hera"
     ],
